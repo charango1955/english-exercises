@@ -1,0 +1,151 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!-- saved from url=(0058)mhtml:file://E:\SCHOOL\html%20exercises\Categories%201.mht -->
+<HTML><HEAD><TITLE>Categories 1</TITLE>
+<META http-equiv=Content-Type content="text/html; charset=windows-1252">
+<META 
+content="Produced using Hot Potatoes by Half-Baked Software, registered to Josef Essberger." 
+name=Author>
+<SCRIPT language=JavaScript>
+CorrectAnswers = new Array();
+CorrectAnswers[0]=2;
+CorrectAnswers[1]=1;
+CorrectAnswers[2]=6;
+CorrectAnswers[3]=9;
+CorrectAnswers[4]=5;
+CorrectAnswers[5]=10;
+CorrectAnswers[6]=7;
+CorrectAnswers[7]=4;
+CorrectAnswers[8]=8;
+CorrectAnswers[9]=3;
+macrightchar=':)';
+macwrongchar=':(';
+winrightchar=':)';
+winwrongchar=':(';
+var platform = 'win'
+if (navigator.appVersion.indexOf('Mac') != -1) {platform = 'mac'}
+if (platform == 'mac') {
+	rightchar = unescape(macrightchar)
+	wrongchar = unescape(macwrongchar)
+}
+else {
+	rightchar = unescape(winrightchar)
+	wrongchar = unescape(winwrongchar)
+}
+function CheckAnswer(){
+	var i = 0;
+	var TotalCorrect = 0;
+	var x = 0;
+	var Score = 0;
+	for (i=0; i<CorrectAnswers.length; i++){
+		if (document.QuizForm.elements[i*2].selectedIndex == CorrectAnswers[i]){
+			document.QuizForm.elements[(i*2)+1].value = rightchar;
+			TotalCorrect++;
+		}
+		else{
+			document.QuizForm.elements[(i*2)+1].value = wrongchar;
+		}
+	}
+	Score = Math.floor((TotalCorrect*100)/CorrectAnswers.length);
+	document.CheckForm.ScoreBox.value = Score + '%';
+}
+</SCRIPT>
+
+<CENTER>
+<H2>Categories 1</H2>
+</CENTER>
+<CENTER>
+<P><B>Match the categories</B></P>
+</CENTER>
+<P></P>
+<FORM name=QuizForm>
+<CENTER>
+<TABLE cellPadding=5 border=0>
+  <TBODY>
+  <TR>
+    <TD><FONT color=#000000><B>fruit</B></FONT></TD>
+    <TD><B><SELECT name=0> <OPTION selected>???</OPTION> 
+        <OPTION>tuna</OPTION> <OPTION>apple</OPTION> <OPTION>Martian</OPTION> 
+        <OPTION>crocodile</OPTION> <OPTION>lettuce</OPTION> 
+        <OPTION>eagle</OPTION> <OPTION>whale</OPTION> <OPTION>ant</OPTION> 
+        <OPTION>oak</OPTION> <OPTION>tulip</OPTION></SELECT></B></TD>
+    <TD><INPUT maxLength=3 size=3 name=1> </TD></TR>
+  <TR>
+    <TD><FONT color=#000000><B>fish</B></FONT></TD>
+    <TD><B><SELECT name=2> <OPTION selected>???</OPTION> 
+        <OPTION>tuna</OPTION> <OPTION>apple</OPTION> <OPTION>Martian</OPTION> 
+        <OPTION>crocodile</OPTION> <OPTION>lettuce</OPTION> 
+        <OPTION>eagle</OPTION> <OPTION>whale</OPTION> <OPTION>ant</OPTION> 
+        <OPTION>oak</OPTION> <OPTION>tulip</OPTION></SELECT></B></TD>
+    <TD><INPUT maxLength=3 size=3 name=3> </TD></TR>
+  <TR>
+    <TD><FONT color=#000000><B>bird</B></FONT></TD>
+    <TD><B><SELECT name=4> <OPTION selected>???</OPTION> 
+        <OPTION>tuna</OPTION> <OPTION>apple</OPTION> <OPTION>Martian</OPTION> 
+        <OPTION>crocodile</OPTION> <OPTION>lettuce</OPTION> 
+        <OPTION>eagle</OPTION> <OPTION>whale</OPTION> <OPTION>ant</OPTION> 
+        <OPTION>oak</OPTION> <OPTION>tulip</OPTION></SELECT></B></TD>
+    <TD><INPUT maxLength=3 size=3 name=5> </TD></TR>
+  <TR>
+    <TD><FONT color=#000000><B>tree</B></FONT></TD>
+    <TD><B><SELECT name=6> <OPTION selected>???</OPTION> 
+        <OPTION>tuna</OPTION> <OPTION>apple</OPTION> <OPTION>Martian</OPTION> 
+        <OPTION>crocodile</OPTION> <OPTION>lettuce</OPTION> 
+        <OPTION>eagle</OPTION> <OPTION>whale</OPTION> <OPTION>ant</OPTION> 
+        <OPTION>oak</OPTION> <OPTION>tulip</OPTION></SELECT></B></TD>
+    <TD><INPUT maxLength=3 size=3 name=7> </TD></TR>
+  <TR>
+    <TD><FONT color=#000000><B>vegetable</B></FONT></TD>
+    <TD><B><SELECT name=8> <OPTION selected>???</OPTION> 
+        <OPTION>tuna</OPTION> <OPTION>apple</OPTION> <OPTION>Martian</OPTION> 
+        <OPTION>crocodile</OPTION> <OPTION>lettuce</OPTION> 
+        <OPTION>eagle</OPTION> <OPTION>whale</OPTION> <OPTION>ant</OPTION> 
+        <OPTION>oak</OPTION> <OPTION>tulip</OPTION></SELECT></B></TD>
+    <TD><INPUT maxLength=3 size=3 name=9> </TD></TR>
+  <TR>
+    <TD><FONT color=#000000><B>flower</B></FONT></TD>
+    <TD><B><SELECT name=10> <OPTION selected>???</OPTION> 
+        <OPTION>tuna</OPTION> <OPTION>apple</OPTION> <OPTION>Martian</OPTION> 
+        <OPTION>crocodile</OPTION> <OPTION>lettuce</OPTION> 
+        <OPTION>eagle</OPTION> <OPTION>whale</OPTION> <OPTION>ant</OPTION> 
+        <OPTION>oak</OPTION> <OPTION>tulip</OPTION></SELECT></B></TD>
+    <TD><INPUT maxLength=3 size=3 name=11> </TD></TR>
+  <TR>
+    <TD><FONT color=#000000><B>mammal</B></FONT></TD>
+    <TD><B><SELECT name=12> <OPTION selected>???</OPTION> 
+        <OPTION>tuna</OPTION> <OPTION>apple</OPTION> <OPTION>Martian</OPTION> 
+        <OPTION>crocodile</OPTION> <OPTION>lettuce</OPTION> 
+        <OPTION>eagle</OPTION> <OPTION>whale</OPTION> <OPTION>ant</OPTION> 
+        <OPTION>oak</OPTION> <OPTION>tulip</OPTION></SELECT></B></TD>
+    <TD><INPUT maxLength=3 size=3 name=13> </TD></TR>
+  <TR>
+    <TD><FONT color=#000000><B>reptile</B></FONT></TD>
+    <TD><B><SELECT name=14> <OPTION selected>???</OPTION> 
+        <OPTION>tuna</OPTION> <OPTION>apple</OPTION> <OPTION>Martian</OPTION> 
+        <OPTION>crocodile</OPTION> <OPTION>lettuce</OPTION> 
+        <OPTION>eagle</OPTION> <OPTION>whale</OPTION> <OPTION>ant</OPTION> 
+        <OPTION>oak</OPTION> <OPTION>tulip</OPTION></SELECT></B></TD>
+    <TD><INPUT maxLength=3 size=3 name=15> </TD></TR>
+  <TR>
+    <TD><FONT color=#000000><B>insect</B></FONT></TD>
+    <TD><B><SELECT name=16> <OPTION selected>???</OPTION> 
+        <OPTION>tuna</OPTION> <OPTION>apple</OPTION> <OPTION>Martian</OPTION> 
+        <OPTION>crocodile</OPTION> <OPTION>lettuce</OPTION> 
+        <OPTION>eagle</OPTION> <OPTION>whale</OPTION> <OPTION>ant</OPTION> 
+        <OPTION>oak</OPTION> <OPTION>tulip</OPTION></SELECT></B></TD>
+    <TD><INPUT maxLength=3 size=3 name=17> </TD></TR>
+  <TR>
+    <TD><FONT color=#000000><B>extra-terrestrial</B></FONT></TD>
+    <TD><B><SELECT name=18> <OPTION selected>???</OPTION> 
+        <OPTION>tuna</OPTION> <OPTION>apple</OPTION> <OPTION>Martian</OPTION> 
+        <OPTION>crocodile</OPTION> <OPTION>lettuce</OPTION> 
+        <OPTION>eagle</OPTION> <OPTION>whale</OPTION> <OPTION>ant</OPTION> 
+        <OPTION>oak</OPTION> <OPTION>tulip</OPTION></SELECT></B></TD>
+    <TD><INPUT maxLength=3 size=3 name=19> 
+</TD></TR></TBODY></TABLE></CENTER></FORM>
+<P></P>
+<FORM name=CheckForm>
+<CENTER>Your score is: <INPUT maxLength=4 size=4 name=ScoreBox> 
+<P><INPUT onclick=CheckAnswer() type=button value="Check Answer"></P></CENTER></FORM>
+<P></P>
+<CENTER>
+</CENTER></BODY></HTML>
