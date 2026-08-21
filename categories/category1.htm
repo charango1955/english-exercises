@@ -175,10 +175,21 @@ function CheckAnswer(){
 
 <P></P>
 
-<FORM name=CheckForm>
+<FORM name=NavigationButtons>
 <CENTER>
-Your score is: <INPUT maxLength=4 size=4 name=ScoreBox> 
-<P><INPUT onclick=CheckAnswer() type=button value="Check Answer"></P>
+<TABLE border=0 width="85%">
+<TR>
+<TD bgcolor="#ff8040" align="center">
+<FONT face="Geneva,Arial" size="-1">
+
+<INPUT type="button" value="&lt;=" onclick='parent.location="../index.html"'>
+<INPUT type="button" value="Index" onclick='parent.location="../index.html"'>
+<INPUT type="button" value="=&gt;" onclick='parent.location="categories2.htm"'>
+
+</FONT>
+</TD>
+</TR>
+</TABLE>
 </CENTER>
 </FORM>
 
