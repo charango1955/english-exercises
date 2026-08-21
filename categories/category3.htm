@@ -1,8 +1,10 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<!-- saved from url=(0058)mhtml:file://E:\SCHOOL\html%20exercises\Categories%203.mht -->
-<HTML><HEAD><TITLE>Categories 3</TITLE>
-<META http-equiv=Content-Type content="text/html; charset=windows-1252">
-<SCRIPT language=JavaScript>
+<HTML>
+<HEAD>
+<TITLE>Categories 3</TITLE>
+<META http-equiv="Content-Type" content="text/html; charset=windows-1252">
+
+<SCRIPT language="JavaScript">
 CorrectAnswers = new Array();
 CorrectAnswers[0]=7;
 CorrectAnswers[1]=3;
@@ -14,58 +16,71 @@ CorrectAnswers[6]=4;
 CorrectAnswers[7]=1;
 CorrectAnswers[8]=10;
 CorrectAnswers[9]=6;
+
 macrightchar=':)';
 macwrongchar=':(';
 winrightchar=':)';
 winwrongchar=':(';
-var platform = 'win'
+
+var platform = 'win';
 if (navigator.appVersion.indexOf('Mac') != -1) {platform = 'mac'}
+
 if (platform == 'mac') {
-	rightchar = unescape(macrightchar)
-	wrongchar = unescape(macwrongchar)
+    rightchar = unescape(macrightchar);
+    wrongchar = unescape(macwrongchar);
 }
 else {
-	rightchar = unescape(winrightchar)
-	wrongchar = unescape(winwrongchar)
+    rightchar = unescape(winrightchar);
+    wrongchar = unescape(winwrongchar);
 }
+
 function CheckAnswer(){
-	var i = 0;
-	var TotalCorrect = 0;
-	var x = 0;
-	var Score = 0;
-	for (i=0; i<CorrectAnswers.length; i++){
-		if (document.QuizForm.elements[i*2].selectedIndex == CorrectAnswers[i]){
-			document.QuizForm.elements[(i*2)+1].value = rightchar;
-			TotalCorrect++;
-		}
-		else{
-			document.QuizForm.elements[(i*2)+1].value = wrongchar;
-		}
-	}
-	Score = Math.floor((TotalCorrect*100)/CorrectAnswers.length);
-	document.CheckForm.ScoreBox.value = Score + '%';
+    var i = 0;
+    var TotalCorrect = 0;
+    var Score = 0;
+
+    for (i=0; i<CorrectAnswers.length; i++){
+        if (document.QuizForm.elements[i*2].selectedIndex == CorrectAnswers[i]){
+            document.QuizForm.elements[(i*2)+1].value = rightchar;
+            TotalCorrect++;
+        }
+        else{
+            document.QuizForm.elements[(i*2)+1].value = wrongchar;
+        }
+    }
+
+    Score = Math.floor((TotalCorrect*100)/CorrectAnswers.length);
+    document.CheckForm.ScoreBox.value = Score + '%';
 }
 </SCRIPT>
+</HEAD>
 
 <BODY bgcolor="#000000" text="#ff8040" link="#ff8040" vlink="#ff0000">
 
-<FORM name=NavigationButtons>
+<!-- NAVIGATION -->
 <CENTER>
-<TABLE border=0 width="85%">
+<TABLE border="0" width="85%">
 <TR>
 <TD bgcolor="#ff8040" align="center">
 <FONT face="Geneva,Arial" size="-1">
 
-<INPUT type="button" value="&lt;=" onclick='parent.location="categories2.htm"'>
-<INPUT type="button" value="Index" onclick='parent.location="../index.html"'>
-<INPUT type="button" value="=&gt;" onclick='parent.location="../index.html"'>
+<A href="categories2.htm">
+<INPUT type="button" value="&lt;">
+</A>
+
+<A href="../index.html">
+<INPUT type="button" value="Index">
+</A>
+
+<A href="../index.html">
+<INPUT type="button" value="&gt;">
+</A>
 
 </FONT>
 </TD>
 </TR>
 </TABLE>
 </CENTER>
-</FORM>
 
 <CENTER>
 <H2><FONT color="#ffff00">Categories 3</FONT></H2>
@@ -77,133 +92,204 @@ function CheckAnswer(){
 
 <P></P>
 
-<FORM name=QuizForm>
+<FORM name="QuizForm">
 <CENTER>
-<TABLE cellPadding=5 border=0>
-  <TBODY>
 
-  <TR>
-    <TD><FONT color="#ff8040"><B>transport</B></FONT></TD>
-    <TD><B><SELECT name=0> <OPTION selected>choose a 
-        word</OPTION> <OPTION>dictionary</OPTION> 
-        <OPTION>doctor</OPTION> <OPTION>fish and chips</OPTION> 
-        <OPTION>Excel</OPTION> <OPTION>bottle</OPTION> <OPTION>New York</OPTION> 
-        <OPTION>bus</OPTION> <OPTION>kitchen</OPTION> <OPTION>wine</OPTION> 
-        <OPTION>China</OPTION></SELECT></B></TD>
-    <TD><INPUT maxLength=3 size=3 name=1> </TD>
-  </TR>
+<TABLE cellPadding="5" border="0">
 
-  <TR>
-    <TD><FONT color="#ff8040"><B>food</B></FONT></TD>
-    <TD><B><SELECT name=2> <OPTION selected>choose a 
-        word</OPTION> <OPTION>dictionary</OPTION> 
-        <OPTION>doctor</OPTION> <OPTION>fish and chips</OPTION> 
-        <OPTION>Excel</OPTION> <OPTION>bottle</OPTION> <OPTION>New York</OPTION> 
-        <OPTION>bus</OPTION> <OPTION>kitchen</OPTION> <OPTION>wine</OPTION> 
-        <OPTION>China</OPTION></SELECT></B></TD>
-    <TD><INPUT maxLength=3 size=3 name=3> </TD>
-  </TR>
+<TR>
+<TD><FONT color="#ff8040"><B>transport</B></FONT></TD>
+<TD><B><SELECT name="0">
+<OPTION selected>choose a word</OPTION>
+<OPTION>dictionary</OPTION>
+<OPTION>doctor</OPTION>
+<OPTION>fish and chips</OPTION>
+<OPTION>Excel</OPTION>
+<OPTION>bottle</OPTION>
+<OPTION>New York</OPTION>
+<OPTION>bus</OPTION>
+<OPTION>kitchen</OPTION>
+<OPTION>wine</OPTION>
+<OPTION>China</OPTION>
+</SELECT></B></TD>
+<TD><INPUT maxLength="3" size="3" name="1"></TD>
+</TR>
 
-  <TR>
-    <TD><FONT color="#ff8040"><B>room</B></FONT></TD>
-    <TD><B><SELECT name=4> <OPTION selected>choose a 
-        word</OPTION> <OPTION>dictionary</OPTION> 
-        <OPTION>doctor</OPTION> <OPTION>fish and chips</OPTION> 
-        <OPTION>Excel</OPTION> <OPTION>bottle</OPTION> <OPTION>New York</OPTION> 
-        <OPTION>bus</OPTION> <OPTION>kitchen</OPTION> <OPTION>wine</OPTION> 
-        <OPTION>China</OPTION></SELECT></B></TD>
-    <TD><INPUT maxLength=3 size=3 name=5> </TD>
-  </TR>
+<TR>
+<TD><FONT color="#ff8040"><B>food</B></FONT></TD>
+<TD><B><SELECT name="2">
+<OPTION selected>choose a word</OPTION>
+<OPTION>dictionary</OPTION>
+<OPTION>doctor</OPTION>
+<OPTION>fish and chips</OPTION>
+<OPTION>Excel</OPTION>
+<OPTION>bottle</OPTION>
+<OPTION>New York</OPTION>
+<OPTION>bus</OPTION>
+<OPTION>kitchen</OPTION>
+<OPTION>wine</OPTION>
+<OPTION>China</OPTION>
+</SELECT></B></TD>
+<TD><INPUT maxLength="3" size="3" name="3"></TD>
+</TR>
 
-  <TR>
-    <TD><FONT color="#ff8040"><B>container</B></FONT></TD>
-    <TD><B><SELECT name=6> <OPTION selected>choose a 
-        word</OPTION> <OPTION>dictionary</OPTION> 
-        <OPTION>doctor</OPTION> <OPTION>fish and chips</OPTION> 
-        <OPTION>Excel</OPTION> <OPTION>bottle</OPTION> <OPTION>New York</OPTION> 
-        <OPTION>bus</OPTION> <OPTION>kitchen</OPTION> <OPTION>wine</OPTION> 
-        <OPTION>China</OPTION></SELECT></B></TD>
-    <TD><INPUT maxLength=3 size=3 name=7> </TD>
-  </TR>
+<TR>
+<TD><FONT color="#ff8040"><B>room</B></FONT></TD>
+<TD><B><SELECT name="4">
+<OPTION selected>choose a word</OPTION>
+<OPTION>dictionary</OPTION>
+<OPTION>doctor</OPTION>
+<OPTION>fish and chips</OPTION>
+<OPTION>Excel</OPTION>
+<OPTION>bottle</OPTION>
+<OPTION>New York</OPTION>
+<OPTION>bus</OPTION>
+<OPTION>kitchen</OPTION>
+<OPTION>wine</OPTION>
+<OPTION>China</OPTION>
+</SELECT></B></TD>
+<TD><INPUT maxLength="3" size="3" name="5"></TD>
+</TR>
 
-  <TR>
-    <TD><FONT color="#ff8040"><B>profession</B></FONT></TD>
-    <TD><B><SELECT name=8> <OPTION selected>choose a 
-        word</OPTION> <OPTION>dictionary</OPTION> 
-        <OPTION>doctor</OPTION> <OPTION>fish and chips</OPTION> 
-        <OPTION>Excel</OPTION> <OPTION>bottle</OPTION> <OPTION>New York</OPTION> 
-        <OPTION>bus</OPTION> <OPTION>kitchen</OPTION> <OPTION>wine</OPTION> 
-        <OPTION>China</OPTION></SELECT></B></TD>
-    <TD><INPUT maxLength=3 size=3 name=9> </TD>
-  </TR>
+<TR>
+<TD><FONT color="#ff8040"><B>container</B></FONT></TD>
+<TD><B><SELECT name="6">
+<OPTION selected>choose a word</OPTION>
+<OPTION>dictionary</OPTION>
+<OPTION>doctor</OPTION>
+<OPTION>fish and chips</OPTION>
+<OPTION>Excel</OPTION>
+<OPTION>bottle</OPTION>
+<OPTION>New York</OPTION>
+<OPTION>bus</OPTION>
+<OPTION>kitchen</OPTION>
+<OPTION>wine</OPTION>
+<OPTION>China</OPTION>
+</SELECT></B></TD>
+<TD><INPUT maxLength="3" size="3" name="7"></TD>
+</TR>
 
-  <TR>
-    <TD><FONT color="#ff8040"><B>drink</B></FONT></TD>
-    <TD><B><SELECT name=10> <OPTION selected>choose a 
-        word</OPTION> <OPTION>dictionary</OPTION> 
-        <OPTION>doctor</OPTION> <OPTION>fish and chips</OPTION> 
-        <OPTION>Excel</OPTION> <OPTION>bottle</OPTION> <OPTION>New York</OPTION> 
-        <OPTION>bus</OPTION> <OPTION>kitchen</OPTION> <OPTION>wine</OPTION> 
-        <OPTION>China</OPTION></SELECT></B></TD>
-    <TD><INPUT maxLength=3 size=3 name=11> </TD>
-  </TR>
+<TR>
+<TD><FONT color="#ff8040"><B>profession</B></FONT></TD>
+<TD><B><SELECT name="8">
+<OPTION selected>choose a word</OPTION>
+<OPTION>dictionary</OPTION>
+<OPTION>doctor</OPTION>
+<OPTION>fish and chips</OPTION>
+<OPTION>Excel</OPTION>
+<OPTION>bottle</OPTION>
+<OPTION>New York</OPTION>
+<OPTION>bus</OPTION>
+<OPTION>kitchen</OPTION>
+<OPTION>wine</OPTION>
+<OPTION>China</OPTION>
+</SELECT></B></TD>
+<TD><INPUT maxLength="3" size="3" name="9"></TD>
+</TR>
 
-  <TR>
-    <TD><FONT color="#ff8040"><B>software</B></FONT></TD>
-    <TD><B><SELECT name=12> <OPTION selected>choose a 
-        word</OPTION> <OPTION>dictionary</OPTION> 
-        <OPTION>doctor</OPTION> <OPTION>fish and chips</OPTION> 
-        <OPTION>Excel</OPTION> <OPTION>bottle</OPTION> <OPTION>New York</OPTION> 
-        <OPTION>bus</OPTION> <OPTION>kitchen</OPTION> <OPTION>wine</OPTION> 
-        <OPTION>China</OPTION></SELECT></B></TD>
-    <TD><INPUT maxLength=3 size=3 name=13> </TD>
-  </TR>
+<TR>
+<TD><FONT color="#ff8040"><B>drink</B></FONT></TD>
+<TD><B><SELECT name="10">
+<OPTION selected>choose a word</OPTION>
+<OPTION>dictionary</OPTION>
+<OPTION>doctor</OPTION>
+<OPTION>fish and chips</OPTION>
+<OPTION>Excel</OPTION>
+<OPTION>bottle</OPTION>
+<OPTION>New York</OPTION>
+<OPTION>bus</OPTION>
+<OPTION>kitchen</OPTION>
+<OPTION>wine</OPTION>
+<OPTION>China</OPTION>
+</SELECT></B></TD>
+<TD><INPUT maxLength="3" size="3" name="11"></TD>
+</TR>
 
-  <TR>
-    <TD><FONT color="#ff8040"><B>book</B></FONT></TD>
-    <TD><B><SELECT name=14> <OPTION selected>choose a 
-        word</OPTION> <OPTION>dictionary</OPTION> 
-        <OPTION>doctor</OPTION> <OPTION>fish and chips</OPTION> 
-        <OPTION>Excel</OPTION> <OPTION>bottle</OPTION> <OPTION>New York</OPTION> 
-        <OPTION>bus</OPTION> <OPTION>kitchen</OPTION> <OPTION>wine</OPTION> 
-        <OPTION>China</OPTION></SELECT></B></TD>
-    <TD><INPUT maxLength=3 size=3 name=15> </TD>
-  </TR>
+<TR>
+<TD><FONT color="#ff8040"><B>software</B></FONT></TD>
+<TD><B><SELECT name="12">
+<OPTION selected>choose a word</OPTION>
+<OPTION>dictionary</OPTION>
+<OPTION>doctor</OPTION>
+<OPTION>fish and chips</OPTION>
+<OPTION>Excel</OPTION>
+<OPTION>bottle</OPTION>
+<OPTION>New York</OPTION>
+<OPTION>bus</OPTION>
+<OPTION>kitchen</OPTION>
+<OPTION>wine</OPTION>
+<OPTION>China</OPTION>
+</SELECT></B></TD>
+<TD><INPUT maxLength="3" size="3" name="13"></TD>
+</TR>
 
-  <TR>
-    <TD><FONT color="#ff8040"><B>country</B></FONT></TD>
-    <TD><B><SELECT name=16> <OPTION selected>choose a 
-        word</OPTION> <OPTION>dictionary</OPTION> 
-        <OPTION>doctor</OPTION> <OPTION>fish and chips</OPTION> 
-        <OPTION>Excel</OPTION> <OPTION>bottle</OPTION> <OPTION>New York</OPTION> 
-        <OPTION>bus</OPTION> <OPTION>kitchen</OPTION> <OPTION>wine</OPTION> 
-        <OPTION>China</OPTION></SELECT></B></TD>
-    <TD><INPUT maxLength=3 size=3 name=17> </TD>
-  </TR>
+<TR>
+<TD><FONT color="#ff8040"><B>book</B></FONT></TD>
+<TD><B><SELECT name="14">
+<OPTION selected>choose a word</OPTION>
+<OPTION>dictionary</OPTION>
+<OPTION>doctor</OPTION>
+<OPTION>fish and chips</OPTION>
+<OPTION>Excel</OPTION>
+<OPTION>bottle</OPTION>
+<OPTION>New York</OPTION>
+<OPTION>bus</OPTION>
+<OPTION>kitchen</OPTION>
+<OPTION>wine</OPTION>
+<OPTION>China</OPTION>
+</SELECT></B></TD>
+<TD><INPUT maxLength="3" size="3" name="15"></TD>
+</TR>
 
-  <TR>
-    <TD><FONT color="#ff8040"><B>town</B></FONT></TD>
-    <TD><B><SELECT name=18> <OPTION selected>choose a 
-        word</OPTION> <OPTION>dictionary</OPTION> 
-        <OPTION>doctor</OPTION> <OPTION>fish and chips</OPTION> 
-        <OPTION>Excel</OPTION> <OPTION>bottle</OPTION> <OPTION>New York</OPTION> 
-        <OPTION>bus</OPTION> <OPTION>kitchen</OPTION> <OPTION>wine</OPTION> 
-        <OPTION>China</OPTION></SELECT></B></TD>
-    <TD><INPUT maxLength=3 size=3 name=19> </TD>
-  </TR>
+<TR>
+<TD><FONT color="#ff8040"><B>country</B></FONT></TD>
+<TD><B><SELECT name="16">
+<OPTION selected>choose a word</OPTION>
+<OPTION>dictionary</OPTION>
+<OPTION>doctor</OPTION>
+<OPTION>fish and chips</OPTION>
+<OPTION>Excel</OPTION>
+<OPTION>bottle</OPTION>
+<OPTION>New York</OPTION>
+<OPTION>bus</OPTION>
+<OPTION>kitchen</OPTION>
+<OPTION>wine</OPTION>
+<OPTION>China</OPTION>
+</SELECT></B></TD>
+<TD><INPUT maxLength="3" size="3" name="17"></TD>
+</TR>
 
-  </TBODY>
+<TR>
+<TD><FONT color="#ff8040"><B>town</B></FONT></TD>
+<TD><B><SELECT name="18">
+<OPTION selected>choose a word</OPTION>
+<OPTION>dictionary</OPTION>
+<OPTION>doctor</OPTION>
+<OPTION>fish and chips</OPTION>
+<OPTION>Excel</OPTION>
+<OPTION>bottle</OPTION>
+<OPTION>New York</OPTION>
+<OPTION>bus</OPTION>
+<OPTION>kitchen</OPTION>
+<OPTION>wine</OPTION>
+<OPTION>China</OPTION>
+</SELECT></B></TD>
+<TD><INPUT maxLength="3" size="3" name="19"></TD>
+</TR>
+
 </TABLE>
 </CENTER>
 </FORM>
 
-<FORM name=CheckForm>
+<FORM name="CheckForm">
 <CENTER>
-<P>Your score is: <INPUT maxLength=4 size=4 name=ScoreBox> 
-<INPUT onclick=CheckAnswer() type=button value="Check Answer"></P>
+<P>
+Your score is:
+<INPUT maxLength="4" size="4" name="ScoreBox">
+<INPUT onclick="CheckAnswer()" type="button" value="Check Answer">
+</P>
 </CENTER>
 </FORM>
 
-<P>&nbsp;</P>
-
-</BODY></HTML>
+</BODY>
+</HTML>
