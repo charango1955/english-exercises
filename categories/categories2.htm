@@ -1,297 +1,308 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<HTML>
-<HEAD>
-<TITLE>Categories 2</TITLE>
-<META http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Categories 2</title>
 
-<SCRIPT language="JavaScript">
-CorrectAnswers = new Array();
-CorrectAnswers[0]=5;
-CorrectAnswers[1]=1;
-CorrectAnswers[2]=8;
-CorrectAnswers[3]=6;
-CorrectAnswers[4]=10;
-CorrectAnswers[5]=2;
-CorrectAnswers[6]=4;
-CorrectAnswers[7]=7;
-CorrectAnswers[8]=3;
-CorrectAnswers[9]=9;
-
-macrightchar=':)';
-macwrongchar=':(';
-winrightchar=':)';
-winwrongchar=':(';
-
-var platform = 'win';
-if (navigator.appVersion.indexOf('Mac') != -1) {platform = 'mac'}
-
-if (platform == 'mac') {
-    rightchar = unescape(macrightchar);
-    wrongchar = unescape(macwrongchar);
-}
-else {
-    rightchar = unescape(winrightchar);
-    wrongchar = unescape(winwrongchar);
+<style>
+body {
+    background-color: #000000;
+    color: #ff8040;
+    font-family: Arial, Geneva, sans-serif;
+    margin: 0;
+    padding: 0;
 }
 
-function CheckAnswer(){
-    var i = 0;
-    var TotalCorrect = 0;
-    var Score = 0;
+#navigation {
+    text-align: center;
+    margin-top: 15px;
+    margin-bottom: 25px;
+    font-size: 16px;
+}
 
-    for (i=0; i<CorrectAnswers.length; i++){
-        if (document.QuizForm.elements[i*2].selectedIndex == CorrectAnswers[i]){
-            document.QuizForm.elements[(i*2)+1].value = rightchar;
-            TotalCorrect++;
+#navigation a {
+    color: #ff8040;
+    text-decoration: none;
+}
+
+#navigation a:hover {
+    color: #ffff00;
+}
+
+.nav-space {
+    display: inline-block;
+    width: 35px;
+}
+
+h1 {
+    color: #ffff00;
+    font-size: 22px;
+    text-align: center;
+    margin: 10px 0 5px 0;
+}
+
+.subtitle {
+    color: #ffff00;
+    font-size: 14px;
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.exercise {
+    margin: 0 auto;
+    width: 650px;
+}
+
+table {
+    border-collapse: separate;
+    border-spacing: 0 8px;
+    margin: 0 auto;
+}
+
+td {
+    vertical-align: middle;
+}
+
+.question {
+    color: #ff8040;
+    font-weight: normal;
+    text-align: right;
+    padding-right: 45px;
+    white-space: nowrap;
+}
+
+.answer {
+    text-align: left;
+}
+
+.answer select {
+    font-size: 14px;
+    min-width: 250px;
+}
+
+.mark {
+    color: #ff8040;
+    padding-left: 12px;
+    font-weight: normal;
+}
+
+.check {
+    text-align: center;
+    padding-top: 18px;
+}
+
+.check input {
+    font-size: 14px;
+    padding: 3px 12px;
+}
+
+#feedback {
+    text-align: center;
+    color: #ff8040;
+    font-size: 14px;
+    min-height: 20px;
+    margin-bottom: 10px;
+}
+</style>
+
+<script type="text/javascript">
+
+var CorrectAnswers = [
+    5, 1, 8, 6, 10, 2, 4, 7, 3, 9
+];
+
+var options = [
+    "bear",
+    "apartment",
+    "English",
+    "yellow",
+    "potato",
+    "table",
+    "train",
+    "iron",
+    "teacher",
+    "shirt"
+];
+
+var categories = [
+    "vegetable",
+    "animal",
+    "metal",
+    "furniture",
+    "clothing",
+    "housing",
+    "colour",
+    "vehicle",
+    "language",
+    "job"
+];
+
+var Status = [];
+var Penalties = 0;
+
+function StartUp() {
+
+    for (var i = 0; i < categories.length; i++) {
+        Status[i] = {
+            correct: false,
+            tried: false
+        };
+    }
+
+    BuildExercise();
+}
+
+function BuildExercise() {
+
+    var html = "";
+
+    html += '<table>';
+
+    for (var i = 0; i < categories.length; i++) {
+
+        html += '<tr>';
+
+        html += '<td class="question">';
+        html += categories[i];
+        html += '</td>';
+
+        html += '<td class="answer">';
+
+        if (Status[i].correct) {
+
+            html += options[CorrectAnswers[i] - 1];
+
+        } else {
+
+            html += '<select id="answer' + i + '">';
+            html += '<option value="">choose a word</option>';
+
+            for (var j = 0; j < options.length; j++) {
+
+                html += '<option value="' + options[j] + '">';
+                html += options[j];
+                html += '</option>';
+            }
+
+            html += '</select>';
         }
-        else{
-            document.QuizForm.elements[(i*2)+1].value = wrongchar;
+
+        html += '</td>';
+
+        html += '<td class="mark">';
+
+        if (Status[i].tried) {
+
+            if (Status[i].correct) {
+                html += ':)';
+            } else {
+                html += ':(';
+            }
+        }
+
+        html += '</td>';
+
+        html += '</tr>';
+    }
+
+    html += '<tr>';
+    html += '<td colspan="3" class="check">';
+    html += '<input type="button" value="Check Answer" onclick="CheckAnswer()">';
+    html += '</td>';
+    html += '</tr>';
+
+    html += '</table>';
+
+    document.getElementById("exercise").innerHTML = html;
+}
+
+function CheckAnswer() {
+
+    var totalCorrect = 0;
+    var allDone = true;
+
+    for (var i = 0; i < categories.length; i++) {
+
+        if (Status[i].correct) {
+            totalCorrect++;
+            continue;
+        }
+
+        var select = document.getElementById("answer" + i);
+
+        if (!select) {
+            continue;
+        }
+
+        Status[i].tried = true;
+
+        var correctWord = options[CorrectAnswers[i] - 1];
+
+        if (select.value === correctWord) {
+
+            Status[i].correct = true;
+            totalCorrect++;
+
+        } else {
+
+            allDone = false;
         }
     }
 
-    Score = Math.floor((TotalCorrect*100)/CorrectAnswers.length);
-    document.CheckForm.ScoreBox.value = Score + '%';
+    var score = Math.floor(
+        ((totalCorrect - Penalties) / categories.length) * 100
+    );
+
+    if (score < 0) {
+        score = 0;
+    }
+
+    if (allDone) {
+
+        document.getElementById("feedback").innerHTML =
+            "Correct! Well done.<br>Your score is " + score + "%.";
+
+    } else {
+
+        document.getElementById("feedback").innerHTML =
+            "Sorry! Try again.<br>Your score is " + score + "%.";
+
+        Penalties++;
+    }
+
+    BuildExercise();
 }
-</SCRIPT>
-</HEAD>
 
-<BODY bgcolor="#000000" text="#ff8040" link="#ff8040" vlink="#ff0000">
+window.onload = StartUp;
 
-<!-- NAVIGATION -->
-<CENTER>
-<TABLE border="0" cellpadding="5" cellspacing="1" width="85%">
-<TR>
-<TD bgcolor="#ff8040" align="center">
-<FONT face="Geneva,Arial" size="-1">
+</script>
+</head>
 
-<A href="categories1.htm" style="color:#000000; text-decoration:none;">
-&lt;
-</A>
+<body>
 
-&nbsp;&nbsp;
+<div id="navigation">
 
-<A href="../index.html" style="color:#000000; text-decoration:none;">
-Index
-</A>
+    <a href="categories1.htm">&lt;</a>
 
-&nbsp;&nbsp;
+    <span class="nav-space"></span>
 
-<A href="categories3.htm" style="color:#000000; text-decoration:none;">
-&gt;
-</A>
+    <a href="../index.html">INDEX</a>
 
-</FONT>
-</TD>
-</TR>
-</TABLE>
-</CENTER>
+    <span class="nav-space"></span>
 
-<CENTER>
-<H2><FONT color="#ffff00">Categories 2</FONT></H2>
-</CENTER>
+    <a href="categories3.htm">&gt;</a>
 
-<CENTER>
-<P><B>Match the categories</B></P>
-</CENTER>
+</div>
 
-<FORM name="QuizForm">
-<CENTER>
+<h1>Categories 2</h1>
 
-<TABLE cellpadding="5" border="0">
+<div class="subtitle">
+    Match the categories
+</div>
 
-<TR>
-<TD><FONT color="#ff8040"><B>vegetable</B></FONT></TD>
-<TD><B><SELECT name="0">
-<OPTION selected>choose a word</OPTION>
-<OPTION>bear</OPTION>
-<OPTION>apartment</OPTION>
-<OPTION>English</OPTION>
-<OPTION>yellow</OPTION>
-<OPTION>potato</OPTION>
-<OPTION>table</OPTION>
-<OPTION>train</OPTION>
-<OPTION>iron</OPTION>
-<OPTION>teacher</OPTION>
-<OPTION>shirt</OPTION>
-</SELECT></B></TD>
-<TD><INPUT maxLength="3" size="3" name="1"></TD>
-</TR>
+<div id="feedback"></div>
 
-<TR>
-<TD><FONT color="#ff8040"><B>animal</B></FONT></TD>
-<TD><B><SELECT name="2">
-<OPTION selected>choose a word</OPTION>
-<OPTION>bear</OPTION>
-<OPTION>apartment</OPTION>
-<OPTION>English</OPTION>
-<OPTION>yellow</OPTION>
-<OPTION>potato</OPTION>
-<OPTION>table</OPTION>
-<OPTION>train</OPTION>
-<OPTION>iron</OPTION>
-<OPTION>teacher</OPTION>
-<OPTION>shirt</OPTION>
-</SELECT></B></TD>
-<TD><INPUT maxLength="3" size="3" name="3"></TD>
-</TR>
+<div id="exercise" class="exercise"></div>
 
-<TR>
-<TD><FONT color="#ff8040"><B>metal</B></FONT></TD>
-<TD><B><SELECT name="4">
-<OPTION selected>choose a word</OPTION>
-<OPTION>bear</OPTION>
-<OPTION>apartment</OPTION>
-<OPTION>English</OPTION>
-<OPTION>yellow</OPTION>
-<OPTION>potato</OPTION>
-<OPTION>table</OPTION>
-<OPTION>train</OPTION>
-<OPTION>iron</OPTION>
-<OPTION>teacher</OPTION>
-<OPTION>shirt</OPTION>
-</SELECT></B></TD>
-<TD><INPUT maxLength="3" size="3" name="5"></TD>
-</TR>
-
-<TR>
-<TD><FONT color="#ff8040"><B>furniture</B></FONT></TD>
-<TD><B><SELECT name="6">
-<OPTION selected>choose a word</OPTION>
-<OPTION>bear</OPTION>
-<OPTION>apartment</OPTION>
-<OPTION>English</OPTION>
-<OPTION>yellow</OPTION>
-<OPTION>potato</OPTION>
-<OPTION>table</OPTION>
-<OPTION>train</OPTION>
-<OPTION>iron</OPTION>
-<OPTION>teacher</OPTION>
-<OPTION>shirt</OPTION>
-</SELECT></B></TD>
-<TD><INPUT maxLength="3" size="3" name="7"></TD>
-</TR>
-
-<TR>
-<TD><FONT color="#ff8040"><B>clothing</B></FONT></TD>
-<TD><B><SELECT name="8">
-<OPTION selected>choose a word</OPTION>
-<OPTION>bear</OPTION>
-<OPTION>apartment</OPTION>
-<OPTION>English</OPTION>
-<OPTION>yellow</OPTION>
-<OPTION>potato</OPTION>
-<OPTION>table</OPTION>
-<OPTION>train</OPTION>
-<OPTION>iron</OPTION>
-<OPTION>teacher</OPTION>
-<OPTION>shirt</OPTION>
-</SELECT></B></TD>
-<TD><INPUT maxLength="3" size="3" name="9"></TD>
-</TR>
-
-<TR>
-<TD><FONT color="#ff8040"><B>housing</B></FONT></TD>
-<TD><B><SELECT name="10">
-<OPTION selected>choose a word</OPTION>
-<OPTION>bear</OPTION>
-<OPTION>apartment</OPTION>
-<OPTION>English</OPTION>
-<OPTION>yellow</OPTION>
-<OPTION>potato</OPTION>
-<OPTION>table</OPTION>
-<OPTION>train</OPTION>
-<OPTION>iron</OPTION>
-<OPTION>teacher</OPTION>
-<OPTION>shirt</OPTION>
-</SELECT></B></TD>
-<TD><INPUT maxLength="3" size="3" name="11"></TD>
-</TR>
-
-<TR>
-<TD><FONT color="#ff8040"><B>colour</B></FONT></TD>
-<TD><B><SELECT name="12">
-<OPTION selected>choose a word</OPTION>
-<OPTION>bear</OPTION>
-<OPTION>apartment</OPTION>
-<OPTION>English</OPTION>
-<OPTION>yellow</OPTION>
-<OPTION>potato</OPTION>
-<OPTION>table</OPTION>
-<OPTION>train</OPTION>
-<OPTION>iron</OPTION>
-<OPTION>teacher</OPTION>
-<OPTION>shirt</OPTION>
-</SELECT></B></TD>
-<TD><INPUT maxLength="3" size="3" name="13"></TD>
-</TR>
-
-<TR>
-<TD><FONT color="#ff8040"><B>vehicle</B></FONT></TD>
-<TD><B><SELECT name="14">
-<OPTION selected>choose a word</OPTION>
-<OPTION>bear</OPTION>
-<OPTION>apartment</OPTION>
-<OPTION>English</OPTION>
-<OPTION>yellow</OPTION>
-<OPTION>potato</OPTION>
-<OPTION>table</OPTION>
-<OPTION>train</OPTION>
-<OPTION>iron</OPTION>
-<OPTION>teacher</OPTION>
-<OPTION>shirt</OPTION>
-</SELECT></B></TD>
-<TD><INPUT maxLength="3" size="3" name="15"></TD>
-</TR>
-
-<TR>
-<TD><FONT color="#ff8040"><B>language</B></FONT></TD>
-<TD><B><SELECT name="16">
-<OPTION selected>choose a word</OPTION>
-<OPTION>bear</OPTION>
-<OPTION>apartment</OPTION>
-<OPTION>English</OPTION>
-<OPTION>yellow</OPTION>
-<OPTION>potato</OPTION>
-<OPTION>table</OPTION>
-<OPTION>train</OPTION>
-<OPTION>iron</OPTION>
-<OPTION>teacher</OPTION>
-<OPTION>shirt</OPTION>
-</SELECT></B></TD>
-<TD><INPUT maxLength="3" size="3" name="17"></TD>
-</TR>
-
-<TR>
-<TD><FONT color="#ff8040"><B>job</B></FONT></TD>
-<TD><B><SELECT name="18">
-<OPTION selected>choose a word</OPTION>
-<OPTION>bear</OPTION>
-<OPTION>apartment</OPTION>
-<OPTION>English</OPTION>
-<OPTION>yellow</OPTION>
-<OPTION>potato</OPTION>
-<OPTION>table</OPTION>
-<OPTION>train</OPTION>
-<OPTION>iron</OPTION>
-<OPTION>teacher</OPTION>
-<OPTION>shirt</OPTION>
-</SELECT></B></TD>
-<TD><INPUT maxLength="3" size="3" name="19"></TD>
-</TR>
-
-</TABLE>
-</CENTER>
-</FORM>
-
-<FORM name="CheckForm">
-<CENTER>
-<P>
-Your score is:
-<INPUT maxLength="4" size="4" name="ScoreBox">
-<INPUT onclick="CheckAnswer()" type="button" value="Check Answer">
-</P>
-</CENTER>
-</FORM>
-
-</BODY>
-</HTML>
+</body>
+</html>
