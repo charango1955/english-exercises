@@ -16,13 +16,21 @@ body {
 .navigation {
     text-align: center;
     margin-top: 15px;
-    margin-bottom: 35px;
+    margin-bottom: 40px;
 }
 
 .navigation button {
+    background-color: #000000;
+    color: #ff8040;
+    border: 1px solid #ff8040;
     font-size: 14px;
-    padding: 4px 10px;
+    padding: 4px 12px;
     cursor: pointer;
+}
+
+.navigation button:hover {
+    background-color: #ff8040;
+    color: #000000;
 }
 
 .navigation .index {
@@ -41,7 +49,14 @@ body {
     text-align: center;
     color: #ffff00;
     font-size: 14px;
-    margin-bottom: 25px;
+    margin-bottom: 30px;
+}
+
+.feedback {
+    text-align: center;
+    color: #ff8040;
+    font-size: 14px;
+    margin-bottom: 15px;
 }
 
 .exercise {
@@ -61,7 +76,7 @@ body {
 .left-item {
     color: #ff8040;
     text-align: right;
-    padding-right: 10px;
+    padding-right: 20px;
     white-space: nowrap;
 }
 
@@ -80,17 +95,6 @@ body {
     padding-top: 15px;
 }
 
-.feedback {
-    text-align: center;
-    color: #ff8040;
-    font-size: 14px;
-    margin-bottom: 15px;
-}
-
-select {
-    font-size: 14px;
-}
-
 .check button {
     font-size: 14px;
     padding: 4px 12px;
@@ -98,58 +102,18 @@ select {
 }
 </style>
 
-<script type="text/javascript">
-
-var I = [];
-
-I[0] = [
-    'as busy as a bee',
-    '&#234;tre tr&#232;s occup&#233;'
-];
-
-I[1] = [
-    'as cool as a cucumber',
-    'garder son flegme'
-];
-
-I[2] = [
-    'as fit as a fiddle',
-    'en pleine forme'
-];
-
-I[3] = [
-    'as good as gold',
-    'sage comme une image'
-];
-
-I[4] = [
-    'as happy as a king/lark',
-    'heureux comme un roi'
-];
-
-I[5] = [
-    'as pale as death',
-    'p&#226;le comme la mort'
-];
-
-I[6] = [
-    'as quick as lightning',
-    'vif comme l\'&#233;clair'
-];
-
-I[7] = [
-    'as proud as a peacock',
-    'fier comme Artaban'
-];
-
-I[8] = [
-    'as hungry as a horse',
-    'avoir une faim de loup'
-];
-
-I[9] = [
-    'as strong as an ox',
-    'fort comme un turc'
+<script>
+var I = [
+    ['as busy as a bee', 'être très occupé'],
+    ['as cool as a cucumber', 'garder son flegme'],
+    ['as fit as a fiddle', 'en pleine forme'],
+    ['as good as gold', 'sage comme une image'],
+    ['as happy as a king/lark', 'heureux comme un roi'],
+    ['as pale as death', 'pâle comme la mort'],
+    ['as quick as lightning', 'vif comme l’éclair'],
+    ['as proud as a peacock', 'fier comme Artaban'],
+    ['as hungry as a horse', 'avoir une faim de loup'],
+    ['as strong as an ox', 'fort comme un turc']
 ];
 
 var answers = [];
@@ -162,7 +126,6 @@ function shuffle(array) {
 
     for (var i = result.length - 1; i > 0; i--) {
         var j = Math.floor(Math.random() * (i + 1));
-
         var temp = result[i];
         result[i] = result[j];
         result[j] = temp;
@@ -172,7 +135,6 @@ function shuffle(array) {
 }
 
 function startExercise() {
-
     answers = [];
 
     for (var i = 0; i < I.length; i++) {
@@ -184,15 +146,11 @@ function startExercise() {
     }
 
     answers = shuffle(answers);
-
     buildExercise();
 }
 
 function buildExercise() {
-
-    var html = '';
-
-    html += '<table>';
+    var html = '<table>';
 
     for (var i = 0; i < I.length; i++) {
 
@@ -204,22 +162,17 @@ function buildExercise() {
 
         html += '<td class="answer">';
 
-        if (status[i] && status[i].correct) {
-
+        if (status[i].correct) {
             html += I[i][1];
-
         } else {
 
             html += '<select id="answer' + i + '">';
             html += '<option value="">???</option>';
 
             for (var j = 0; j < answers.length; j++) {
-
-                html += '<option value="' +
-                    escapeQuotes(answers[j]) +
-                    '">' +
-                    answers[j] +
-                    '</option>';
+                html += '<option value="' + escapeQuotes(answers[j]) + '">';
+                html += answers[j];
+                html += '</option>';
             }
 
             html += '</select>';
@@ -229,17 +182,11 @@ function buildExercise() {
 
         html += '<td class="mark">';
 
-        if (status[i] && status[i].attempted) {
-
-            if (status[i].correct) {
-                html += ':-)';
-            } else {
-                html += 'X';
-            }
+        if (status[i].attempted) {
+            html += status[i].correct ? ':-)' : 'X';
         }
 
         html += '</td>';
-
         html += '</tr>';
     }
 
@@ -259,7 +206,6 @@ function escapeQuotes(text) {
 }
 
 function checkAnswers() {
-
     var allDone = true;
     totalCorrect = 0;
 
@@ -272,19 +218,14 @@ function checkAnswers() {
 
         var select = document.getElementById('answer' + i);
 
-        if (!select) {
-            continue;
-        }
+        if (!select) continue;
 
         status[i].attempted = true;
 
         if (select.value === I[i][1]) {
-
             status[i].correct = true;
             totalCorrect++;
-
         } else {
-
             allDone = false;
         }
     }
@@ -293,60 +234,36 @@ function checkAnswers() {
         ((totalCorrect - penalties) / I.length) * 100
     );
 
-    if (score < 0) {
-        score = 0;
-    }
-
-    var feedback = '';
+    if (score < 0) score = 0;
 
     if (allDone) {
-
-        feedback =
-            'Correct! Well done.<br>Your score is ' +
-            score +
-            '%.';
-
+        document.getElementById('feedback').innerHTML =
+            'Correct! Well done.<br>Your score is ' + score + '%.';
     } else {
-
-        feedback =
-            'Sorry! Try again. Incorrect matches have been removed.<br>' +
-            'Your score is ' +
-            score +
-            '%.';
-
+        document.getElementById('feedback').innerHTML =
+            'Sorry! Try again.<br>Your score is ' + score + '%.';
         penalties++;
     }
 
-    document.getElementById('feedback').innerHTML = feedback;
-
     buildExercise();
 }
-
 </script>
 </head>
 
 <body onload="startExercise()">
 
-<!-- NAVIGATION -->
 <div class="navigation">
 
-    <button onclick="window.top.location.href='proverbs2.htm'">
-        &lt;
-    </button>
+    <button onclick="window.location.href='proverbs2.htm'">&lt;</button>
 
     <span class="index">
-        <button onclick="window.top.location.href='../index.html'">
-            INDEX
-        </button>
+        <button onclick="window.location.href='../index.html'">INDEX</button>
     </span>
 
-    <button onclick="window.top.location.href='proverbs4.htm'">
-        &gt;
-    </button>
+    <button onclick="window.location.href='proverbs4.htm'">&gt;</button>
 
 </div>
 
-<!-- TITLE -->
 <div class="title">
     Proverbs and Expressions 3 (with TO BE)
 </div>
@@ -355,10 +272,8 @@ function checkAnswers() {
     Matching exercise
 </div>
 
-<!-- FEEDBACK -->
 <div id="feedback" class="feedback"></div>
 
-<!-- EXERCISE -->
 <div id="exercise" class="exercise"></div>
 
 </body>
