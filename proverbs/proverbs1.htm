@@ -1,270 +1,775 @@
-<!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="Created with Hot Potatoes by Half-Baked Software, registered to Armando Vezza.">
+<meta name="keywords" content="Hot Potatoes, Half-Baked Software, Windows, University of Victoria">
 
 <title>Proverbs & Expressions 1</title>
 
-<style>
-body {
-    background-color: #000000;
-    color: #FF8040;
-    font-family: Arial, sans-serif;
-    font-size: 14px;
-    margin: 20px;
+<script language="javascript" type="text/javascript">
+
+//<![CDATA[
+
+// BrowserCheck Object
+
+function BrowserCheck() {
+	var b = navigator.appName
+	this.mac = (navigator.appVersion.indexOf('Mac') != -1)
+
+	if (b=="Netscape") this.b = "ns"
+	else if (b=="Microsoft Internet Explorer") this.b = "ie"
+	else this.b = b
+
+	this.version = navigator.appVersion
+	this.v = parseInt(this.version)
+	this.ns = (this.b=="ns" && this.v>=4)
+	this.ns4 = (this.b=="ns" && this.v==4)
+	this.ns5 = (this.b=="ns" && this.v==5)
+	this.ie = (this.b=="ie" && this.v>=4)
+	this.ie4 = (this.version.indexOf('MSIE 4')>0)
+	this.ie5 = (this.version.indexOf('MSIE 5')>0)
+	this.min = (this.ns||this.ie)
+	this.CRAPBrowser = (this.ie && this.mac);
 }
 
-.navigation {
-    text-align: left;
-    margin-bottom: 30px;
+is = new BrowserCheck();
+
+var LocFolder = GetFolder(window.location.href);
+
+function GetFolder(LocPath){
+	LocPath = ReplaceStuff('\'','%27',LocPath);
+	var i = LocPath.lastIndexOf('/');
+	if (i<0){i=LocPath.lastIndexOf('\\')};
+	return LocPath.substring(0,i);
 }
 
-.navigation a {
-    color: #FFFF00;
-    text-decoration: none;
-    font-size: 26px;
-    font-weight: bold;
-    margin-right: 45px;
+function CombineURLs(InURL){
+	var i = InURL.indexOf('../');
+	var s = LocFolder;
+
+	while (i > -1){
+		s = GetFolder(s);
+		InURL = InURL.substring(3,InURL.length);
+		i = InURL.indexOf('../');
+	}
+
+	return s + '/' + InURL;
 }
 
-.navigation a:hover {
-    color: #FF8040;
+x = new Array();
+
+function ResolveURLs(InText,Attribute){
+	x.length=0;
+	var Temp = InText.toLowerCase();
+	var z;
+	var AttLen = Attribute.length + 2;
+	var y=Temp.lastIndexOf(Attribute + '="');
+
+	while (y>-1){
+		var sLoc = y+AttLen;
+
+		if (Temp.substring(sLoc,sLoc+5) != 'http:'){
+			x[x.length]=new Array();
+			x[x.length-1][0] = sLoc;
+			z = Temp.indexOf('"',sLoc);
+			x[x.length-1][1] = z;
+			x[x.length-1][2] = InText.substring(sLoc,z);
+		}
+
+		Temp = Temp.substring(0,y);
+		y=Temp.lastIndexOf(Attribute + '="');
+	}
+
+	for (var j=0; j<x.length; j++){
+		InText = InText.substring(0,x[j][0]) +
+		CombineURLs(x[j][2]) +
+		InText.substring(x[j][1], InText.length);
+	}
+
+	return InText;
 }
 
-h1 {
-    color: #FFFF00;
-    font-size: 22px;
-    text-align: center;
-    margin-bottom: 5px;
+function ResolveAllURLs(Stuff){
+	Stuff = ResolveURLs(Stuff,'href');
+	Stuff = ResolveURLs(Stuff,'src');
+	Stuff = ResolveURLs(Stuff,'parent.location');
+	return Stuff;
 }
 
-.subtitle {
-    color: #FFFF00;
-    font-size: 14px;
-    font-weight: bold;
-    font-style: italic;
-    text-align: center;
-    margin-bottom: 25px;
+
+var CorrectIndicator = ':-)';
+var IncorrectIndicator = 'X';
+var YourScoreIs = 'Your score is ';
+var CorrectResponse = 'Correct! Well done.';
+var IncorrectResponse = 'Sorry! Try again. Incorrect matches have been removed.';
+var TotalUnfixedLeftItems = 0;
+var TotCorrectChoices = 0;
+var Penalties = 0;
+
+var ExerciseTitle = 'Proverbs & Expressions 1';
+var ExerciseSubtitle = 'Matching exercise';
+
+/*
+   Navigation
+   Previous page is not needed on Proverbs 1.
+   Index goes to ../index.html
+   Right arrow goes to Proverbs 2.
+*/
+
+var NavBar = '';
+
+NavBar += '<div style="text-align:center; margin-top:10px; margin-bottom:25px;">';
+
+NavBar += '<a href="../index.html" ';
+NavBar += 'style="color:#FFFF00; text-decoration:none; font-family:Arial,sans-serif; ';
+NavBar += 'font-size:26px; font-weight:bold; margin:0 30px;">INDEX</a>';
+
+NavBar += '<a href="proverbs2.htm" ';
+NavBar += 'style="color:#FFFF00; text-decoration:none; font-family:Arial,sans-serif; ';
+NavBar += 'font-size:30px; font-weight:bold; margin:0 30px;">&#8594;</a>';
+
+NavBar += '</div>';
+
+
+/*
+   Title
+*/
+
+var TitleCode = '';
+
+TitleCode += '<div style="text-align:center; margin-bottom:25px;">';
+
+TitleCode += '<div style="color:#FFFF00; font-family:Arial,sans-serif; ';
+TitleCode += 'font-size:22px; font-weight:bold;">';
+TitleCode += ExerciseTitle;
+TitleCode += '</div>';
+
+TitleCode += '<div style="color:#FFFF00; font-family:Arial,sans-serif; ';
+TitleCode += 'font-size:14px; margin-top:5px;">';
+TitleCode += ExerciseSubtitle;
+TitleCode += '</div>';
+
+TitleCode += '</div>';
+
+
+/*
+   Exercise layout
+
+   The old version had:
+   [strLeftItem]&nbsp;&nbsp;&nbsp;&nbsp;
+
+   The extra spaces have been removed so that the
+   proverb is closer to the answer box.
+*/
+
+var TableOpener = '<center><form name="QForm">';
+TableOpener += '<table border="0" cellpadding="4" cellspacing="4">';
+
+var IRow = '<tr>';
+IRow += '<td valign="top" bgcolor="#000000">';
+IRow += '<font face="Geneva,Arial" color="#ff8040">';
+IRow += '[strLeftItem]';
+IRow += '</font></td>';
+
+IRow += '<td valign="top" bgcolor="#000000">';
+IRow += '<font face="Geneva,Arial" color="#ff8040">';
+IRow += '[strRightItem]';
+IRow += '</font></td>';
+
+IRow += '<td valign="top" bgcolor="#000000">';
+IRow += '<font face="Geneva,Arial" color="#ff8040">';
+IRow += '&nbsp;&nbsp;[Mark]';
+IRow += '</font></td>';
+
+IRow += '</tr>';
+
+
+var CheckButton = '';
+
+CheckButton += '<tr>';
+CheckButton += '<td valign="top" align="center" bgcolor="#000000" colspan="3">';
+CheckButton += '<br />';
+CheckButton += '<input type="button" value="Check" ';
+CheckButton += 'style="background-color:#FF9900; color:#000000; ';
+CheckButton += 'border:2px solid #FFFF00; padding:5px 12px; ';
+CheckButton += 'font-weight:bold; cursor:pointer;" ';
+CheckButton += 'OnClick="parent.CheckAnswers()">';
+CheckButton += '</input>';
+CheckButton += '</td>';
+CheckButton += '</tr>';
+
+TableCloser = '</table></form></center>';
+
+var DropDownList = '';
+var Exercise = '';
+
+
+function GoBack(){
+
+	var BackSkip = history.length - PreviousPage;
+
+	if (BackSkip > 0){
+		history.go((BackSkip+1)*-1);
+	}
+	else{
+		parent.history.back();
+	}
 }
 
-.exercise {
-    width: 85%;
-    margin: 0 auto;
+
+function Shuffle(InArray){
+
+	Temp = new Array();
+	var Len = InArray.length;
+	var j = Len;
+
+	for (var i=0; i<Len; i++){
+		Temp[i] = InArray[i];
+	}
+
+	for (i=0; i<Len; i++){
+
+		Num = Math.floor(j * Math.random());
+
+		InArray[i] = Temp[Num];
+
+		for (var k=Num; k < j; k++) {
+			Temp[k] = Temp[k+1];
+		}
+
+		j--;
+	}
+
+	return InArray;
 }
 
-.exercise table {
-    border-collapse: collapse;
-    width: 100%;
+
+/*
+   Feedback
+
+   Deliberately no instruction message is displayed.
+   The navigation is only at the top.
+*/
+
+function WriteFeedback(Feedback) {
+
+	if (is.CRAPBrowser){
+		Feedback=ResolveAllURLs(Feedback);
+	}
+
+	var OutString = '';
+
+	OutString += '<html>';
+	OutString += '<head>';
+	OutString += '<style>';
+	OutString += 'body { background-color:#000000; color:#FFFF00; ';
+	OutString += 'font-family:Arial,sans-serif; margin:0; padding:0; }';
+	OutString += '</style>';
+	OutString += '</head>';
+
+	OutString += '<body>';
+
+	OutString += NavBar;
+
+	/*
+	   No instruction text here.
+	*/
+
+	OutString += '</body>';
+	OutString += '</html>';
+
+	TopFrame.document.clear();
+	TopFrame.document.open();
+	TopFrame.document.write(OutString);
+	TopFrame.document.close();
 }
 
-.exercise td {
-    padding: 8px;
-    color: #FF8040;
-    vertical-align: top;
+
+function BuildSelector(){
+
+	DropDownList = '<select name="sel[INum]" ';
+	DropDownList += 'style="background-color:#FFFFCC; color:#000000; ';
+	DropDownList += 'border:1px solid #FF9900;">';
+
+	DropDownList += '<option value="??? ">??? </option>';
+
+	for (var i=0; i<RItems.length; i++){
+
+		DropDownList += '<option value="' +
+		EscapeDoubleQuotes(RItems[i][0]) +
+		'">' +
+		RItems[i][0] +
+		'</option>';
+	}
+
+	DropDownList += '</select>';
 }
 
-select {
-    background-color: #FFFFCC;
-    color: #000000;
-    font-size: 14px;
+
+function StartUp(){
+
+	CorrectIndicator = '<nobr>' + CorrectIndicator + '</nobr>';
+	IncorrectIndicator = '<nobr>' + IncorrectIndicator + '</nobr>';
+
+	// Write navigation to top frame
+	WriteFeedback('');
+
+	// Create the right-item/distractor array
+	var DuplicateItem = false;
+
+	for (var i=0; i<I.length; i++){
+
+		if (I[i][2] < 1){
+
+			if (I[i][0].length > 0){
+				TotalUnfixedLeftItems++;
+			}
+
+			DuplicateItem = false;
+
+			for (var j=0; j<RItems.length; j++){
+
+				if (I[i][1] == RItems[j][0]){
+
+					DuplicateItem = true;
+
+					RItems[j][1][RItems[j][1].length] = i;
+				}
+			}
+
+			if (DuplicateItem == false){
+
+				RItems[RItems.length] = new Array();
+
+				RItems[RItems.length-1][0] = I[i][1];
+
+				RItems[RItems.length-1][1] = new Array();
+
+				RItems[RItems.length-1][1][0] = i;
+			}
+		}
+	}
+
+	RItems = Shuffle(RItems);
+
+
+	for (i=0; i<RItems.length; i++){
+
+		for (j=0; j<RItems[i][1].length; j++){
+
+			I[RItems[i][1][j]][3] = i;
+		}
+	}
+
+
+	BuildSelector();
+
+	CreateStatusArrays();
+
+	BuildExercise();
+
+	DisplayExercise(Exercise);
 }
 
-.check {
-    text-align: center;
-    padding-top: 20px;
+
+function BuildExercise(){
+
+	var TempRow = '';
+
+	Exercise = '';
+
+	for (var i=0; i<I.length; i++){
+
+		if (I[i][0].length > 0){
+
+			TempRow = IRow;
+
+			TempRow = ReplaceStuff(
+				'[strLeftItem]',
+				I[i][0],
+				TempRow
+			);
+
+			if ((I[i][2] < 1)&&(Status[i][0] < 1)){
+
+				TempRow = ReplaceStuff(
+					'[strRightItem]',
+					DropDownList,
+					TempRow
+				);
+			}
+			else{
+
+				TempRow = ReplaceStuff(
+					'[strRightItem]',
+					I[i][1],
+					TempRow
+				);
+			}
+
+
+			if ((I[i][2] < 1)&&(Status[i][1] > 0)){
+
+				if (Status[i][0] < 1){
+
+					TempRow = ReplaceStuff(
+						'[Mark]',
+						IncorrectIndicator,
+						TempRow
+					);
+				}
+				else{
+
+					TempRow = ReplaceStuff(
+						'[Mark]',
+						CorrectIndicator,
+						TempRow
+					);
+				}
+			}
+			else{
+
+				TempRow = ReplaceStuff(
+					'[Mark]',
+					'',
+					TempRow
+				);
+			}
+
+
+			TempRow = ReplaceStuff(
+				'[INum]',
+				i,
+				TempRow
+			);
+
+			Exercise += TempRow;
+		}
+	}
+
+
+	Exercise += CheckButton;
+
+	Exercise = TableOpener + Exercise + TableCloser;
 }
 
-.check input {
-    background-color: #FF8040;
-    color: #000000;
-    border: 2px solid #FFFF00;
-    padding: 6px 18px;
-    font-weight: bold;
-    cursor: pointer;
+
+/*
+   EXERCISE CONTENT
+*/
+
+I = new Array();
+
+I[0] = new Array();
+I[0][0] = 'to update<br />';
+I[0][1] = 'mettre &#224; jour';
+I[0][2] = 0;
+
+I[1] = new Array();
+I[1][0] = 'to cross one\'s fingers<br />';
+I[1][1] = 'croiser les doigts';
+I[1][2] = 0;
+
+I[2] = new Array();
+I[2][0] = 'to keep body & soul together<br />';
+I[2][1] = 'survivre';
+I[2][2] = 0;
+
+I[3] = new Array();
+I[3][0] = 'to keep oneself to oneself<br />';
+I[3][1] = '&#234;tre repli&#233; sur soi';
+I[3][2] = 0;
+
+I[4] = new Array();
+I[4][0] = 'to beat about the bush<br />';
+I[4][1] = 'tourner autour du pot';
+I[4][2] = 0;
+
+I[5] = new Array();
+I[5][0] = 'to keep up appearances<br />';
+I[5][1] = 'sauver les apparences';
+I[5][2] = 0;
+
+I[6] = new Array();
+I[6][0] = 'to keep a straight face<br />';
+I[6][1] = 'rester impassible';
+I[6][2] = 0;
+
+I[7] = new Array();
+I[7][0] = 'to keep up with the Joneses<br />';
+I[7][1] = 'rivaliser avec son voisin';
+I[7][2] = 0;
+
+I[8] = new Array();
+I[8][0] = 'to keep a stiff upper lip<br />';
+I[8][1] = 'garder son sang froid';
+I[8][2] = 0;
+
+I[9] = new Array();
+I[9][0] = 'to kill two birds with one stone';
+I[9][1] = 'faire d\'une pierre deux coups';
+I[9][2] = 0;
+
+
+Status = new Array();
+
+RItems = new Array();
+
+
+function CreateStatusArrays(){
+
+	for (var x=0; x<I.length; x++){
+
+		Status[x] = new Array();
+
+		Status[x][0] = 0;
+		Status[x][1] = 0;
+	}
 }
 
-.check input:hover {
-    background-color: #FFFF00;
+
+function ReplaceStuff(Token, Replacement, InString){
+
+	var i = InString.indexOf(Token);
+
+	var FirstBit = '';
+	var LastBit = '';
+
+	while (i>-1){
+
+		FirstBit = InString.substring(0, i);
+
+		LastBit = InString.substring(
+			i + Token.length,
+			InString.length
+		);
+
+		InString = FirstBit + Replacement + LastBit;
+
+		i = InString.indexOf(Token);
+	}
+
+	return InString;
 }
 
-#feedback {
-    color: #FFFF00;
-    font-weight: bold;
-    text-align: center;
-    margin-top: 20px;
-}
-</style>
 
-<script>
+function EscapeDoubleQuotes(InString){
 
-var I = [];
+	var Result = '';
 
-I[0] = ["to update", "mettre à jour"];
-I[1] = ["to cross one's fingers", "croiser les doigts"];
-I[2] = ["to keep body & soul together", "survivre"];
-I[3] = ["to keep oneself to oneself", "être replié sur soi"];
-I[4] = ["to beat about the bush", "tourner autour du pot"];
-I[5] = ["to keep up appearances", "sauver les apparences"];
-I[6] = ["to keep a straight face", "rester impassible"];
-I[7] = ["to keep up with the Joneses", "rivaliser avec son voisin"];
-I[8] = ["to keep a stiff upper lip", "garder son sang froid"];
-I[9] = ["to kill two birds with one stone", "faire d'une pierre deux coups"];
+	for (var i=0; i<InString.length; i++){
 
-var answers = [];
-var choices = [];
-var penalties = 0;
+		if (InString.charAt(i) == '"'){
+			Result += '&quot;';
+		}
+		else{
+			Result += InString.charAt(i);
+		}
+	}
 
-function shuffle(array) {
-    var copy = array.slice();
-
-    for (var i = copy.length - 1; i > 0; i--) {
-        var j = Math.floor(Math.random() * (i + 1));
-        var temp = copy[i];
-        copy[i] = copy[j];
-        copy[j] = temp;
-    }
-
-    return copy;
+	return Result;
 }
 
-function StartUp() {
 
-    choices = [];
+function DisplayExercise(StuffToDisplay){
 
-    for (var i = 0; i < I.length; i++) {
-        choices.push(I[i][1]);
-    }
+	var OutString = '';
 
-    choices = shuffle(choices);
+	OutString += '<html>';
 
-    BuildExercise();
+	OutString += '<head>';
+
+	OutString += '<style>';
+
+	OutString += 'body {';
+	OutString += 'background-color:#000000;';
+	OutString += 'color:#FFFF00;';
+	OutString += 'font-family:Arial,sans-serif;';
+	OutString += 'font-size:14px;';
+	OutString += 'margin:0;';
+	OutString += 'padding:0;';
+	OutString += '}';
+
+	OutString += 'select {';
+	OutString += 'background-color:#FFFFCC;';
+	OutString += 'color:#000000;';
+	OutString += 'font-family:Arial,sans-serif;';
+	OutString += '}';
+
+	OutString += '</style>';
+
+	OutString += '</head>';
+
+	OutString += '<body>';
+
+	/*
+	   Navigation at the top
+	*/
+
+	OutString += NavBar;
+
+	/*
+	   Exercise title
+	*/
+
+	OutString += TitleCode;
+
+	/*
+	   Exercise itself
+	*/
+
+	OutString += '<div style="text-align:center;">';
+
+	OutString += '<font face="Geneva,Arial" size="-1">';
+
+	OutString += StuffToDisplay;
+
+	OutString += '</font>';
+
+	OutString += '</div>';
+
+	/*
+	   No navigation at the bottom
+	*/
+
+	OutString += '</body>';
+
+	OutString += '</html>';
+
+
+	if (is.CRAPBrowser){
+		OutString=ResolveAllURLs(OutString);
+	}
+
+
+	BottomFrame.document.clear();
+	BottomFrame.document.open();
+	BottomFrame.document.write(OutString);
+	BottomFrame.document.close();
 }
 
-function BuildExercise() {
 
-    var html = '<table>';
+function GetAnswer(INum){
 
-    for (var i = 0; i < I.length; i++) {
+	var Result = -1;
 
-        html += '<tr>';
+	var s = eval(
+		'BottomFrame.document.QForm.sel' + INum
+	);
 
-        html += '<td>';
-        html += I[i][0];
-        html += '</td>';
+	if (s != null){
+		Result = s.selectedIndex - 1;
+	}
 
-        html += '<td>';
-
-        html += '<select id="answer' + i + '">';
-        html += '<option value="">???</option>';
-
-        for (var j = 0; j < choices.length; j++) {
-
-            html += '<option value="' +
-                    escapeHTML(choices[j]) +
-                    '">' +
-                    escapeHTML(choices[j]) +
-                    '</option>';
-        }
-
-        html += '</select>';
-
-        html += '</td>';
-
-        html += '</tr>';
-    }
-
-    html += '</table>';
-
-    document.getElementById("exercise").innerHTML = html;
+	return Result;
 }
 
-function CheckAnswers() {
 
-    var correct = 0;
+function CheckAnswers(){
 
-    for (var i = 0; i < I.length; i++) {
+	var AllDone = true;
 
-        var select = document.getElementById("answer" + i);
-        var answer = select.value;
+	TotCorrectChoices = 0;
 
-        if (answer === I[i][1]) {
-            correct++;
-        } else {
-            select.value = "";
-        }
-    }
+	for (var i=0; i<I.length; i++){
 
-    var score = Math.floor((correct / I.length) * 100);
+		if ((I[i][2] < 1)&&(I[i][0].length > 0)){
 
-    if (correct === I.length) {
+			if (Status[i][0] < 1){
 
-        document.getElementById("feedback").innerHTML =
-            "Correct! Well done. Your score is " + score + "%.";
+				Status[i][1]++;
 
-    } else {
+				if (GetAnswer(i) == I[i][3]){
 
-        penalties++;
+					Status[i][0] = 1;
+				}
 
-        document.getElementById("feedback").innerHTML =
-            "Sorry! Try again. Incorrect matches have been removed. " +
-            "Your score is " + score + "%.";
-    }
+				else{
+
+					AllDone = false;
+				}
+			}
+
+			if (Status[i][0] == 1){
+
+				TotCorrectChoices++;
+			}
+		}
+	}
+
+
+	var Score = Math.floor(
+		((TotCorrectChoices-Penalties) /
+		TotalUnfixedLeftItems) * 100
+	);
+
+	var Feedback = '';
+
+
+	if (AllDone == true){
+
+		Feedback =
+			CorrectResponse +
+			'<br />' +
+			YourScoreIs +
+			Score +
+			'%.';
+	}
+
+	else{
+
+		Feedback =
+			IncorrectResponse +
+			'<br />' +
+			YourScoreIs +
+			Score +
+			'%.';
+
+		Penalties++;
+	}
+
+
+	/*
+	   We don't display feedback in the top frame anymore.
+	   The exercise simply updates.
+	*/
+
+	BuildExercise();
+
+	DisplayExercise(Exercise);
 }
 
-function escapeHTML(text) {
 
-    return text
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
+function Blank(){
+
+	return '<html><body></body></html>';
 }
+
+//-->
+
+//]]>
 
 </script>
 
 </head>
 
-<body onload="StartUp()">
 
-<!-- NAVIGATION -->
+<frameset
+	rows="0,*"
+	framespacing="0"
+	border="0"
+	onload="StartUp()">
 
-<div class="navigation">
+	<frame
+		src="javascript:parent.Blank()"
+		frameborder="0"
+		name="TopFrame">
 
-    <a href="../index.html">INDEX</a>
+	<frame
+		src="javascript:parent.Blank()"
+		frameborder="0"
+		name="BottomFrame">
 
-    <a href="proverbs2.htm">→</a>
-
-</div>
-
-
-<!-- TITLE -->
-
-<h1>Proverbs &amp; Expressions 1</h1>
-
-<div class="subtitle">
-Matching exercise
-</div>
+</frameset>
 
 
-<!-- EXERCISE -->
-
-<div class="exercise">
-
-    <div id="exercise"></div>
-
-    <div class="check">
-
-        <input type="button"
-               value="Check"
-               onclick="CheckAnswers()">
-
-    </div>
-
-    <div id="feedback"></div>
-
-</div>
-
-</body>
 </html>
