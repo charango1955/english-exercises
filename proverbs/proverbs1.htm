@@ -109,16 +109,15 @@ var PreviousPage = history.length;
 
 var NavBar='';
 
+NavBar += '<tr><td bgcolor="#000000" align="center">';
+NavBar += '<font face="Arial" size="+1">';
 
-NavBar+='<tr><form name="NavButtons1" action=""><td bgcolor="#ff8040" align="center">';
-NavBar+='<font face="Geneva,Arial" size="-1">';
+NavBar += '<a href="../index.html" style="color:#FFFF00; text-decoration:none; font-size:26px; font-weight:bold; margin:0 25px;">INDEX</a>';
 
+NavBar += '<a href="proverbs2.htm" style="color:#FFFF00; text-decoration:none; font-size:32px; font-weight:bold; margin:0 25px;">→</a>';
 
-NavBar+='<input type="button" value="Index" onclick=\'parent.location="../index.html"\'></input>';
+NavBar += '</font></td></tr>';
 
-
-NavBar+='<input type="button" value="=&gt;" onclick=\'parent.location="proverbs2.htm"\'></input>';
-NavBar+='</font></td></form></tr>';
 if (is.CRAPBrowser){NavBar = ResolveAllURLs(NavBar);}
 
 
