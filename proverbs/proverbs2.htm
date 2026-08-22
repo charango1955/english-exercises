@@ -1,5 +1,6 @@
 <html>
 <head>
+
 <meta name="author" content="Created with Hot Potatoes by Half-Baked Software, registered to Armando Vezza.">
 <meta name="keywords" content="Hot Potatoes, Half-Baked Software, Windows, University of Victoria">
 
@@ -9,23 +10,28 @@
 
 //<![CDATA[
 
-// BrowserCheck Object
+// =========================================================
+// BrowserCheck
+// =========================================================
 
 function BrowserCheck() {
-	var b = navigator.appName
-	this.mac = (navigator.appVersion.indexOf('Mac') != -1)
-	if (b=="Netscape") this.b = "ns"
-	else if (b=="Microsoft Internet Explorer") this.b = "ie"
-	else this.b = b
-	this.version = navigator.appVersion
-	this.v = parseInt(this.version)
-	this.ns = (this.b=="ns" && this.v>=4)
-	this.ns4 = (this.b=="ns" && this.v==4)
-	this.ns5 = (this.b=="ns" && this.v==5)
-	this.ie = (this.b=="ie" && this.v>=4)
-	this.ie4 = (this.version.indexOf('MSIE 4')>0)
-	this.ie5 = (this.version.indexOf('MSIE 5')>0)
-	this.min = (this.ns||this.ie)
+	var b = navigator.appName;
+	this.mac = (navigator.appVersion.indexOf('Mac') != -1);
+
+	if (b=="Netscape") this.b = "ns";
+	else if (b=="Microsoft Internet Explorer") this.b = "ie";
+	else this.b = b;
+
+	this.version = navigator.appVersion;
+	this.v = parseInt(this.version);
+
+	this.ns = (this.b=="ns" && this.v>=4);
+	this.ns4 = (this.b=="ns" && this.v==4);
+	this.ns5 = (this.b=="ns" && this.v==5);
+	this.ie = (this.b=="ie" && this.v>=4);
+	this.ie4 = (this.version.indexOf('MSIE 4')>0);
+	this.ie5 = (this.version.indexOf('MSIE 5')>0);
+	this.min = (this.ns||this.ie);
 	this.CRAPBrowser = (this.ie && this.mac);
 }
 
@@ -36,144 +42,220 @@ var LocFolder = GetFolder(window.location.href);
 function GetFolder(LocPath){
 	LocPath = ReplaceStuff('\'','%27',LocPath);
 	var i = LocPath.lastIndexOf('/');
-	if (i<0){i=LocPath.lastIndexOf('\\')};
+
+	if (i<0){
+		i=LocPath.lastIndexOf('\\');
+	}
+
 	return LocPath.substring(0,i);
 }
 
 function CombineURLs(InURL){
 	var i = InURL.indexOf('../');
 	var s = LocFolder;
+
 	while (i >- 1){
 		s = GetFolder(s);
 		InURL = InURL.substring(3,InURL.length);
 		i = InURL.indexOf('../');
 	}
+
 	return s + '/' + InURL;
 }
 
 x = new Array();
 
 function ResolveURLs(InText,Attribute){
+
 	x.length=0;
+
 	var Temp = InText.toLowerCase();
 	var z;
 	var AttLen = Attribute.length + 2;
 	var y=Temp.lastIndexOf(Attribute + '="');
 
 	while (y>-1){
+
 		var sLoc = y+AttLen;
+
 		if (Temp.substring(sLoc,sLoc+5) != 'http:'){
+
 			x[x.length]=new Array();
 			x[x.length-1][0] = sLoc;
+
 			z = Temp.indexOf('"',sLoc);
+
 			x[x.length-1][1] = z;
 			x[x.length-1][2] = InText.substring(sLoc,z);
 		}
+
 		Temp = Temp.substring(0,y);
 		y=Temp.lastIndexOf(Attribute + '="');
 	}
 
 	for (var j=0; j<x.length; j++){
-		InText = InText.substring(0,x[j][0]) + CombineURLs(x[j][2]) + InText.substring(x[j][1], InText.length);
+
+		InText =
+			InText.substring(0,x[j][0]) +
+			CombineURLs(x[j][2]) +
+			InText.substring(x[j][1], InText.length);
 	}
+
 	return InText;
 }
 
 function ResolveAllURLs(Stuff){
+
 	Stuff = ResolveURLs(Stuff,'href');
 	Stuff = ResolveURLs(Stuff,'src');
 	Stuff = ResolveURLs(Stuff,'parent.location');
+
 	return Stuff;
 }
 
 
+// =========================================================
+// Exercise variables
+// =========================================================
+
 var CorrectIndicator = ':-)';
 var IncorrectIndicator = 'X';
+
 var YourScoreIs = 'Your score is ';
+
 var CorrectResponse = 'Correct! Well done.';
-var IncorrectResponse = 'Sorry! Try again. Incorrect matches have been removed.';
+
+var IncorrectResponse =
+	'Sorry! Try again. Incorrect matches have been removed.';
+
 var TotalUnfixedLeftItems = 0;
 var TotCorrectChoices = 0;
 var Penalties = 0;
 
 var ExerciseTitle = 'Proverbs & Expressions 2';
 var ExerciseSubtitle = 'Matching exercise';
-var Instructions = 'Match the items on the right with the items on the left.';
+
+var Instructions =
+	'Match the items on the right with the items on the left.';
+
 var DefaultResponse = '[strDefaultResponse]';
 var ReadingURL = '';
 
 var PreviousPage = history.length;
 
 
-/* =========================================================
-   NAVIGATION
-   ========================================================= */
+// =========================================================
+// NAVIGATION
+// =========================================================
 
 var NavBar = '';
 
 NavBar += '<div style="text-align:center; padding-top:10px; padding-bottom:25px;">';
 
-NavBar += '<a href="proverbs1.htm" ';
-NavBar += 'style="color:#FFFF00; text-decoration:none; font-size:32px; font-weight:bold; margin:0 30px;">';
+NavBar += '<a href="proverbs1.htm" target="_top" ';
+NavBar += 'style="color:#FFFF00; text-decoration:none; ';
+NavBar += 'font-size:32px; font-weight:bold; margin:0 30px;">';
 NavBar += '&#8592;';
 NavBar += '</a>';
 
-NavBar += '<a href="../index.html" ';
-NavBar += 'style="color:#FFFF00; text-decoration:none; font-size:26px; font-weight:bold; margin:0 30px;">';
+NavBar += '<a href="../index.html" target="_top" ';
+NavBar += 'style="color:#FFFF00; text-decoration:none; ';
+NavBar += 'font-size:26px; font-weight:bold; margin:0 30px;">';
 NavBar += 'INDEX';
 NavBar += '</a>';
 
-NavBar += '<a href="proverbs3.htm" ';
-NavBar += 'style="color:#FFFF00; text-decoration:none; font-size:32px; font-weight:bold; margin:0 30px;">';
+NavBar += '<a href="proverbs3.htm" target="_top" ';
+NavBar += 'style="color:#FFFF00; text-decoration:none; ';
+NavBar += 'font-size:32px; font-weight:bold; margin:0 30px;">';
 NavBar += '&#8594;';
 NavBar += '</a>';
 
 NavBar += '</div>';
 
 
-/* =========================================================
-   TITLE
-   ========================================================= */
+// =========================================================
+// TITLE
+// =========================================================
 
-var TitleCode = '<div style="text-align:center; background-color:#000000; padding:10px;">';
+var TitleCode = '';
 
-TitleCode += '<div style="font-size:22px; font-family:Arial,sans-serif; ';
-TitleCode += 'font-weight:bold; color:#FF9900;">';
+TitleCode += '<div style="text-align:center; ';
+TitleCode += 'background-color:#000000; ';
+TitleCode += 'padding:10px;">';
+
+TitleCode += '<div style="font-size:22px; ';
+TitleCode += 'font-family:Arial,sans-serif; ';
+TitleCode += 'font-weight:bold; ';
+TitleCode += 'color:#FF9900;">';
+
 TitleCode += ExerciseTitle;
+
 TitleCode += '</div>';
 
-TitleCode += '<div style="font-size:14px; font-family:Arial,sans-serif; ';
-TitleCode += 'color:#FFFF00; margin-top:5px;">';
+TitleCode += '<div style="font-size:14px; ';
+TitleCode += 'font-family:Arial,sans-serif; ';
+TitleCode += 'color:#FFFF00; ';
+TitleCode += 'margin-top:5px;">';
+
 TitleCode += ExerciseSubtitle;
-TitleCode += '</div>';
 
 TitleCode += '</div>';
 
+TitleCode += '</div>';
 
-/* =========================================================
-   EXERCISE FORMATTING
-   ========================================================= */
+
+// =========================================================
+// EXERCISE FORMATTING
+// =========================================================
 
 var TableOpener = '<center><form name="QForm">';
 TableOpener += '<table border="0">';
 
-var IRow = '<tr><td valign="top" bgcolor="#000000">';
-IRow += '<font face="Geneva,Arial" color="#FF9900">[strLeftItem]&nbsp;&nbsp;&nbsp;&nbsp;</font></td>';
+var IRow = '';
+
+IRow += '<tr>';
 
 IRow += '<td valign="top" bgcolor="#000000">';
-IRow += '<font face="Geneva,Arial" color="#FF9900">[strRightItem]</font></td>';
+IRow += '<font face="Geneva,Arial" color="#FF9900">';
+IRow += '[strLeftItem]';
+IRow += '</font>';
+IRow += '</td>';
+
+IRow += '<td valign="top" bgcolor="#000000">';
+IRow += '<font face="Geneva,Arial" color="#FF9900">';
+IRow += '&nbsp;&nbsp;&nbsp;&nbsp;';
+IRow += '[strRightItem]';
+IRow += '</font>';
+IRow += '</td>';
 
 IRow += '<td valign="top" bgcolor="#000000">';
 IRow += '<font face="Geneva,Arial" color="#FFFF00">';
 IRow += '&nbsp;&nbsp;&nbsp;[Mark]';
-IRow += '</font></td></tr>';
+IRow += '</font>';
+IRow += '</td>';
 
-var CheckButton = '<tr><td valign="top" align="center" bgcolor="#000000" colspan="3">';
+IRow += '</tr>';
+
+
+var CheckButton = '';
+
+CheckButton += '<tr>';
+CheckButton += '<td valign="top" align="center" ';
+CheckButton += 'bgcolor="#000000" colspan="3">';
 CheckButton += '<br />';
+
 CheckButton += '<input type="button" value="Check" ';
-CheckButton += 'style="background-color:#FF9900; color:#000000; border:2px solid #FFFF00; padding:5px 12px; font-weight:bold;" ';
+CheckButton += 'style="background-color:#FF9900; ';
+CheckButton += 'color:#000000; ';
+CheckButton += 'border:2px solid #FFFF00; ';
+CheckButton += 'padding:5px 12px; ';
+CheckButton += 'font-weight:bold;" ';
 CheckButton += 'OnClick="parent.CheckAnswers()">';
-CheckButton += '</input></td></tr>';
+
+CheckButton += '</input>';
+
+CheckButton += '</td>';
+CheckButton += '</tr>';
 
 TableCloser = '</table></form></center>';
 
@@ -181,21 +263,14 @@ var DropDownList = '';
 var Exercise = '';
 
 
-function GoBack(){
-	var BackSkip = history.length - PreviousPage;
-
-	if (BackSkip > 0){
-		history.go((BackSkip+1)*-1);
-	}
-	else{
-		parent.history.back();
-	}
-}
-
+// =========================================================
+// Shuffle
+// =========================================================
 
 function Shuffle(InArray){
 
 	Temp = new Array();
+
 	var Len = InArray.length;
 	var j = Len;
 
@@ -204,7 +279,9 @@ function Shuffle(InArray){
 	}
 
 	for (i=0; i<Len; i++){
+
 		Num = Math.floor(j * Math.random());
+
 		InArray[i] = Temp[Num];
 
 		for (var k=Num; k < j; k++) {
@@ -218,26 +295,29 @@ function Shuffle(InArray){
 }
 
 
-/* =========================================================
-   TOP FRAME
-   ========================================================= */
+// =========================================================
+// Navigation frame
+// =========================================================
 
-function WriteFeedback(Feedback) {
-
-	if (is.CRAPBrowser){
-		Feedback=ResolveAllURLs(Feedback);
-	}
+function WriteFeedback(Feedback){
 
 	var OutString = '';
 
 	OutString += '<html>';
-	OutString += '<body bgcolor="#000000" text="#FFFF00" ';
+
+	OutString += '<body bgcolor="#000000" ';
+	OutString += 'text="#FFFF00" ';
 	OutString += 'style="margin:0; padding:0;">';
 
-	/* Navigation only - no instruction text */
+	/*
+	   Only navigation is written here.
+	   The instruction text is deliberately NOT displayed.
+	*/
+
 	OutString += NavBar;
 
-	OutString += '</body></html>';
+	OutString += '</body>';
+	OutString += '</html>';
 
 	TopFrame.document.clear();
 	TopFrame.document.open();
@@ -246,14 +326,17 @@ function WriteFeedback(Feedback) {
 }
 
 
-/* =========================================================
-   DROP-DOWN LIST
-   ========================================================= */
+// =========================================================
+// Build selector
+// =========================================================
 
 function BuildSelector(){
 
-	DropDownList = '<select name="sel[INum]" ';
-	DropDownList += 'style="background-color:#FFFFCC; color:#000000;">';
+	DropDownList = '';
+
+	DropDownList += '<select name="sel[INum]" ';
+	DropDownList += 'style="background-color:#FFFFCC; ';
+	DropDownList += 'color:#000000;">';
 
 	DropDownList += '<option value="??? ">??? </option>';
 
@@ -270,19 +353,20 @@ function BuildSelector(){
 }
 
 
-/* =========================================================
-   START UP
-   ========================================================= */
+// =========================================================
+// StartUp
+// =========================================================
 
 function StartUp(){
 
-	CorrectIndicator = '<nobr>' + CorrectIndicator + '</nobr>';
-	IncorrectIndicator = '<nobr>' + IncorrectIndicator + '</nobr>';
+	CorrectIndicator =
+		'<nobr>' + CorrectIndicator + '</nobr>';
 
-	/* Show navigation */
+	IncorrectIndicator =
+		'<nobr>' + IncorrectIndicator + '</nobr>';
+
 	WriteFeedback('');
 
-	/* Create right-item/distractor array */
 	var DuplicateItem = false;
 
 	for (var i=0; i<I.length; i++){
@@ -300,6 +384,7 @@ function StartUp(){
 				if (I[i][1] == RItems[j][0]){
 
 					DuplicateItem = true;
+
 					RItems[j][1][RItems[j][1].length] = i;
 				}
 			}
@@ -307,8 +392,12 @@ function StartUp(){
 			if (DuplicateItem == false){
 
 				RItems[RItems.length] = new Array();
+
 				RItems[RItems.length-1][0] = I[i][1];
-				RItems[RItems.length-1][1] = new Array();
+
+				RItems[RItems.length-1][1] =
+					new Array();
+
 				RItems[RItems.length-1][1][0] = i;
 			}
 		}
@@ -329,17 +418,19 @@ function StartUp(){
 	CreateStatusArrays();
 
 	BuildExercise();
+
 	DisplayExercise(Exercise);
 }
 
 
-/* =========================================================
-   BUILD EXERCISE
-   ========================================================= */
+// =========================================================
+// Build exercise
+// =========================================================
 
 function BuildExercise(){
 
 	var TempRow = '';
+
 	Exercise = '';
 
 	for (var i=0; i<I.length; i++){
@@ -348,62 +439,69 @@ function BuildExercise(){
 
 			TempRow = IRow;
 
-			TempRow = ReplaceStuff(
-				'[strLeftItem]',
-				I[i][0],
-				TempRow
-			);
+			TempRow =
+				ReplaceStuff(
+					'[strLeftItem]',
+					I[i][0],
+					TempRow
+				);
 
 			if ((I[i][2] < 1)&&(Status[i][0] < 1)){
 
-				TempRow = ReplaceStuff(
-					'[strRightItem]',
-					DropDownList,
-					TempRow
-				);
+				TempRow =
+					ReplaceStuff(
+						'[strRightItem]',
+						DropDownList,
+						TempRow
+					);
 			}
 			else{
 
-				TempRow = ReplaceStuff(
-					'[strRightItem]',
-					I[i][1],
-					TempRow
-				);
+				TempRow =
+					ReplaceStuff(
+						'[strRightItem]',
+						I[i][1],
+						TempRow
+					);
 			}
 
 			if ((I[i][2] < 1)&&(Status[i][1] > 0)){
 
 				if (Status[i][0] < 1){
 
-					TempRow = ReplaceStuff(
-						'[Mark]',
-						IncorrectIndicator,
-						TempRow
-					);
+					TempRow =
+						ReplaceStuff(
+							'[Mark]',
+							IncorrectIndicator,
+							TempRow
+						);
 				}
 				else{
 
-					TempRow = ReplaceStuff(
-						'[Mark]',
-						CorrectIndicator,
-						TempRow
-					);
+					TempRow =
+						ReplaceStuff(
+							'[Mark]',
+							CorrectIndicator,
+							TempRow
+						);
 				}
 			}
 			else{
 
-				TempRow = ReplaceStuff(
-					'[Mark]',
-					'',
-					TempRow
-				);
+				TempRow =
+					ReplaceStuff(
+						'[Mark]',
+						'',
+						TempRow
+					);
 			}
 
-			TempRow = ReplaceStuff(
-				'[INum]',
-				i,
-				TempRow
-			);
+			TempRow =
+				ReplaceStuff(
+					'[INum]',
+					i,
+					TempRow
+				);
 
 			Exercise += TempRow;
 		}
@@ -411,13 +509,16 @@ function BuildExercise(){
 
 	Exercise += CheckButton;
 
-	Exercise = TableOpener + Exercise + TableCloser;
+	Exercise =
+		TableOpener +
+		Exercise +
+		TableCloser;
 }
 
 
-/* =========================================================
-   EXERCISE CONTENT
-   ========================================================= */
+// =========================================================
+// EXERCISE CONTENT
+// =========================================================
 
 I = new Array();
 
@@ -488,21 +589,32 @@ function CreateStatusArrays(){
 }
 
 
+// =========================================================
+// Utility functions
+// =========================================================
+
 function ReplaceStuff(Token, Replacement, InString){
 
 	var i = InString.indexOf(Token);
+
 	var FirstBit = '';
 	var LastBit = '';
 
 	while (i>-1){
 
-		FirstBit = InString.substring(0, i);
-		LastBit = InString.substring(
-			i + Token.length,
-			InString.length
-		);
+		FirstBit =
+			InString.substring(0, i);
 
-		InString = FirstBit + Replacement + LastBit;
+		LastBit =
+			InString.substring(
+				i + Token.length,
+				InString.length
+			);
+
+		InString =
+			FirstBit +
+			Replacement +
+			LastBit;
 
 		i = InString.indexOf(Token);
 	}
@@ -518,9 +630,11 @@ function EscapeDoubleQuotes(InString){
 	for (var i=0; i<InString.length; i++){
 
 		if (InString.charAt(i) == '"'){
+
 			Result += '&quot;';
 		}
 		else{
+
 			Result += InString.charAt(i);
 		}
 	}
@@ -529,9 +643,9 @@ function EscapeDoubleQuotes(InString){
 }
 
 
-/* =========================================================
-   DISPLAY EXERCISE
-   ========================================================= */
+// =========================================================
+// Display exercise
+// =========================================================
 
 function DisplayExercise(StuffToDisplay){
 
@@ -541,18 +655,27 @@ function DisplayExercise(StuffToDisplay){
 
 	OutString += '<body bgcolor="#000000" ';
 	OutString += 'text="#FFFF00" ';
-	OutString += 'style="margin:0; padding:10px; font-family:Arial,sans-serif;">';
+	OutString += 'style="margin:0; padding:10px; ';
+	OutString += 'font-family:Arial,sans-serif;">';
+
 
 	/* Title */
+
 	OutString += TitleCode;
 
-	/* Small gap between title and exercise */
+
+	/* Gap */
+
 	OutString += '<div style="height:15px;"></div>';
 
+
 	/* Exercise */
+
 	OutString += '<div style="text-align:center;">';
 
-	OutString += '<font face="Geneva,Arial" size="-1" color="#FF9900">';
+	OutString +=
+		'<font face="Geneva,Arial" ' +
+		'size="-1" color="#FF9900">';
 
 	OutString += StuffToDisplay;
 
@@ -560,11 +683,15 @@ function DisplayExercise(StuffToDisplay){
 
 	OutString += '</div>';
 
+
 	OutString += '</body></html>';
 
+
 	if (is.CRAPBrowser){
-		OutString=ResolveAllURLs(OutString);
+		OutString =
+			ResolveAllURLs(OutString);
 	}
+
 
 	BottomFrame.document.clear();
 	BottomFrame.document.open();
@@ -573,42 +700,52 @@ function DisplayExercise(StuffToDisplay){
 }
 
 
-/* =========================================================
-   GET ANSWER
-   ========================================================= */
+// =========================================================
+// Get answer
+// =========================================================
 
 function GetAnswer(INum){
 
 	var Result = -1;
 
-	var s = eval(
-		'BottomFrame.document.QForm.sel' + INum
-	);
+	var s =
+		eval(
+			'BottomFrame.document.QForm.sel' +
+			INum
+		);
 
 	if (s != null){
-		Result = s.selectedIndex - 1;
+
+		Result =
+			s.selectedIndex - 1;
 	}
 
 	return Result;
 }
 
 
-/* =========================================================
-   CHECK ANSWERS
-   ========================================================= */
+// =========================================================
+// Check answers
+// =========================================================
 
 function CheckAnswers(){
 
 	var AllDone = true;
+
 	TotCorrectChoices = 0;
+
 
 	for (var i=0; i<I.length; i++){
 
-		if ((I[i][2] < 1)&&(I[i][0].length > 0)){
+		if (
+			(I[i][2] < 1) &&
+			(I[i][0].length > 0)
+		){
 
 			if (Status[i][0] < 1){
 
 				Status[i][1]++;
+
 
 				if (GetAnswer(i) == I[i][3]){
 
@@ -620,6 +757,7 @@ function CheckAnswers(){
 				}
 			}
 
+
 			if (Status[i][0] == 1){
 
 				TotCorrectChoices++;
@@ -627,47 +765,39 @@ function CheckAnswers(){
 		}
 	}
 
-	var Score = Math.floor(
-		((TotCorrectChoices-Penalties) /
-		TotalUnfixedLeftItems) * 100
-	);
 
-	var Feedback = '';
+	var Score =
+		Math.floor(
+			((TotCorrectChoices-Penalties) /
+			TotalUnfixedLeftItems) * 100
+		);
+
 
 	if (AllDone == true){
 
-		Feedback =
-			CorrectResponse +
-			'<br />' +
-			YourScoreIs +
-			Score +
-			'%.';
+		Penalties = 0;
 	}
 	else{
-
-		Feedback =
-			IncorrectResponse +
-			'<br />' +
-			YourScoreIs +
-			Score +
-			'%.';
 
 		Penalties++;
 	}
 
-	/* Do not display feedback/instructions in the navigation area */
+
 	BuildExercise();
+
 	DisplayExercise(Exercise);
 }
 
 
-/* =========================================================
-   BLANK FRAME
-   ========================================================= */
+// =========================================================
+// Blank frame
+// =========================================================
 
 function Blank(){
 
-	return '<html><body bgcolor="#000000"></body></html>';
+	return '<html>' +
+		'<body bgcolor="#000000">' +
+		'</body></html>';
 }
 
 
@@ -678,7 +808,11 @@ function Blank(){
 </head>
 
 
-<frameset rows="75,*" framespacing="0" border="0" onload="StartUp()">
+<frameset
+	rows="75,*"
+	framespacing="0"
+	border="0"
+	onload="StartUp()">
 
 	<frame
 		src="javascript:parent.Blank()"
@@ -693,5 +827,6 @@ function Blank(){
 	</frame>
 
 </frameset>
+
 
 </html>
