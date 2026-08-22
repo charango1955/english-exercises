@@ -20,19 +20,20 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        gap: 25px;
+        gap: 10px;
         padding: 12px 10px;
         background-color: #000000;
+        border-bottom: none;
     }
 
     .navbar button {
-        background: none;
+        background-color: #000000;
         color: #ff8040;
         border: none;
-        padding: 0;
+        padding: 7px 16px;
         font-size: 14px;
-        font-weight: bold;
         font-family: Arial, Helvetica, sans-serif;
+        font-weight: bold;
         cursor: pointer;
     }
 
@@ -40,7 +41,6 @@
         color: #ffff00;
     }
 
-    /* Title */
     .title {
         text-align: center;
         padding: 18px 10px 10px;
@@ -411,7 +411,7 @@ function StartUp() {
 
     ShowAllQs();
 
-    WriteFeedback("");
+    WriteFeedback(Instructions);
 }
 
 
@@ -666,6 +666,12 @@ function GoIndex() {
     window.location.href = "../index.html";
 }
 
+
+function GoNext() {
+
+    window.location.href = "trivial.html";
+}
+
 </script>
 
 </head>
@@ -686,8 +692,7 @@ function GoIndex() {
         INDEX
     </button>
 
-    <!-- Right-hand button deliberately inactive for now -->
-    <button type="button">
+    <button type="button" onclick="GoNext()">
         &rarr;
     </button>
 
@@ -722,4 +727,3 @@ function GoIndex() {
 
 </body>
 </html>
-```
