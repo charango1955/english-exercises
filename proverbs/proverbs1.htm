@@ -1,775 +1,280 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<meta name="author" content="Created with Hot Potatoes by Half-Baked Software, registered to Armando Vezza.">
-<meta name="keywords" content="Hot Potatoes, Half-Baked Software, Windows, University of Victoria">
-
+<meta charset="UTF-8">
 <title>Proverbs & Expressions 1</title>
 
-<script language="javascript" type="text/javascript">
-
-//<![CDATA[
-
-// BrowserCheck Object
-
-function BrowserCheck() {
-	var b = navigator.appName
-	this.mac = (navigator.appVersion.indexOf('Mac') != -1)
-
-	if (b=="Netscape") this.b = "ns"
-	else if (b=="Microsoft Internet Explorer") this.b = "ie"
-	else this.b = b
-
-	this.version = navigator.appVersion
-	this.v = parseInt(this.version)
-	this.ns = (this.b=="ns" && this.v>=4)
-	this.ns4 = (this.b=="ns" && this.v==4)
-	this.ns5 = (this.b=="ns" && this.v==5)
-	this.ie = (this.b=="ie" && this.v>=4)
-	this.ie4 = (this.version.indexOf('MSIE 4')>0)
-	this.ie5 = (this.version.indexOf('MSIE 5')>0)
-	this.min = (this.ns||this.ie)
-	this.CRAPBrowser = (this.ie && this.mac);
+<style>
+body {
+    background-color: #000000;
+    color: #ff8040;
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0;
+    padding: 0;
 }
 
-is = new BrowserCheck();
-
-var LocFolder = GetFolder(window.location.href);
-
-function GetFolder(LocPath){
-	LocPath = ReplaceStuff('\'','%27',LocPath);
-	var i = LocPath.lastIndexOf('/');
-	if (i<0){i=LocPath.lastIndexOf('\\')};
-	return LocPath.substring(0,i);
+.navigation {
+    text-align: center;
+    margin-top: 15px;
+    margin-bottom: 40px;
 }
 
-function CombineURLs(InURL){
-	var i = InURL.indexOf('../');
-	var s = LocFolder;
-
-	while (i > -1){
-		s = GetFolder(s);
-		InURL = InURL.substring(3,InURL.length);
-		i = InURL.indexOf('../');
-	}
-
-	return s + '/' + InURL;
+.navigation button {
+    background-color: #000000;
+    color: #ff8040;
+    border: 1px solid #ff8040;
+    font-size: 14px;
+    padding: 4px 12px;
+    cursor: pointer;
 }
 
-x = new Array();
-
-function ResolveURLs(InText,Attribute){
-	x.length=0;
-	var Temp = InText.toLowerCase();
-	var z;
-	var AttLen = Attribute.length + 2;
-	var y=Temp.lastIndexOf(Attribute + '="');
-
-	while (y>-1){
-		var sLoc = y+AttLen;
-
-		if (Temp.substring(sLoc,sLoc+5) != 'http:'){
-			x[x.length]=new Array();
-			x[x.length-1][0] = sLoc;
-			z = Temp.indexOf('"',sLoc);
-			x[x.length-1][1] = z;
-			x[x.length-1][2] = InText.substring(sLoc,z);
-		}
-
-		Temp = Temp.substring(0,y);
-		y=Temp.lastIndexOf(Attribute + '="');
-	}
-
-	for (var j=0; j<x.length; j++){
-		InText = InText.substring(0,x[j][0]) +
-		CombineURLs(x[j][2]) +
-		InText.substring(x[j][1], InText.length);
-	}
-
-	return InText;
+.navigation button:hover {
+    background-color: #ff8040;
+    color: #000000;
 }
 
-function ResolveAllURLs(Stuff){
-	Stuff = ResolveURLs(Stuff,'href');
-	Stuff = ResolveURLs(Stuff,'src');
-	Stuff = ResolveURLs(Stuff,'parent.location');
-	return Stuff;
+.navigation .index {
+    margin-left: 25px;
+    margin-right: 25px;
 }
 
-
-var CorrectIndicator = ':-)';
-var IncorrectIndicator = 'X';
-var YourScoreIs = 'Your score is ';
-var CorrectResponse = 'Correct! Well done.';
-var IncorrectResponse = 'Sorry! Try again. Incorrect matches have been removed.';
-var TotalUnfixedLeftItems = 0;
-var TotCorrectChoices = 0;
-var Penalties = 0;
-
-var ExerciseTitle = 'Proverbs & Expressions 1';
-var ExerciseSubtitle = 'Matching exercise';
-
-/*
-   Navigation
-   Previous page is not needed on Proverbs 1.
-   Index goes to ../index.html
-   Right arrow goes to Proverbs 2.
-*/
-
-var NavBar = '';
-
-NavBar += '<div style="text-align:center; margin-top:10px; margin-bottom:25px;">';
-
-NavBar += '<a href="../index.html" ';
-NavBar += 'style="color:#FFFF00; text-decoration:none; font-family:Arial,sans-serif; ';
-NavBar += 'font-size:26px; font-weight:bold; margin:0 30px;">INDEX</a>';
-
-NavBar += '<a href="proverbs2.htm" ';
-NavBar += 'style="color:#FFFF00; text-decoration:none; font-family:Arial,sans-serif; ';
-NavBar += 'font-size:30px; font-weight:bold; margin:0 30px;">&#8594;</a>';
-
-NavBar += '</div>';
-
-
-/*
-   Title
-*/
-
-var TitleCode = '';
-
-TitleCode += '<div style="text-align:center; margin-bottom:25px;">';
-
-TitleCode += '<div style="color:#FFFF00; font-family:Arial,sans-serif; ';
-TitleCode += 'font-size:22px; font-weight:bold;">';
-TitleCode += ExerciseTitle;
-TitleCode += '</div>';
-
-TitleCode += '<div style="color:#FFFF00; font-family:Arial,sans-serif; ';
-TitleCode += 'font-size:14px; margin-top:5px;">';
-TitleCode += ExerciseSubtitle;
-TitleCode += '</div>';
-
-TitleCode += '</div>';
-
-
-/*
-   Exercise layout
-
-   The old version had:
-   [strLeftItem]&nbsp;&nbsp;&nbsp;&nbsp;
-
-   The extra spaces have been removed so that the
-   proverb is closer to the answer box.
-*/
-
-var TableOpener = '<center><form name="QForm">';
-TableOpener += '<table border="0" cellpadding="4" cellspacing="4">';
-
-var IRow = '<tr>';
-IRow += '<td valign="top" bgcolor="#000000">';
-IRow += '<font face="Geneva,Arial" color="#ff8040">';
-IRow += '[strLeftItem]';
-IRow += '</font></td>';
-
-IRow += '<td valign="top" bgcolor="#000000">';
-IRow += '<font face="Geneva,Arial" color="#ff8040">';
-IRow += '[strRightItem]';
-IRow += '</font></td>';
-
-IRow += '<td valign="top" bgcolor="#000000">';
-IRow += '<font face="Geneva,Arial" color="#ff8040">';
-IRow += '&nbsp;&nbsp;[Mark]';
-IRow += '</font></td>';
-
-IRow += '</tr>';
-
-
-var CheckButton = '';
-
-CheckButton += '<tr>';
-CheckButton += '<td valign="top" align="center" bgcolor="#000000" colspan="3">';
-CheckButton += '<br />';
-CheckButton += '<input type="button" value="Check" ';
-CheckButton += 'style="background-color:#FF9900; color:#000000; ';
-CheckButton += 'border:2px solid #FFFF00; padding:5px 12px; ';
-CheckButton += 'font-weight:bold; cursor:pointer;" ';
-CheckButton += 'OnClick="parent.CheckAnswers()">';
-CheckButton += '</input>';
-CheckButton += '</td>';
-CheckButton += '</tr>';
-
-TableCloser = '</table></form></center>';
-
-var DropDownList = '';
-var Exercise = '';
-
-
-function GoBack(){
-
-	var BackSkip = history.length - PreviousPage;
-
-	if (BackSkip > 0){
-		history.go((BackSkip+1)*-1);
-	}
-	else{
-		parent.history.back();
-	}
+.title {
+    text-align: center;
+    color: #ffff00;
+    font-size: 22px;
+    margin-bottom: 5px;
 }
 
-
-function Shuffle(InArray){
-
-	Temp = new Array();
-	var Len = InArray.length;
-	var j = Len;
-
-	for (var i=0; i<Len; i++){
-		Temp[i] = InArray[i];
-	}
-
-	for (i=0; i<Len; i++){
-
-		Num = Math.floor(j * Math.random());
-
-		InArray[i] = Temp[Num];
-
-		for (var k=Num; k < j; k++) {
-			Temp[k] = Temp[k+1];
-		}
-
-		j--;
-	}
-
-	return InArray;
+.subtitle {
+    text-align: center;
+    color: #ffff00;
+    font-size: 14px;
+    margin-bottom: 30px;
 }
 
-
-/*
-   Feedback
-
-   Deliberately no instruction message is displayed.
-   The navigation is only at the top.
-*/
-
-function WriteFeedback(Feedback) {
-
-	if (is.CRAPBrowser){
-		Feedback=ResolveAllURLs(Feedback);
-	}
-
-	var OutString = '';
-
-	OutString += '<html>';
-	OutString += '<head>';
-	OutString += '<style>';
-	OutString += 'body { background-color:#000000; color:#FFFF00; ';
-	OutString += 'font-family:Arial,sans-serif; margin:0; padding:0; }';
-	OutString += '</style>';
-	OutString += '</head>';
-
-	OutString += '<body>';
-
-	OutString += NavBar;
-
-	/*
-	   No instruction text here.
-	*/
-
-	OutString += '</body>';
-	OutString += '</html>';
-
-	TopFrame.document.clear();
-	TopFrame.document.open();
-	TopFrame.document.write(OutString);
-	TopFrame.document.close();
+.feedback {
+    text-align: center;
+    color: #ff8040;
+    font-size: 14px;
+    margin-bottom: 15px;
 }
 
-
-function BuildSelector(){
-
-	DropDownList = '<select name="sel[INum]" ';
-	DropDownList += 'style="background-color:#FFFFCC; color:#000000; ';
-	DropDownList += 'border:1px solid #FF9900;">';
-
-	DropDownList += '<option value="??? ">??? </option>';
-
-	for (var i=0; i<RItems.length; i++){
-
-		DropDownList += '<option value="' +
-		EscapeDoubleQuotes(RItems[i][0]) +
-		'">' +
-		RItems[i][0] +
-		'</option>';
-	}
-
-	DropDownList += '</select>';
+.exercise {
+    width: fit-content;
+    margin: 0 auto;
 }
 
-
-function StartUp(){
-
-	CorrectIndicator = '<nobr>' + CorrectIndicator + '</nobr>';
-	IncorrectIndicator = '<nobr>' + IncorrectIndicator + '</nobr>';
-
-	// Write navigation to top frame
-	WriteFeedback('');
-
-	// Create the right-item/distractor array
-	var DuplicateItem = false;
-
-	for (var i=0; i<I.length; i++){
-
-		if (I[i][2] < 1){
-
-			if (I[i][0].length > 0){
-				TotalUnfixedLeftItems++;
-			}
-
-			DuplicateItem = false;
-
-			for (var j=0; j<RItems.length; j++){
-
-				if (I[i][1] == RItems[j][0]){
-
-					DuplicateItem = true;
-
-					RItems[j][1][RItems[j][1].length] = i;
-				}
-			}
-
-			if (DuplicateItem == false){
-
-				RItems[RItems.length] = new Array();
-
-				RItems[RItems.length-1][0] = I[i][1];
-
-				RItems[RItems.length-1][1] = new Array();
-
-				RItems[RItems.length-1][1][0] = i;
-			}
-		}
-	}
-
-	RItems = Shuffle(RItems);
-
-
-	for (i=0; i<RItems.length; i++){
-
-		for (j=0; j<RItems[i][1].length; j++){
-
-			I[RItems[i][1][j]][3] = i;
-		}
-	}
-
-
-	BuildSelector();
-
-	CreateStatusArrays();
-
-	BuildExercise();
-
-	DisplayExercise(Exercise);
+.exercise table {
+    border-collapse: separate;
+    border-spacing: 8px 6px;
 }
 
-
-function BuildExercise(){
-
-	var TempRow = '';
-
-	Exercise = '';
-
-	for (var i=0; i<I.length; i++){
-
-		if (I[i][0].length > 0){
-
-			TempRow = IRow;
-
-			TempRow = ReplaceStuff(
-				'[strLeftItem]',
-				I[i][0],
-				TempRow
-			);
-
-			if ((I[i][2] < 1)&&(Status[i][0] < 1)){
-
-				TempRow = ReplaceStuff(
-					'[strRightItem]',
-					DropDownList,
-					TempRow
-				);
-			}
-			else{
-
-				TempRow = ReplaceStuff(
-					'[strRightItem]',
-					I[i][1],
-					TempRow
-				);
-			}
-
-
-			if ((I[i][2] < 1)&&(Status[i][1] > 0)){
-
-				if (Status[i][0] < 1){
-
-					TempRow = ReplaceStuff(
-						'[Mark]',
-						IncorrectIndicator,
-						TempRow
-					);
-				}
-				else{
-
-					TempRow = ReplaceStuff(
-						'[Mark]',
-						CorrectIndicator,
-						TempRow
-					);
-				}
-			}
-			else{
-
-				TempRow = ReplaceStuff(
-					'[Mark]',
-					'',
-					TempRow
-				);
-			}
-
-
-			TempRow = ReplaceStuff(
-				'[INum]',
-				i,
-				TempRow
-			);
-
-			Exercise += TempRow;
-		}
-	}
-
-
-	Exercise += CheckButton;
-
-	Exercise = TableOpener + Exercise + TableCloser;
+.exercise td {
+    vertical-align: top;
 }
 
-
-/*
-   EXERCISE CONTENT
-*/
-
-I = new Array();
-
-I[0] = new Array();
-I[0][0] = 'to update<br />';
-I[0][1] = 'mettre &#224; jour';
-I[0][2] = 0;
-
-I[1] = new Array();
-I[1][0] = 'to cross one\'s fingers<br />';
-I[1][1] = 'croiser les doigts';
-I[1][2] = 0;
-
-I[2] = new Array();
-I[2][0] = 'to keep body & soul together<br />';
-I[2][1] = 'survivre';
-I[2][2] = 0;
-
-I[3] = new Array();
-I[3][0] = 'to keep oneself to oneself<br />';
-I[3][1] = '&#234;tre repli&#233; sur soi';
-I[3][2] = 0;
-
-I[4] = new Array();
-I[4][0] = 'to beat about the bush<br />';
-I[4][1] = 'tourner autour du pot';
-I[4][2] = 0;
-
-I[5] = new Array();
-I[5][0] = 'to keep up appearances<br />';
-I[5][1] = 'sauver les apparences';
-I[5][2] = 0;
-
-I[6] = new Array();
-I[6][0] = 'to keep a straight face<br />';
-I[6][1] = 'rester impassible';
-I[6][2] = 0;
-
-I[7] = new Array();
-I[7][0] = 'to keep up with the Joneses<br />';
-I[7][1] = 'rivaliser avec son voisin';
-I[7][2] = 0;
-
-I[8] = new Array();
-I[8][0] = 'to keep a stiff upper lip<br />';
-I[8][1] = 'garder son sang froid';
-I[8][2] = 0;
-
-I[9] = new Array();
-I[9][0] = 'to kill two birds with one stone';
-I[9][1] = 'faire d\'une pierre deux coups';
-I[9][2] = 0;
-
-
-Status = new Array();
-
-RItems = new Array();
-
-
-function CreateStatusArrays(){
-
-	for (var x=0; x<I.length; x++){
-
-		Status[x] = new Array();
-
-		Status[x][0] = 0;
-		Status[x][1] = 0;
-	}
+.left-item {
+    color: #ff8040;
+    text-align: right;
+    padding-right: 20px;
+    white-space: nowrap;
 }
 
-
-function ReplaceStuff(Token, Replacement, InString){
-
-	var i = InString.indexOf(Token);
-
-	var FirstBit = '';
-	var LastBit = '';
-
-	while (i>-1){
-
-		FirstBit = InString.substring(0, i);
-
-		LastBit = InString.substring(
-			i + Token.length,
-			InString.length
-		);
-
-		InString = FirstBit + Replacement + LastBit;
-
-		i = InString.indexOf(Token);
-	}
-
-	return InString;
+.answer {
+    text-align: left;
+    white-space: nowrap;
 }
 
-
-function EscapeDoubleQuotes(InString){
-
-	var Result = '';
-
-	for (var i=0; i<InString.length; i++){
-
-		if (InString.charAt(i) == '"'){
-			Result += '&quot;';
-		}
-		else{
-			Result += InString.charAt(i);
-		}
-	}
-
-	return Result;
+.mark {
+    padding-left: 5px;
+    white-space: nowrap;
 }
 
-
-function DisplayExercise(StuffToDisplay){
-
-	var OutString = '';
-
-	OutString += '<html>';
-
-	OutString += '<head>';
-
-	OutString += '<style>';
-
-	OutString += 'body {';
-	OutString += 'background-color:#000000;';
-	OutString += 'color:#FFFF00;';
-	OutString += 'font-family:Arial,sans-serif;';
-	OutString += 'font-size:14px;';
-	OutString += 'margin:0;';
-	OutString += 'padding:0;';
-	OutString += '}';
-
-	OutString += 'select {';
-	OutString += 'background-color:#FFFFCC;';
-	OutString += 'color:#000000;';
-	OutString += 'font-family:Arial,sans-serif;';
-	OutString += '}';
-
-	OutString += '</style>';
-
-	OutString += '</head>';
-
-	OutString += '<body>';
-
-	/*
-	   Navigation at the top
-	*/
-
-	OutString += NavBar;
-
-	/*
-	   Exercise title
-	*/
-
-	OutString += TitleCode;
-
-	/*
-	   Exercise itself
-	*/
-
-	OutString += '<div style="text-align:center;">';
-
-	OutString += '<font face="Geneva,Arial" size="-1">';
-
-	OutString += StuffToDisplay;
-
-	OutString += '</font>';
-
-	OutString += '</div>';
-
-	/*
-	   No navigation at the bottom
-	*/
-
-	OutString += '</body>';
-
-	OutString += '</html>';
-
-
-	if (is.CRAPBrowser){
-		OutString=ResolveAllURLs(OutString);
-	}
-
-
-	BottomFrame.document.clear();
-	BottomFrame.document.open();
-	BottomFrame.document.write(OutString);
-	BottomFrame.document.close();
+.check {
+    text-align: center;
+    padding-top: 15px;
 }
 
+.check button {
+    font-size: 14px;
+    padding: 4px 12px;
+    cursor: pointer;
+}
+</style>
 
-function GetAnswer(INum){
+<script>
+var I = [
+    ['a blessing in disguise', 'un mal pour un bien'],
+    ['a piece of cake', 'très facile'],
+    ['actions speak louder than words', 'les actes valent mieux que les paroles'],
+    ['better late than never', 'mieux vaut tard que jamais'],
+    ['every cloud has a silver lining', 'à quelque chose malheur est bon'],
+    ['to kill two birds with one stone', 'faire d’une pierre deux coups'],
+    ['once in a blue moon', 'très rarement'],
+    ['the early bird catches the worm', 'le monde appartient à ceux qui se lèvent tôt'],
+    ['when pigs fly', 'quand les poules auront des dents'],
+    ['you can’t judge a book by its cover', 'l’habit ne fait pas le moine']
+];
 
-	var Result = -1;
+var answers = [];
+var status = [];
+var penalties = 0;
+var totalCorrect = 0;
 
-	var s = eval(
-		'BottomFrame.document.QForm.sel' + INum
-	);
+function shuffle(array) {
+    var result = array.slice();
 
-	if (s != null){
-		Result = s.selectedIndex - 1;
-	}
+    for (var i = result.length - 1; i > 0; i--) {
+        var j = Math.floor(Math.random() * (i + 1));
+        var temp = result[i];
+        result[i] = result[j];
+        result[j] = temp;
+    }
 
-	return Result;
+    return result;
 }
 
+function startExercise() {
+    answers = [];
 
-function CheckAnswers(){
+    for (var i = 0; i < I.length; i++) {
+        answers.push(I[i][1]);
+        status[i] = {
+            correct: false,
+            attempted: false
+        };
+    }
 
-	var AllDone = true;
-
-	TotCorrectChoices = 0;
-
-	for (var i=0; i<I.length; i++){
-
-		if ((I[i][2] < 1)&&(I[i][0].length > 0)){
-
-			if (Status[i][0] < 1){
-
-				Status[i][1]++;
-
-				if (GetAnswer(i) == I[i][3]){
-
-					Status[i][0] = 1;
-				}
-
-				else{
-
-					AllDone = false;
-				}
-			}
-
-			if (Status[i][0] == 1){
-
-				TotCorrectChoices++;
-			}
-		}
-	}
-
-
-	var Score = Math.floor(
-		((TotCorrectChoices-Penalties) /
-		TotalUnfixedLeftItems) * 100
-	);
-
-	var Feedback = '';
-
-
-	if (AllDone == true){
-
-		Feedback =
-			CorrectResponse +
-			'<br />' +
-			YourScoreIs +
-			Score +
-			'%.';
-	}
-
-	else{
-
-		Feedback =
-			IncorrectResponse +
-			'<br />' +
-			YourScoreIs +
-			Score +
-			'%.';
-
-		Penalties++;
-	}
-
-
-	/*
-	   We don't display feedback in the top frame anymore.
-	   The exercise simply updates.
-	*/
-
-	BuildExercise();
-
-	DisplayExercise(Exercise);
+    answers = shuffle(answers);
+    buildExercise();
 }
 
+function buildExercise() {
+    var html = '<table>';
 
-function Blank(){
+    for (var i = 0; i < I.length; i++) {
 
-	return '<html><body></body></html>';
+        html += '<tr>';
+
+        html += '<td class="left-item">';
+        html += I[i][0];
+        html += '</td>';
+
+        html += '<td class="answer">';
+
+        if (status[i].correct) {
+
+            html += I[i][1];
+
+        } else {
+
+            html += '<select id="answer' + i + '">';
+            html += '<option value="">???</option>';
+
+            for (var j = 0; j < answers.length; j++) {
+                html += '<option value="' + escapeQuotes(answers[j]) + '">';
+                html += answers[j];
+                html += '</option>';
+            }
+
+            html += '</select>';
+        }
+
+        html += '</td>';
+
+        html += '<td class="mark">';
+
+        if (status[i].attempted) {
+            html += status[i].correct ? ':-)' : 'X';
+        }
+
+        html += '</td>';
+        html += '</tr>';
+    }
+
+    html += '<tr>';
+    html += '<td colspan="3" class="check">';
+    html += '<button onclick="checkAnswers()">Check</button>';
+    html += '</td>';
+    html += '</tr>';
+
+    html += '</table>';
+
+    document.getElementById('exercise').innerHTML = html;
 }
 
-//-->
+function escapeQuotes(text) {
+    return text.replace(/"/g, '&quot;');
+}
 
-//]]>
+function checkAnswers() {
+    var allDone = true;
+    totalCorrect = 0;
 
+    for (var i = 0; i < I.length; i++) {
+
+        if (status[i].correct) {
+            totalCorrect++;
+            continue;
+        }
+
+        var select = document.getElementById('answer' + i);
+
+        if (!select) continue;
+
+        status[i].attempted = true;
+
+        if (select.value === I[i][1]) {
+            status[i].correct = true;
+            totalCorrect++;
+        } else {
+            allDone = false;
+        }
+    }
+
+    var score = Math.floor(
+        ((totalCorrect - penalties) / I.length) * 100
+    );
+
+    if (score < 0) score = 0;
+
+    if (allDone) {
+        document.getElementById('feedback').innerHTML =
+            'Correct! Well done.<br>Your score is ' + score + '%.';
+    } else {
+        document.getElementById('feedback').innerHTML =
+            'Sorry! Try again.<br>Your score is ' + score + '%.';
+        penalties++;
+    }
+
+    buildExercise();
+}
 </script>
-
 </head>
 
+<body onload="startExercise()">
 
-<frameset
-	rows="0,*"
-	framespacing="0"
-	border="0"
-	onload="StartUp()">
+<div class="navigation">
+    <button onclick="window.location.href='proverbs4.htm'">&lt;</button>
 
-	<frame
-		src="javascript:parent.Blank()"
-		frameborder="0"
-		name="TopFrame">
+    <span class="index">
+        <button onclick="window.location.href='../index.html'">INDEX</button>
+    </span>
 
-	<frame
-		src="javascript:parent.Blank()"
-		frameborder="0"
-		name="BottomFrame">
+    <button onclick="window.location.href='proverbs2.htm'">&gt;</button>
+</div>
 
-</frameset>
+<div class="title">
+    Proverbs & Expressions 1
+</div>
 
+<div class="subtitle">
+    Matching exercise
+</div>
 
+<div id="feedback" class="feedback"></div>
+
+<div id="exercise" class="exercise"></div>
+
+</body>
 </html>
