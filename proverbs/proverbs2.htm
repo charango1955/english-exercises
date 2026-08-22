@@ -1,832 +1,278 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-
-<meta name="author" content="Created with Hot Potatoes by Half-Baked Software, registered to Armando Vezza.">
-<meta name="keywords" content="Hot Potatoes, Half-Baked Software, Windows, University of Victoria">
-
+<meta charset="UTF-8">
 <title>Proverbs & Expressions 2</title>
 
-<script language="javascript" type="text/javascript">
-
-//<![CDATA[
-
-// =========================================================
-// BrowserCheck
-// =========================================================
-
-function BrowserCheck() {
-	var b = navigator.appName;
-	this.mac = (navigator.appVersion.indexOf('Mac') != -1);
-
-	if (b=="Netscape") this.b = "ns";
-	else if (b=="Microsoft Internet Explorer") this.b = "ie";
-	else this.b = b;
-
-	this.version = navigator.appVersion;
-	this.v = parseInt(this.version);
-
-	this.ns = (this.b=="ns" && this.v>=4);
-	this.ns4 = (this.b=="ns" && this.v==4);
-	this.ns5 = (this.b=="ns" && this.v==5);
-	this.ie = (this.b=="ie" && this.v>=4);
-	this.ie4 = (this.version.indexOf('MSIE 4')>0);
-	this.ie5 = (this.version.indexOf('MSIE 5')>0);
-	this.min = (this.ns||this.ie);
-	this.CRAPBrowser = (this.ie && this.mac);
+<style>
+body {
+    background-color: #000000;
+    color: #ff8040;
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0;
+    padding: 0;
 }
 
-is = new BrowserCheck();
-
-var LocFolder = GetFolder(window.location.href);
-
-function GetFolder(LocPath){
-	LocPath = ReplaceStuff('\'','%27',LocPath);
-	var i = LocPath.lastIndexOf('/');
-
-	if (i<0){
-		i=LocPath.lastIndexOf('\\');
-	}
-
-	return LocPath.substring(0,i);
+.navigation {
+    text-align: center;
+    margin-top: 15px;
+    margin-bottom: 40px;
 }
 
-function CombineURLs(InURL){
-	var i = InURL.indexOf('../');
-	var s = LocFolder;
-
-	while (i >- 1){
-		s = GetFolder(s);
-		InURL = InURL.substring(3,InURL.length);
-		i = InURL.indexOf('../');
-	}
-
-	return s + '/' + InURL;
+.navigation button {
+    background-color: #000000;
+    color: #ff8040;
+    border: 1px solid #ff8040;
+    font-size: 14px;
+    padding: 4px 12px;
+    cursor: pointer;
 }
 
-x = new Array();
-
-function ResolveURLs(InText,Attribute){
-
-	x.length=0;
-
-	var Temp = InText.toLowerCase();
-	var z;
-	var AttLen = Attribute.length + 2;
-	var y=Temp.lastIndexOf(Attribute + '="');
-
-	while (y>-1){
-
-		var sLoc = y+AttLen;
-
-		if (Temp.substring(sLoc,sLoc+5) != 'http:'){
-
-			x[x.length]=new Array();
-			x[x.length-1][0] = sLoc;
-
-			z = Temp.indexOf('"',sLoc);
-
-			x[x.length-1][1] = z;
-			x[x.length-1][2] = InText.substring(sLoc,z);
-		}
-
-		Temp = Temp.substring(0,y);
-		y=Temp.lastIndexOf(Attribute + '="');
-	}
-
-	for (var j=0; j<x.length; j++){
-
-		InText =
-			InText.substring(0,x[j][0]) +
-			CombineURLs(x[j][2]) +
-			InText.substring(x[j][1], InText.length);
-	}
-
-	return InText;
+.navigation button:hover {
+    background-color: #ff8040;
+    color: #000000;
 }
 
-function ResolveAllURLs(Stuff){
-
-	Stuff = ResolveURLs(Stuff,'href');
-	Stuff = ResolveURLs(Stuff,'src');
-	Stuff = ResolveURLs(Stuff,'parent.location');
-
-	return Stuff;
+.navigation .index {
+    margin-left: 25px;
+    margin-right: 25px;
 }
 
-
-// =========================================================
-// Exercise variables
-// =========================================================
-
-var CorrectIndicator = ':-)';
-var IncorrectIndicator = 'X';
-
-var YourScoreIs = 'Your score is ';
-
-var CorrectResponse = 'Correct! Well done.';
-
-var IncorrectResponse =
-	'Sorry! Try again. Incorrect matches have been removed.';
-
-var TotalUnfixedLeftItems = 0;
-var TotCorrectChoices = 0;
-var Penalties = 0;
-
-var ExerciseTitle = 'Proverbs & Expressions 2';
-var ExerciseSubtitle = 'Matching exercise';
-
-var Instructions =
-	'Match the items on the right with the items on the left.';
-
-var DefaultResponse = '[strDefaultResponse]';
-var ReadingURL = '';
-
-var PreviousPage = history.length;
-
-
-// =========================================================
-// NAVIGATION
-// =========================================================
-
-var NavBar = '';
-
-NavBar += '<div style="text-align:center; padding-top:10px; padding-bottom:25px;">';
-
-NavBar += '<a href="proverbs1.htm" target="_top" ';
-NavBar += 'style="color:#FFFF00; text-decoration:none; ';
-NavBar += 'font-size:32px; font-weight:bold; margin:0 30px;">';
-NavBar += '&#8592;';
-NavBar += '</a>';
-
-NavBar += '<a href="../index.html" target="_top" ';
-NavBar += 'style="color:#FFFF00; text-decoration:none; ';
-NavBar += 'font-size:26px; font-weight:bold; margin:0 30px;">';
-NavBar += 'INDEX';
-NavBar += '</a>';
-
-NavBar += '<a href="proverbs3.htm" target="_top" ';
-NavBar += 'style="color:#FFFF00; text-decoration:none; ';
-NavBar += 'font-size:32px; font-weight:bold; margin:0 30px;">';
-NavBar += '&#8594;';
-NavBar += '</a>';
-
-NavBar += '</div>';
-
-
-// =========================================================
-// TITLE
-// =========================================================
-
-var TitleCode = '';
-
-TitleCode += '<div style="text-align:center; ';
-TitleCode += 'background-color:#000000; ';
-TitleCode += 'padding:10px;">';
-
-TitleCode += '<div style="font-size:22px; ';
-TitleCode += 'font-family:Arial,sans-serif; ';
-TitleCode += 'font-weight:bold; ';
-TitleCode += 'color:#FF9900;">';
-
-TitleCode += ExerciseTitle;
-
-TitleCode += '</div>';
-
-TitleCode += '<div style="font-size:14px; ';
-TitleCode += 'font-family:Arial,sans-serif; ';
-TitleCode += 'color:#FFFF00; ';
-TitleCode += 'margin-top:5px;">';
-
-TitleCode += ExerciseSubtitle;
-
-TitleCode += '</div>';
-
-TitleCode += '</div>';
-
-
-// =========================================================
-// EXERCISE FORMATTING
-// =========================================================
-
-var TableOpener = '<center><form name="QForm">';
-TableOpener += '<table border="0">';
-
-var IRow = '';
-
-IRow += '<tr>';
-
-IRow += '<td valign="top" bgcolor="#000000">';
-IRow += '<font face="Geneva,Arial" color="#FF9900">';
-IRow += '[strLeftItem]';
-IRow += '</font>';
-IRow += '</td>';
-
-IRow += '<td valign="top" bgcolor="#000000">';
-IRow += '<font face="Geneva,Arial" color="#FF9900">';
-IRow += '&nbsp;&nbsp;&nbsp;&nbsp;';
-IRow += '[strRightItem]';
-IRow += '</font>';
-IRow += '</td>';
-
-IRow += '<td valign="top" bgcolor="#000000">';
-IRow += '<font face="Geneva,Arial" color="#FFFF00">';
-IRow += '&nbsp;&nbsp;&nbsp;[Mark]';
-IRow += '</font>';
-IRow += '</td>';
-
-IRow += '</tr>';
-
-
-var CheckButton = '';
-
-CheckButton += '<tr>';
-CheckButton += '<td valign="top" align="center" ';
-CheckButton += 'bgcolor="#000000" colspan="3">';
-CheckButton += '<br />';
-
-CheckButton += '<input type="button" value="Check" ';
-CheckButton += 'style="background-color:#FF9900; ';
-CheckButton += 'color:#000000; ';
-CheckButton += 'border:2px solid #FFFF00; ';
-CheckButton += 'padding:5px 12px; ';
-CheckButton += 'font-weight:bold;" ';
-CheckButton += 'OnClick="parent.CheckAnswers()">';
-
-CheckButton += '</input>';
-
-CheckButton += '</td>';
-CheckButton += '</tr>';
-
-TableCloser = '</table></form></center>';
-
-var DropDownList = '';
-var Exercise = '';
-
-
-// =========================================================
-// Shuffle
-// =========================================================
-
-function Shuffle(InArray){
-
-	Temp = new Array();
-
-	var Len = InArray.length;
-	var j = Len;
-
-	for (var i=0; i<Len; i++){
-		Temp[i] = InArray[i];
-	}
-
-	for (i=0; i<Len; i++){
-
-		Num = Math.floor(j * Math.random());
-
-		InArray[i] = Temp[Num];
-
-		for (var k=Num; k < j; k++) {
-			Temp[k] = Temp[k+1];
-		}
-
-		j--;
-	}
-
-	return InArray;
+.title {
+    text-align: center;
+    color: #ffff00;
+    font-size: 22px;
+    margin-bottom: 5px;
 }
 
-
-// =========================================================
-// Navigation frame
-// =========================================================
-
-function WriteFeedback(Feedback){
-
-	var OutString = '';
-
-	OutString += '<html>';
-
-	OutString += '<body bgcolor="#000000" ';
-	OutString += 'text="#FFFF00" ';
-	OutString += 'style="margin:0; padding:0;">';
-
-	/*
-	   Only navigation is written here.
-	   The instruction text is deliberately NOT displayed.
-	*/
-
-	OutString += NavBar;
-
-	OutString += '</body>';
-	OutString += '</html>';
-
-	TopFrame.document.clear();
-	TopFrame.document.open();
-	TopFrame.document.write(OutString);
-	TopFrame.document.close();
+.subtitle {
+    text-align: center;
+    color: #ffff00;
+    font-size: 14px;
+    margin-bottom: 30px;
 }
 
-
-// =========================================================
-// Build selector
-// =========================================================
-
-function BuildSelector(){
-
-	DropDownList = '';
-
-	DropDownList += '<select name="sel[INum]" ';
-	DropDownList += 'style="background-color:#FFFFCC; ';
-	DropDownList += 'color:#000000;">';
-
-	DropDownList += '<option value="??? ">??? </option>';
-
-	for (var i=0; i<RItems.length; i++){
-
-		DropDownList += '<option value="' +
-		EscapeDoubleQuotes(RItems[i][0]) +
-		'">' +
-		RItems[i][0] +
-		'</option>';
-	}
-
-	DropDownList += '</select>';
+.feedback {
+    text-align: center;
+    color: #ff8040;
+    font-size: 14px;
+    margin-bottom: 15px;
 }
 
-
-// =========================================================
-// StartUp
-// =========================================================
-
-function StartUp(){
-
-	CorrectIndicator =
-		'<nobr>' + CorrectIndicator + '</nobr>';
-
-	IncorrectIndicator =
-		'<nobr>' + IncorrectIndicator + '</nobr>';
-
-	WriteFeedback('');
-
-	var DuplicateItem = false;
-
-	for (var i=0; i<I.length; i++){
-
-		if (I[i][2] < 1){
-
-			if (I[i][0].length > 0){
-				TotalUnfixedLeftItems++;
-			}
-
-			DuplicateItem = false;
-
-			for (var j=0; j<RItems.length; j++){
-
-				if (I[i][1] == RItems[j][0]){
-
-					DuplicateItem = true;
-
-					RItems[j][1][RItems[j][1].length] = i;
-				}
-			}
-
-			if (DuplicateItem == false){
-
-				RItems[RItems.length] = new Array();
-
-				RItems[RItems.length-1][0] = I[i][1];
-
-				RItems[RItems.length-1][1] =
-					new Array();
-
-				RItems[RItems.length-1][1][0] = i;
-			}
-		}
-	}
-
-	RItems = Shuffle(RItems);
-
-	for (i=0; i<RItems.length; i++){
-
-		for (j=0; j<RItems[i][1].length; j++){
-
-			I[RItems[i][1][j]][3] = i;
-		}
-	}
-
-	BuildSelector();
-
-	CreateStatusArrays();
-
-	BuildExercise();
-
-	DisplayExercise(Exercise);
+.exercise {
+    width: fit-content;
+    margin: 0 auto;
 }
 
-
-// =========================================================
-// Build exercise
-// =========================================================
-
-function BuildExercise(){
-
-	var TempRow = '';
-
-	Exercise = '';
-
-	for (var i=0; i<I.length; i++){
-
-		if (I[i][0].length > 0){
-
-			TempRow = IRow;
-
-			TempRow =
-				ReplaceStuff(
-					'[strLeftItem]',
-					I[i][0],
-					TempRow
-				);
-
-			if ((I[i][2] < 1)&&(Status[i][0] < 1)){
-
-				TempRow =
-					ReplaceStuff(
-						'[strRightItem]',
-						DropDownList,
-						TempRow
-					);
-			}
-			else{
-
-				TempRow =
-					ReplaceStuff(
-						'[strRightItem]',
-						I[i][1],
-						TempRow
-					);
-			}
-
-			if ((I[i][2] < 1)&&(Status[i][1] > 0)){
-
-				if (Status[i][0] < 1){
-
-					TempRow =
-						ReplaceStuff(
-							'[Mark]',
-							IncorrectIndicator,
-							TempRow
-						);
-				}
-				else{
-
-					TempRow =
-						ReplaceStuff(
-							'[Mark]',
-							CorrectIndicator,
-							TempRow
-						);
-				}
-			}
-			else{
-
-				TempRow =
-					ReplaceStuff(
-						'[Mark]',
-						'',
-						TempRow
-					);
-			}
-
-			TempRow =
-				ReplaceStuff(
-					'[INum]',
-					i,
-					TempRow
-				);
-
-			Exercise += TempRow;
-		}
-	}
-
-	Exercise += CheckButton;
-
-	Exercise =
-		TableOpener +
-		Exercise +
-		TableCloser;
+.exercise table {
+    border-collapse: separate;
+    border-spacing: 8px 6px;
 }
 
-
-// =========================================================
-// EXERCISE CONTENT
-// =========================================================
-
-I = new Array();
-
-I[0] = new Array();
-I[0][0] = 'to let the cat out of the bag<br />';
-I[0][1] = 'r&#233;v&#233;ler un secret';
-I[0][2] = 0;
-
-I[1] = new Array();
-I[1][0] = 'to make a living<br />';
-I[1][1] = 'gagner sa vie';
-I[1][2] = 0;
-
-I[2] = new Array();
-I[2][0] = 'to make  ends meet<br />';
-I[2][1] = 'joindre les deux bouts';
-I[2][2] = 0;
-
-I[3] = new Array();
-I[3][0] = 'to make the most of sth<br />';
-I[3][1] = 'tirer le meilleur parti de qqchose';
-I[3][2] = 0;
-
-I[4] = new Array();
-I[4][0] = 'to pull someone\'s leg<br />';
-I[4][1] = 'faire \'marcher\' quelqu\'un';
-I[4][2] = 0;
-
-I[5] = new Array();
-I[5][0] = 'to put something right<br />';
-I[5][1] = 'remettre les choses en ordre';
-I[5][2] = 0;
-
-I[6] = new Array();
-I[6][0] = 'to rack one\'s brains<br />';
-I[6][1] = 'se creuser la t&#234;te';
-I[6][2] = 0;
-
-I[7] = new Array();
-I[7][0] = 'it rings a bell<br />';
-I[7][1] = '&#231;a me dit quelque chose';
-I[7][2] = 0;
-
-I[8] = new Array();
-I[8][0] = 'to see life through rose-coloured spectacles<br />';
-I[8][1] = 'voir la vie en rose';
-I[8][2] = 0;
-
-I[9] = new Array();
-I[9][0] = 'to toe the line<br />';
-I[9][1] = '&#234;tre docile';
-I[9][2] = 0;
-
-
-Status = new Array();
-RItems = new Array();
-
-
-function CreateStatusArrays(){
-
-	for (var x=0; x<I.length; x++){
-
-		Status[x] = new Array();
-
-		Status[x][0] = 0;
-		Status[x][1] = 0;
-	}
+.exercise td {
+    vertical-align: top;
 }
 
-
-// =========================================================
-// Utility functions
-// =========================================================
-
-function ReplaceStuff(Token, Replacement, InString){
-
-	var i = InString.indexOf(Token);
-
-	var FirstBit = '';
-	var LastBit = '';
-
-	while (i>-1){
-
-		FirstBit =
-			InString.substring(0, i);
-
-		LastBit =
-			InString.substring(
-				i + Token.length,
-				InString.length
-			);
-
-		InString =
-			FirstBit +
-			Replacement +
-			LastBit;
-
-		i = InString.indexOf(Token);
-	}
-
-	return InString;
+.left-item {
+    color: #ff8040;
+    text-align: right;
+    padding-right: 20px;
+    white-space: nowrap;
 }
 
-
-function EscapeDoubleQuotes(InString){
-
-	var Result = '';
-
-	for (var i=0; i<InString.length; i++){
-
-		if (InString.charAt(i) == '"'){
-
-			Result += '&quot;';
-		}
-		else{
-
-			Result += InString.charAt(i);
-		}
-	}
-
-	return Result;
+.answer {
+    text-align: left;
+    white-space: nowrap;
 }
 
-
-// =========================================================
-// Display exercise
-// =========================================================
-
-function DisplayExercise(StuffToDisplay){
-
-	var OutString = '';
-
-	OutString += '<html>';
-
-	OutString += '<body bgcolor="#000000" ';
-	OutString += 'text="#FFFF00" ';
-	OutString += 'style="margin:0; padding:10px; ';
-	OutString += 'font-family:Arial,sans-serif;">';
-
-
-	/* Title */
-
-	OutString += TitleCode;
-
-
-	/* Gap */
-
-	OutString += '<div style="height:15px;"></div>';
-
-
-	/* Exercise */
-
-	OutString += '<div style="text-align:center;">';
-
-	OutString +=
-		'<font face="Geneva,Arial" ' +
-		'size="-1" color="#FF9900">';
-
-	OutString += StuffToDisplay;
-
-	OutString += '</font>';
-
-	OutString += '</div>';
-
-
-	OutString += '</body></html>';
-
-
-	if (is.CRAPBrowser){
-		OutString =
-			ResolveAllURLs(OutString);
-	}
-
-
-	BottomFrame.document.clear();
-	BottomFrame.document.open();
-	BottomFrame.document.write(OutString);
-	BottomFrame.document.close();
+.mark {
+    padding-left: 5px;
+    white-space: nowrap;
 }
 
-
-// =========================================================
-// Get answer
-// =========================================================
-
-function GetAnswer(INum){
-
-	var Result = -1;
-
-	var s =
-		eval(
-			'BottomFrame.document.QForm.sel' +
-			INum
-		);
-
-	if (s != null){
-
-		Result =
-			s.selectedIndex - 1;
-	}
-
-	return Result;
+.check {
+    text-align: center;
+    padding-top: 15px;
 }
 
+.check button {
+    font-size: 14px;
+    padding: 4px 12px;
+    cursor: pointer;
+}
+</style>
 
-// =========================================================
-// Check answers
-// =========================================================
+<script>
+var I = [
+    ['to let the cat out of the bag', 'révéler un secret'],
+    ['to make a living', 'gagner sa vie'],
+    ['to make ends meet', 'joindre les deux bouts'],
+    ['to make the most of sth', 'tirer le meilleur parti de qqchose'],
+    ['to pull someone’s leg', 'faire “marcher” quelqu’un'],
+    ['to put something right', 'remettre les choses en ordre'],
+    ['to rack one’s brains', 'se creuser la tête'],
+    ['it rings a bell', 'ça me dit quelque chose'],
+    ['to see life through rose-coloured spectacles', 'voir la vie en rose'],
+    ['to toe the line', 'être docile']
+];
 
-function CheckAnswers(){
+var answers = [];
+var status = [];
+var penalties = 0;
+var totalCorrect = 0;
 
-	var AllDone = true;
+function shuffle(array) {
+    var result = array.slice();
 
-	TotCorrectChoices = 0;
+    for (var i = result.length - 1; i > 0; i--) {
+        var j = Math.floor(Math.random() * (i + 1));
+        var temp = result[i];
+        result[i] = result[j];
+        result[j] = temp;
+    }
 
-
-	for (var i=0; i<I.length; i++){
-
-		if (
-			(I[i][2] < 1) &&
-			(I[i][0].length > 0)
-		){
-
-			if (Status[i][0] < 1){
-
-				Status[i][1]++;
-
-
-				if (GetAnswer(i) == I[i][3]){
-
-					Status[i][0] = 1;
-				}
-				else{
-
-					AllDone = false;
-				}
-			}
-
-
-			if (Status[i][0] == 1){
-
-				TotCorrectChoices++;
-			}
-		}
-	}
-
-
-	var Score =
-		Math.floor(
-			((TotCorrectChoices-Penalties) /
-			TotalUnfixedLeftItems) * 100
-		);
-
-
-	if (AllDone == true){
-
-		Penalties = 0;
-	}
-	else{
-
-		Penalties++;
-	}
-
-
-	BuildExercise();
-
-	DisplayExercise(Exercise);
+    return result;
 }
 
+function startExercise() {
+    answers = [];
 
-// =========================================================
-// Blank frame
-// =========================================================
+    for (var i = 0; i < I.length; i++) {
+        answers.push(I[i][1]);
+        status[i] = {
+            correct: false,
+            attempted: false
+        };
+    }
 
-function Blank(){
-
-	return '<html>' +
-		'<body bgcolor="#000000">' +
-		'</body></html>';
+    answers = shuffle(answers);
+    buildExercise();
 }
 
+function buildExercise() {
+    var html = '<table>';
 
-//]]>
+    for (var i = 0; i < I.length; i++) {
 
+        html += '<tr>';
+
+        html += '<td class="left-item">';
+        html += I[i][0];
+        html += '</td>';
+
+        html += '<td class="answer">';
+
+        if (status[i].correct) {
+            html += I[i][1];
+        } else {
+
+            html += '<select id="answer' + i + '">';
+            html += '<option value="">???</option>';
+
+            for (var j = 0; j < answers.length; j++) {
+                html += '<option value="' + escapeQuotes(answers[j]) + '">';
+                html += answers[j];
+                html += '</option>';
+            }
+
+            html += '</select>';
+        }
+
+        html += '</td>';
+
+        html += '<td class="mark">';
+
+        if (status[i].attempted) {
+            html += status[i].correct ? ':-)' : 'X';
+        }
+
+        html += '</td>';
+        html += '</tr>';
+    }
+
+    html += '<tr>';
+    html += '<td colspan="3" class="check">';
+    html += '<button onclick="checkAnswers()">Check</button>';
+    html += '</td>';
+    html += '</tr>';
+
+    html += '</table>';
+
+    document.getElementById('exercise').innerHTML = html;
+}
+
+function escapeQuotes(text) {
+    return text.replace(/"/g, '&quot;');
+}
+
+function checkAnswers() {
+    var allDone = true;
+    totalCorrect = 0;
+
+    for (var i = 0; i < I.length; i++) {
+
+        if (status[i].correct) {
+            totalCorrect++;
+            continue;
+        }
+
+        var select = document.getElementById('answer' + i);
+
+        if (!select) continue;
+
+        status[i].attempted = true;
+
+        if (select.value === I[i][1]) {
+            status[i].correct = true;
+            totalCorrect++;
+        } else {
+            allDone = false;
+        }
+    }
+
+    var score = Math.floor(
+        ((totalCorrect - penalties) / I.length) * 100
+    );
+
+    if (score < 0) score = 0;
+
+    if (allDone) {
+        document.getElementById('feedback').innerHTML =
+            'Correct! Well done.<br>Your score is ' + score + '%.';
+    } else {
+        document.getElementById('feedback').innerHTML =
+            'Sorry! Try again.<br>Your score is ' + score + '%.';
+        penalties++;
+    }
+
+    buildExercise();
+}
 </script>
-
 </head>
 
+<body onload="startExercise()">
 
-<frameset
-	rows="75,*"
-	framespacing="0"
-	border="0"
-	onload="StartUp()">
+<div class="navigation">
+    <button onclick="window.location.href='proverbs1.htm'">&lt;</button>
 
-	<frame
-		src="javascript:parent.Blank()"
-		frameborder="0"
-		name="TopFrame">
-	</frame>
+    <span class="index">
+        <button onclick="window.location.href='../index.html'">INDEX</button>
+    </span>
 
-	<frame
-		src="javascript:parent.Blank()"
-		frameborder="0"
-		name="BottomFrame">
-	</frame>
+    <button onclick="window.location.href='proverbs3.htm'">&gt;</button>
+</div>
 
-</frameset>
+<div class="title">
+    Proverbs & Expressions 2
+</div>
 
+<div class="subtitle">
+    Matching exercise
+</div>
 
+<div id="feedback" class="feedback"></div>
+
+<div id="exercise" class="exercise"></div>
+
+</body>
 </html>
