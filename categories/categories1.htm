@@ -1,291 +1,449 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<HTML>
-<HEAD>
-<TITLE>Categories 1</TITLE>
-<META http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<!DOCTYPE html>
+<html>
+<head>
 
-<SCRIPT language="JavaScript">
-CorrectAnswers = new Array();
-CorrectAnswers[0]=2;
-CorrectAnswers[1]=1;
-CorrectAnswers[2]=6;
-CorrectAnswers[3]=9;
-CorrectAnswers[4]=5;
-CorrectAnswers[5]=10;
-CorrectAnswers[6]=7;
-CorrectAnswers[7]=4;
-CorrectAnswers[8]=8;
-CorrectAnswers[9]=3;
+<meta charset="UTF-8">
+<title>Categories 1</title>
 
-macrightchar=':)';
-macwrongchar=':(';
-winrightchar=':)';
-winwrongchar=':(';
+<script type="text/javascript">
 
-var platform = 'win';
-if (navigator.appVersion.indexOf('Mac') != -1) {platform = 'mac'}
+var CorrectAnswers = new Array();
 
-if (platform == 'mac') {
-    rightchar = unescape(macrightchar);
-    wrongchar = unescape(macwrongchar);
-}
-else {
-    rightchar = unescape(winrightchar);
-    wrongchar = unescape(winwrongchar);
-}
+CorrectAnswers[0] = 2;
+CorrectAnswers[1] = 1;
+CorrectAnswers[2] = 6;
+CorrectAnswers[3] = 9;
+CorrectAnswers[4] = 5;
+CorrectAnswers[5] = 10;
+CorrectAnswers[6] = 7;
+CorrectAnswers[7] = 4;
+CorrectAnswers[8] = 8;
+CorrectAnswers[9] = 3;
 
-function CheckAnswer(){
-    var i = 0;
+var rightchar = ':)';
+var wrongchar = ':(';
+
+function CheckAnswer() {
+
     var TotalCorrect = 0;
-    var Score = 0;
 
-    for (i=0; i<CorrectAnswers.length; i++){
-        if (document.QuizForm.elements[i*2].selectedIndex == CorrectAnswers[i]){
-            document.QuizForm.elements[(i*2)+1].value = rightchar;
+    for (var i = 0; i < CorrectAnswers.length; i++) {
+
+        if (document.QuizForm.elements[i * 2].selectedIndex == CorrectAnswers[i]) {
+
+            document.QuizForm.elements[(i * 2) + 1].value = rightchar;
+
             TotalCorrect++;
         }
-        else{
-            document.QuizForm.elements[(i*2)+1].value = wrongchar;
+
+        else {
+
+            document.QuizForm.elements[(i * 2) + 1].value = wrongchar;
         }
     }
 
-    Score = Math.floor((TotalCorrect*100)/CorrectAnswers.length);
+    var Score = Math.floor(
+        (TotalCorrect * 100) / CorrectAnswers.length
+    );
+
     document.CheckForm.ScoreBox.value = Score + '%';
 }
-</SCRIPT>
-</HEAD>
 
-<BODY bgcolor="#000000" text="#ff8040" link="#ff8040" vlink="#ff0000">
+</script>
 
-<!-- NAVIGATION -->
-<CENTER>
-<TABLE border="0" cellpadding="5" cellspacing="1" width="85%">
-<TR>
-<TD bgcolor="#ff8040" align="center">
-<FONT face="Geneva,Arial" size="-1">
+<style type="text/css">
 
-<A href="../index.html" style="color:#000000; text-decoration:none;">
-Index
-</A>
+body {
+    background-color: #000000;
+    color: #ff8040;
+    font-family: Geneva, Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
 
-&nbsp;&nbsp;
+.navigation {
+    text-align: center;
+    margin-top: 18px;
+    margin-bottom: 30px;
+    font-size: 14px;
+}
 
-<A href="categories2.htm" style="color:#000000; text-decoration:none;">
-&gt;
-</A>
+.navigation a {
+    color: #ff8040;
+    text-decoration: none;
+}
 
-</FONT>
-</TD>
-</TR>
-</TABLE>
-</CENTER>
+.navigation .index {
+    margin-right: 30px;
+}
 
-<CENTER>
-<H2><FONT color="#ffff00">Categories 1</FONT></H2>
-</CENTER>
+.navigation a:hover {
+    text-decoration: underline;
+}
 
-<CENTER>
-<P><B>Match the categories</B></P>
-</CENTER>
+.title {
+    text-align: center;
+    color: #ffff00;
+    font-size: 24px;
+    margin-bottom: 12px;
+}
 
-<FORM name="QuizForm">
-<CENTER>
+.subtitle {
+    text-align: center;
+    color: #ff8040;
+    font-weight: bold;
+    margin-bottom: 25px;
+}
 
-<TABLE cellpadding="5" border="0">
+.exercise {
+    margin-left: auto;
+    margin-right: auto;
+    border-collapse: separate;
+    border-spacing: 0 7px;
+}
 
-<TR>
-<TD><FONT color="#ff8040"><B>fruit</B></FONT></TD>
-<TD><B><SELECT name="0">
-<OPTION selected>???</OPTION>
-<OPTION>tuna</OPTION>
-<OPTION>apple</OPTION>
-<OPTION>Martian</OPTION>
-<OPTION>crocodile</OPTION>
-<OPTION>lettuce</OPTION>
-<OPTION>eagle</OPTION>
-<OPTION>whale</OPTION>
-<OPTION>ant</OPTION>
-<OPTION>oak</OPTION>
-<OPTION>tulip</OPTION>
-</SELECT></B></TD>
-<TD><INPUT maxLength="3" size="3" name="1"></TD>
-</TR>
+.exercise td {
+    padding-top: 3px;
+    padding-bottom: 3px;
+}
 
-<TR>
-<TD><FONT color="#ff8040"><B>fish</B></FONT></TD>
-<TD><B><SELECT name="2">
-<OPTION selected>???</OPTION>
-<OPTION>tuna</OPTION>
-<OPTION>apple</OPTION>
-<OPTION>Martian</OPTION>
-<OPTION>crocodile</OPTION>
-<OPTION>lettuce</OPTION>
-<OPTION>eagle</OPTION>
-<OPTION>whale</OPTION>
-<OPTION>ant</OPTION>
-<OPTION>oak</OPTION>
-<OPTION>tulip</OPTION>
-</SELECT></B></TD>
-<TD><INPUT maxLength="3" size="3" name="3"></TD>
-</TR>
+.category {
+    color: #ff8040;
+    font-weight: bold;
+    text-align: right;
+    padding-right: 45px !important;
+    white-space: nowrap;
+}
 
-<TR>
-<TD><FONT color="#ff8040"><B>bird</B></FONT></TD>
-<TD><B><SELECT name="4">
-<OPTION selected>???</OPTION>
-<OPTION>tuna</OPTION>
-<OPTION>apple</OPTION>
-<OPTION>Martian</OPTION>
-<OPTION>crocodile</OPTION>
-<OPTION>lettuce</OPTION>
-<OPTION>eagle</OPTION>
-<OPTION>whale</OPTION>
-<OPTION>ant</OPTION>
-<OPTION>oak</OPTION>
-<OPTION>tulip</OPTION>
-</SELECT></B></TD>
-<TD><INPUT maxLength="3" size="3" name="5"></TD>
-</TR>
+.answer {
+    text-align: left;
+}
 
-<TR>
-<TD><FONT color="#ff8040"><B>tree</B></FONT></TD>
-<TD><B><SELECT name="6">
-<OPTION selected>???</OPTION>
-<OPTION>tuna</OPTION>
-<OPTION>apple</OPTION>
-<OPTION>Martian</OPTION>
-<OPTION>crocodile</OPTION>
-<OPTION>lettuce</OPTION>
-<OPTION>eagle</OPTION>
-<OPTION>whale</OPTION>
-<OPTION>ant</OPTION>
-<OPTION>oak</OPTION>
-<OPTION>tulip</OPTION>
-</SELECT></B></TD>
-<TD><INPUT maxLength="3" size="3" name="7"></TD>
-</TR>
+.answer select {
+    min-width: 150px;
+}
 
-<TR>
-<TD><FONT color="#ff8040"><B>vegetable</B></FONT></TD>
-<TD><B><SELECT name="8">
-<OPTION selected>???</OPTION>
-<OPTION>tuna</OPTION>
-<OPTION>apple</OPTION>
-<OPTION>Martian</OPTION>
-<OPTION>crocodile</OPTION>
-<OPTION>lettuce</OPTION>
-<OPTION>eagle</OPTION>
-<OPTION>whale</OPTION>
-<OPTION>ant</OPTION>
-<OPTION>oak</OPTION>
-<OPTION>tulip</OPTION>
-</SELECT></B></TD>
-<TD><INPUT maxLength="3" size="3" name="9"></TD>
-</TR>
+.mark {
+    padding-left: 12px !important;
+}
 
-<TR>
-<TD><FONT color="#ff8040"><B>flower</B></FONT></TD>
-<TD><B><SELECT name="10">
-<OPTION selected>???</OPTION>
-<OPTION>tuna</OPTION>
-<OPTION>apple</OPTION>
-<OPTION>Martian</OPTION>
-<OPTION>crocodile</OPTION>
-<OPTION>lettuce</OPTION>
-<OPTION>eagle</OPTION>
-<OPTION>whale</OPTION>
-<OPTION>ant</OPTION>
-<OPTION>oak</OPTION>
-<OPTION>tulip</OPTION>
-</SELECT></B></TD>
-<TD><INPUT maxLength="3" size="3" name="11"></TD>
-</TR>
+.check {
+    text-align: center;
+    margin-top: 25px;
+    margin-bottom: 30px;
+}
 
-<TR>
-<TD><FONT color="#ff8040"><B>mammal</B></FONT></TD>
-<TD><B><SELECT name="12">
-<OPTION selected>???</OPTION>
-<OPTION>tuna</OPTION>
-<OPTION>apple</OPTION>
-<OPTION>Martian</OPTION>
-<OPTION>crocodile</OPTION>
-<OPTION>lettuce</OPTION>
-<OPTION>eagle</OPTION>
-<OPTION>whale</OPTION>
-<OPTION>ant</OPTION>
-<OPTION>oak</OPTION>
-<OPTION>tulip</OPTION>
-</SELECT></B></TD>
-<TD><INPUT maxLength="3" size="3" name="13"></TD>
-</TR>
+</style>
 
-<TR>
-<TD><FONT color="#ff8040"><B>reptile</B></FONT></TD>
-<TD><B><SELECT name="14">
-<OPTION selected>???</OPTION>
-<OPTION>tuna</OPTION>
-<OPTION>apple</OPTION>
-<OPTION>Martian</OPTION>
-<OPTION>crocodile</OPTION>
-<OPTION>lettuce</OPTION>
-<OPTION>eagle</OPTION>
-<OPTION>whale</OPTION>
-<OPTION>ant</OPTION>
-<OPTION>oak</OPTION>
-<OPTION>tulip</OPTION>
-</SELECT></B></TD>
-<TD><INPUT maxLength="3" size="3" name="15"></TD>
-</TR>
+</head>
 
-<TR>
-<TD><FONT color="#ff8040"><B>insect</B></FONT></TD>
-<TD><B><SELECT name="16">
-<OPTION selected>???</OPTION>
-<OPTION>tuna</OPTION>
-<OPTION>apple</OPTION>
-<OPTION>Martian</OPTION>
-<OPTION>crocodile</OPTION>
-<OPTION>lettuce</OPTION>
-<OPTION>eagle</OPTION>
-<OPTION>whale</OPTION>
-<OPTION>ant</OPTION>
-<OPTION>oak</OPTION>
-<OPTION>tulip</OPTION>
-</SELECT></B></TD>
-<TD><INPUT maxLength="3" size="3" name="17"></TD>
-</TR>
+<body>
 
-<TR>
-<TD><FONT color="#ff8040"><B>extra-terrestrial</B></FONT></TD>
-<TD><B><SELECT name="18">
-<OPTION selected>???</OPTION>
-<OPTION>tuna</OPTION>
-<OPTION>apple</OPTION>
-<OPTION>Martian</OPTION>
-<OPTION>crocodile</OPTION>
-<OPTION>lettuce</OPTION>
-<OPTION>eagle</OPTION>
-<OPTION>whale</OPTION>
-<OPTION>ant</OPTION>
-<OPTION>oak</OPTION>
-<OPTION>tulip</OPTION>
-</SELECT></B></TD>
-<TD><INPUT maxLength="3" size="3" name="19"></TD>
-</TR>
 
-</TABLE>
-</CENTER>
-</FORM>
+<!-- SIMPLE NAVIGATION -->
 
-<FORM name="CheckForm">
-<CENTER>
-<P>
+<div class="navigation">
+
+<a class="index" href="../index.html">INDEX</a>
+
+<a href="categories2.htm">&gt;</a>
+
+</div>
+
+
+<!-- TITLE -->
+
+<div class="title">
+Categories 1
+</div>
+
+
+<div class="subtitle">
+Match the categories
+</div>
+
+
+<!-- EXERCISE -->
+
+<form name="QuizForm">
+
+<table class="exercise">
+
+
+<tr>
+<td class="category">fruit</td>
+
+<td class="answer">
+<select name="0">
+<option selected>???</option>
+<option>tuna</option>
+<option>apple</option>
+<option>Martian</option>
+<option>crocodile</option>
+<option>lettuce</option>
+<option>eagle</option>
+<option>whale</option>
+<option>ant</option>
+<option>oak</option>
+<option>tulip</option>
+</select>
+</td>
+
+<td class="mark">
+<input maxlength="3" size="3" name="1">
+</td>
+</tr>
+
+
+<tr>
+<td class="category">fish</td>
+
+<td class="answer">
+<select name="2">
+<option selected>???</option>
+<option>tuna</option>
+<option>apple</option>
+<option>Martian</option>
+<option>crocodile</option>
+<option>lettuce</option>
+<option>eagle</option>
+<option>whale</option>
+<option>ant</option>
+<option>oak</option>
+<option>tulip</option>
+</select>
+</td>
+
+<td class="mark">
+<input maxlength="3" size="3" name="3">
+</td>
+</tr>
+
+
+<tr>
+<td class="category">bird</td>
+
+<td class="answer">
+<select name="4">
+<option selected>???</option>
+<option>tuna</option>
+<option>apple</option>
+<option>Martian</option>
+<option>crocodile</option>
+<option>lettuce</option>
+<option>eagle</option>
+<option>whale</option>
+<option>ant</option>
+<option>oak</option>
+<option>tulip</option>
+</select>
+</td>
+
+<td class="mark">
+<input maxlength="3" size="3" name="5">
+</td>
+</tr>
+
+
+<tr>
+<td class="category">tree</td>
+
+<td class="answer">
+<select name="6">
+<option selected>???</option>
+<option>tuna</option>
+<option>apple</option>
+<option>Martian</option>
+<option>crocodile</option>
+<option>lettuce</option>
+<option>eagle</option>
+<option>whale</option>
+<option>ant</option>
+<option>oak</option>
+<option>tulip</option>
+</select>
+</td>
+
+<td class="mark">
+<input maxlength="3" size="3" name="7">
+</td>
+</tr>
+
+
+<tr>
+<td class="category">vegetable</td>
+
+<td class="answer">
+<select name="8">
+<option selected>???</option>
+<option>tuna</option>
+<option>apple</option>
+<option>Martian</option>
+<option>crocodile</option>
+<option>lettuce</option>
+<option>eagle</option>
+<option>whale</option>
+<option>ant</option>
+<option>oak</option>
+<option>tulip</option>
+</select>
+</td>
+
+<td class="mark">
+<input maxlength="3" size="3" name="9">
+</td>
+</tr>
+
+
+<tr>
+<td class="category">flower</td>
+
+<td class="answer">
+<select name="10">
+<option selected>???</option>
+<option>tuna</option>
+<option>apple</option>
+<option>Martian</option>
+<option>crocodile</option>
+<option>lettuce</option>
+<option>eagle</option>
+<option>whale</option>
+<option>ant</option>
+<option>oak</option>
+<option>tulip</option>
+</select>
+</td>
+
+<td class="mark">
+<input maxlength="3" size="3" name="11">
+</td>
+</tr>
+
+
+<tr>
+<td class="category">mammal</td>
+
+<td class="answer">
+<select name="12">
+<option selected>???</option>
+<option>tuna</option>
+<option>apple</option>
+<option>Martian</option>
+<option>crocodile</option>
+<option>lettuce</option>
+<option>eagle</option>
+<option>whale</option>
+<option>ant</option>
+<option>oak</option>
+<option>tulip</option>
+</select>
+</td>
+
+<td class="mark">
+<input maxlength="3" size="3" name="13">
+</td>
+</tr>
+
+
+<tr>
+<td class="category">reptile</td>
+
+<td class="answer">
+<select name="14">
+<option selected>???</option>
+<option>tuna</option>
+<option>apple</option>
+<option>Martian</option>
+<option>crocodile</option>
+<option>lettuce</option>
+<option>eagle</option>
+<option>whale</option>
+<option>ant</option>
+<option>oak</option>
+<option>tulip</option>
+</select>
+</td>
+
+<td class="mark">
+<input maxlength="3" size="3" name="15">
+</td>
+</tr>
+
+
+<tr>
+<td class="category">insect</td>
+
+<td class="answer">
+<select name="16">
+<option selected>???</option>
+<option>tuna</option>
+<option>apple</option>
+<option>Martian</option>
+<option>crocodile</option>
+<option>lettuce</option>
+<option>eagle</option>
+<option>whale</option>
+<option>ant</option>
+<option>oak</option>
+<option>tulip</option>
+</select>
+</td>
+
+<td class="mark">
+<input maxlength="3" size="3" name="17">
+</td>
+</tr>
+
+
+<tr>
+<td class="category">extra-terrestrial</td>
+
+<td class="answer">
+<select name="18">
+<option selected>???</option>
+<option>tuna</option>
+<option>apple</option>
+<option>Martian</option>
+<option>crocodile</option>
+<option>lettuce</option>
+<option>eagle</option>
+<option>whale</option>
+<option>ant</option>
+<option>oak</option>
+<option>tulip</option>
+</select>
+</td>
+
+<td class="mark">
+<input maxlength="3" size="3" name="19">
+</td>
+</tr>
+
+
+</table>
+
+</form>
+
+
+<!-- CHECK BUTTON -->
+
+<form name="CheckForm">
+
+<div class="check">
+
 Your score is:
-<INPUT maxLength="4" size="4" name="ScoreBox">
-<INPUT onclick="CheckAnswer()" type="button" value="Check Answer">
-</P>
-</CENTER>
-</FORM>
 
-</BODY>
-</HTML>
+<input maxlength="4" size="4" name="ScoreBox">
+
+<input
+    onclick="CheckAnswer()"
+    type="button"
+    value="Check Answer">
+
+</div>
+
+</form>
+
+
+</body>
+</html>
