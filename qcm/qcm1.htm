@@ -1,1 +1,740 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<title>Multiple Choice Quiz 1</title>
+
+<style>
+    body {
+        background-color: #000000;
+        color: #ff8040;
+        font-family: Arial, Helvetica, sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+
+    /* Navigation bar */
+    .navbar {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 10px;
+        background-color: #111111;
+        border-bottom: 1px solid #444444;
+    }
+
+    .navbar button {
+        background-color: #222222;
+        color: #ffffff;
+        border: 1px solid #666666;
+        border-radius: 6px;
+        padding: 7px 16px;
+        font-size: 14px;
+        cursor: pointer;
+    }
+
+    .navbar button:hover {
+        background-color: #444444;
+    }
+
+    .navbar button:disabled {
+        opacity: 0.4;
+        cursor: default;
+    }
+
+    /* Title */
+    .title {
+        text-align: center;
+        padding: 18px 10px 10px;
+        color: #ffff00;
+    }
+
+    .title-main {
+        font-size: 22px;
+    }
+
+    .title-sub {
+        font-size: 14px;
+        margin-top: 5px;
+    }
+
+    .instructions {
+        text-align: center;
+        margin: 10px;
+        font-size: 14px;
+    }
+
+    .feedback {
+        text-align: center;
+        min-height: 25px;
+        margin: 10px;
+        font-size: 14px;
+    }
+
+    /* Quiz */
+    .quiz {
+        width: 85%;
+        max-width: 900px;
+        margin: 0 auto 30px;
+    }
+
+    .question {
+        margin-top: 20px;
+        padding: 10px 5px;
+    }
+
+    .question-number {
+        font-size: 18px;
+        font-weight: bold;
+        margin-right: 8px;
+    }
+
+    .question-text {
+        font-size: 15px;
+    }
+
+    .answer {
+        margin: 9px 0;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .answer button {
+        background-color: #222222;
+        color: #ffffff;
+        border: 1px solid #666666;
+        border-radius: 5px;
+        min-width: 40px;
+        padding: 5px 10px;
+        font-size: 14px;
+        cursor: pointer;
+    }
+
+    .answer button:hover {
+        background-color: #444444;
+    }
+
+    .answer input[type="text"] {
+        width: 28px;
+        height: 22px;
+        box-sizing: border-box;
+        text-align: center;
+        background-color: #111111;
+        color: #ffffff;
+        border: 1px solid #555555;
+        border-radius: 3px;
+    }
+
+    .answer-text {
+        font-size: 14px;
+    }
+
+    .correct {
+        color: #00ff00 !important;
+        font-weight: bold;
+    }
+
+    .incorrect {
+        color: #ff0000 !important;
+        font-weight: bold;
+    }
+
+    hr {
+        border: 0;
+        border-top: 1px solid #444444;
+        margin: 20px 0;
+    }
+</style>
+
+<script>
+
+/* =========================================================
+   QUIZ SETTINGS
+   ========================================================= */
+
+var ExerciseTitle = "Multiple Choice Quiz 1";
+var ExerciseSubtitle = "Multiple-choice exercise";
+var Instructions = "Choose the correct answer for each question.";
+
+var CorrectIndicator = ":-)";
+var IncorrectIndicator = "X";
+
+var YourScoreIs = "Your score is ";
+var CorrectFirstTime = "Questions answered correctly first time: ";
+
+var DefaultRight = "Correct!";
+var DefaultWrong = "Sorry! Try again.";
+
+var Score = 0;
+
+
+/* =========================================================
+   QUESTIONS
+   ========================================================= */
+
+var I = new Array();
+
+I[0] = new Array();
+I[0][0] = "Which two colours must you mix to make purple ?";
+I[0][1] = new Array();
+I[0][1][0] = ["red and green", "no, sorry !", 0];
+I[0][1][1] = ["green and blue", "not quite !", 0];
+I[0][1][2] = ["blue and red", "yes, of course !", 1];
+I[0][1][3] = ["orange and yellow", "ugh !!", 0];
+I[0][1][4] = ["pink and grey", "ha ha ha !!", 0];
+
+
+I[1] = new Array();
+I[1][0] = "In which forest did Robin Hood live ?";
+I[1][1] = new Array();
+I[1][1][0] = ["The Black Forest", "nope !", 0];
+I[1][1][1] = ["Birmingham", "what ?", 0];
+I[1][1][2] = ["Oakdale", "Sorry, wrong answer", 0];
+I[1][1][3] = ["Chiberta", "LOL !", 0];
+I[1][1][4] = ["Sherwood", "Very good !", 1];
+
+
+I[2] = new Array();
+I[2][0] = "Which American state is famous for tobacco ?";
+I[2][1] = new Array();
+I[2][1][0] = ["Virginia", "Yes, do you smoke ?", 1];
+I[2][1][1] = ["Alabama", "No No !!", 0];
+I[2][1][2] = ["Georgia", "not at all !", 0];
+I[2][1][3] = ["Texas", "you don't smoke ,do you ?", 0];
+I[2][1][4] = ["Hawaii", "They surf there but they don't smoke", 0];
+
+
+I[3] = new Array();
+I[3][0] = "When did Marilyn Monroe die ?";
+I[3][1] = new Array();
+I[3][1][0] = ["1960", "not quite !", 0];
+I[3][1][1] = ["1962", "yes, one year before J.F.K.!", 1];
+I[3][1][2] = ["1961", "try again !", 0];
+I[3][1][3] = ["1963", "no !", 0];
+I[3][1][4] = ["1964", "no, you're wrong !", 0];
+
+
+I[4] = new Array();
+I[4][0] = "What is the opposite of married ?";
+I[4][1] = new Array();
+I[4][1][0] = ["divorced", "not really !", 0];
+I[4][1][1] = ["single", "yes !", 1];
+I[4][1][2] = ["dead", "no,no !!", 0];
+I[4][1][3] = ["happy", "joke !!", 0];
+I[4][1][4] = ["separated", "no !", 0];
+
+
+I[5] = new Array();
+I[5][0] = "Where did life begin ?";
+I[5][1] = new Array();
+I[5][1][0] = ["on Mars", "not at all !", 0];
+I[5][1][1] = ["in Africa", "not really", 0];
+I[5][1][2] = ["in the sea", "very good !", 1];
+I[5][1][3] = ["in your mother's stomach", "joke !", 0];
+I[5][1][4] = ["in heaven", "another joke  !", 0];
+
+
+I[6] = new Array();
+I[6][0] = "Of which country is Nairobi the capital ?";
+I[6][1] = new Array();
+I[6][1][0] = ["Cameroun", "no", 0];
+I[6][1][1] = ["Sudan", "no", 0];
+I[6][1][2] = ["Kenya", "yes yes !!", 1];
+I[6][1][3] = ["Zimbabwe", "no", 0];
+I[6][1][4] = ["Egypt", "of course not ,it's Cairo", 0];
+
+
+I[7] = new Array();
+I[7][0] = "What is the forbidden fruit ?";
+I[7][1] = new Array();
+I[7][1][0] = ["a banana", "of course not !", 0];
+I[7][1][1] = ["a kiwi", "don't be silly !", 0];
+I[7][1][2] = ["an orange", "no", 0];
+I[7][1][3] = ["an apple", "yes of course !", 1];
+I[7][1][4] = ["a pineapple", "no", 0];
+
+
+I[8] = new Array();
+I[8][0] = "Where is the Golden Gate Bridge ?";
+I[8][1] = new Array();
+I[8][1][0] = ["in San Francisco", "yes !!", 1];
+I[8][1][1] = ["in London", "not at all, you're thinking of Tower Bridge", 0];
+I[8][1][2] = ["in New York", "no", 0];
+I[8][1][3] = ["in Sydney", "no", 0];
+I[8][1][4] = ["in Bayonne", "no", 0];
+
+
+I[9] = new Array();
+I[9][0] = "During the battle of Fort Alamo who defeated the Americans ?";
+I[9][1] = new Array();
+I[9][1][0] = ["the Indians", "not at all !", 0];
+I[9][1][1] = ["the Mexicans", "si si amigos !", 1];
+I[9][1][2] = ["the Iraqis", "joke !", 0];
+I[9][1][3] = ["the English", "no", 0];
+I[9][1][4] = ["the Basques", "another joke !!", 0];
+
+
+I[10] = new Array();
+I[10][0] = "Who shot an apple from his son's head ?";
+I[10][1] = new Array();
+I[10][1][0] = ["Robert Burns", "no", 0];
+I[10][1][1] = ["Bill Gates", "I don't know if he has a son !!", 0];
+I[10][1][2] = ["William Tell", "yes !", 1];
+I[10][1][3] = ["Robin Hood", "no he didn't !", 0];
+I[10][1][4] = ["Bob Marley", "LOL!", 0];
+
+
+I[11] = new Array();
+I[11][0] = "What is England's national summer sport ?";
+I[11][1] = new Array();
+I[11][1][0] = ["golf", "no", 0];
+I[11][1][1] = ["tennis", "no", 0];
+I[11][1][2] = ["curling", "no this is a Scottish sport !", 0];
+I[11][1][3] = ["polo", "no", 0];
+I[11][1][4] = ["cricket", "yes !!", 1];
+
+
+I[12] = new Array();
+I[12][0] = "Which animal produces Cashmire wool ?";
+I[12][1] = new Array();
+I[12][1][0] = ["the sheep", "nope !", 0];
+I[12][1][1] = ["the horse", "ha ha !", 0];
+I[12][1][2] = ["the goat", "yep !", 1];
+I[12][1][3] = ["the donkey", "hi haw !!", 0];
+I[12][1][4] = ["the duck", "quack quack !", 0];
+
+
+I[13] = new Array();
+I[13][0] = 'Who said "I think therefore I am ?';
+I[13][1] = new Array();
+I[13][1][0] = ["Rimbaud", "not at all !", 0];
+I[13][1][1] = ["Julius Cesar", "your'e not very good are you ?", 0];
+I[13][1][2] = ["Donald Trump", "I don't know", 0];
+I[13][1][3] = ["Victor Hugo", "no !", 0];
+I[13][1][4] = ["Descartes", "yes he did !", 1];
+
+
+I[14] = new Array();
+I[14][0] = "What did Galileo invent in 1610 ?";
+I[14][1] = new Array();
+I[14][1][0] = ["the telescope", "he did indeed !", 1];
+I[14][1][1] = ["the wheel", "your history is not very good, is it ?", 0];
+I[14][1][2] = ["the telephone", "that was Bell !", 0];
+I[14][1][3] = ["the juke-box", "did Galileo listen to rock music ?", 0];
+I[14][1][4] = ["this quiz", "joke !!", 0];
+
+
+I[15] = new Array();
+I[15][0] = "What was the city of 1001 nights ?";
+I[15][1] = new Array();
+I[15][1][0] = ["Teheran", "no", 0];
+I[15][1][1] = ["Istanbul", "no", 0];
+I[15][1][2] = ["Baghdad", "yes !", 1];
+I[15][1][3] = ["Damas", "no", 0];
+I[15][1][4] = ["Jerusalem", "no", 0];
+
+
+I[16] = new Array();
+I[16][0] = "What is a streptocoque ?";
+I[16][1] = new Array();
+I[16][1][0] = ["a boat", "", 0];
+I[16][1][1] = ["a fish", "", 0];
+I[16][1][2] = ["a game", "", 0];
+I[16][1][3] = ["a biscuit", "", 0];
+I[16][1][4] = ["a bacteria", "yes bravo!!", 1];
+
+
+I[17] = new Array();
+I[17][0] = "What was Jesus's father's job ?";
+I[17][1] = new Array();
+I[17][1][0] = ["a teacher", "", 0];
+I[17][1][1] = ["a farmer", "", 0];
+I[17][1][2] = ["a carpenter", "yes !", 1];
+I[17][1][3] = ["a door-to-door salesman", "don't be silly !", 0];
+I[17][1][4] = ["a politician", "joke !!", 0];
+
+
+I[18] = new Array();
+I[18][0] = "How many days must a hen sit on her eggs ?";
+I[18][1] = new Array();
+I[18][1][0] = ["21", "good !!", 1];
+I[18][1][1] = ["28", "no", 0];
+I[18][1][2] = ["10", "more than this !!", 0];
+I[18][1][3] = ["30", "less !!", 0];
+I[18][1][4] = ["60", "you don't live on a farm, do you ?", 0];
+
+
+I[19] = new Array();
+I[19][0] = "What colour is yack's milk ?";
+I[19][1] = new Array();
+I[19][1][0] = ["pink", "excellent !!", 1];
+I[19][1][1] = ["white", "no sorry !", 0];
+I[19][1][2] = ["yellow", "no !", 0];
+I[19][1][3] = ["blue", "you must be joking !", 0];
+I[19][1][4] = ["grey", "not at all !", 0];
+
+
+/* =========================================================
+   QUIZ STATUS
+   ========================================================= */
+
+var Status = new Array();
+
+function CreateStatusArrays() {
+
+    for (var x = 0; x < I.length; x++) {
+
+        Status[x] = new Array();
+
+        Status[x][0] = 0;
+
+        Status[x][1] = new Array();
+
+        for (var y = 0; y < I[x][1].length; y++) {
+            Status[x][1][y] = "0";
+        }
+
+        Status[x][2] = 0;
+        Status[x][3] = 0;
+    }
+}
+
+
+/* =========================================================
+   START
+   ========================================================= */
+
+function StartUp() {
+
+    CreateStatusArrays();
+
+    document.getElementById("title").innerHTML =
+        ExerciseTitle;
+
+    document.getElementById("subtitle").innerHTML =
+        ExerciseSubtitle;
+
+    document.getElementById("instructions").innerHTML =
+        Instructions;
+
+    ShowAllQs();
+
+    WriteFeedback(Instructions);
+}
+
+
+/* =========================================================
+   DISPLAY
+   ========================================================= */
+
+function ShowAllQs() {
+
+    var output = "";
+
+    for (var i = 0; i < I.length; i++) {
+
+        output += BuildQuestion(i);
+
+        if (i < I.length - 1) {
+            output += "<hr>";
+        }
+    }
+
+    document.getElementById("quiz").innerHTML = output;
+}
+
+
+function BuildQuestion(QNum) {
+
+    var output = "";
+
+    output += '<div class="question">';
+
+    output +=
+        '<span class="question-number">' +
+        (QNum + 1) +
+        '.</span>';
+
+    output +=
+        '<span class="question-text">' +
+        I[QNum][0] +
+        '</span>';
+
+    for (var i = 0; i < I[QNum][1].length; i++) {
+
+        output +=
+            '<div class="answer">';
+
+        output +=
+            '<input type="text" id="FB_' +
+            QNum + '_' + i +
+            '" value=" " readonly>';
+
+        output +=
+            '<button type="button" onclick="CheckAnswer(' +
+            QNum + ',' + i + ')">' +
+            String.fromCharCode(65 + i) +
+            '</button>';
+
+        output +=
+            '<span class="answer-text">' +
+            I[QNum][1][i][0] +
+            '</span>';
+
+        output += '</div>';
+    }
+
+    output += '</div>';
+
+    return output;
+}
+
+
+/* =========================================================
+   ANSWERS
+   ========================================================= */
+
+function CheckAnswer(QNum, ANum) {
+
+    var Output = I[QNum][1][ANum][1];
+
+    if (Output == "") {
+
+        if (I[QNum][1][ANum][2] == 1) {
+            Output = DefaultRight;
+        } else {
+            Output = DefaultWrong;
+        }
+    }
+
+
+    if (Status[QNum][0] == 0) {
+
+        if (I[QNum][1][ANum][2] == 1) {
+
+            Status[QNum][0] = 1;
+
+            Status[QNum][1][ANum] = "R";
+
+            MarkAnswer(QNum, ANum, true);
+
+
+            var PossibleWrongs = 0;
+
+            for (
+                var i = 0;
+                i < I[QNum][1].length;
+                i++
+            ) {
+
+                if (I[QNum][1][i][2] == 0) {
+                    PossibleWrongs++;
+                }
+            }
+
+            if (PossibleWrongs == 0) {
+                PossibleWrongs = 1;
+            }
+
+            Status[QNum][3] =
+                1 -
+                (Status[QNum][2] / PossibleWrongs);
+
+            if (Status[QNum][3] < 0) {
+                Status[QNum][3] = 0;
+            }
+
+        } else {
+
+            if (Status[QNum][1][ANum] != "W") {
+
+                Status[QNum][1][ANum] = "W";
+
+                MarkAnswer(QNum, ANum, false);
+
+                Status[QNum][2]++;
+            }
+        }
+    }
+
+
+    var Finished = true;
+
+    for (var i = 0; i < Status.length; i++) {
+
+        if (Status[i][0] == 0) {
+            Finished = false;
+        }
+    }
+
+
+    if (Status[QNum][0] == 1) {
+
+        var DoneQs = 0;
+        var TotalScore = 0;
+
+        for (var i = 0; i < Status.length; i++) {
+
+            if (Status[i][0] == 1) {
+
+                DoneQs++;
+
+                TotalScore += Status[i][3];
+            }
+        }
+
+        if (DoneQs > 0) {
+
+            Score =
+                Math.floor(
+                    100 * (TotalScore / DoneQs)
+                );
+        }
+
+        Output +=
+            "<br>" +
+            YourScoreIs +
+            " " +
+            Score +
+            "%.";
+
+
+        if (Finished == true) {
+
+            var CFT = 0;
+
+            for (var i = 0; i < I.length; i++) {
+
+                if (Status[i][2] == 0) {
+                    CFT++;
+                }
+            }
+
+            Output +=
+                "<br>" +
+                CorrectFirstTime +
+                CFT +
+                "/" +
+                I.length;
+        }
+    }
+
+
+    WriteFeedback(Output);
+}
+
+
+function MarkAnswer(QNum, ANum, Right) {
+
+    var box =
+        document.getElementById(
+            "FB_" + QNum + "_" + ANum
+        );
+
+    if (box == null) {
+        return;
+    }
+
+    if (Right == true) {
+
+        box.value = CorrectIndicator;
+        box.className = "correct";
+
+    } else {
+
+        box.value = IncorrectIndicator;
+        box.className = "incorrect";
+    }
+}
+
+
+/* =========================================================
+   FEEDBACK
+   ========================================================= */
+
+function WriteFeedback(Feedback) {
+
+    document.getElementById("feedback").innerHTML =
+        Feedback;
+}
+
+
+/* =========================================================
+   NAVIGATION
+   ========================================================= */
+
+function GoBack() {
+
+    window.history.back();
+}
+
+
+function GoIndex() {
+
+    window.location.href = "../index.html";
+}
+
+</script>
+
+</head>
+
+
+<body onload="StartUp()">
+
+
+<!-- NAVIGATION BAR -->
+
+<div class="navbar">
+
+    <button type="button" onclick="GoBack()">
+        &larr;
+    </button>
+
+    <button type="button" onclick="GoIndex()">
+        Index
+    </button>
+
+    <!-- Right-hand button deliberately inactive for now -->
+    <button type="button">
+        &rarr;
+    </button>
+
+</div>
+
+
+<!-- TITLE -->
+
+<div class="title">
+
+    <div class="title-main" id="title">
+        Multiple Choice Quiz 1
+    </div>
+
+    <div class="title-sub" id="subtitle">
+        Multiple-choice exercise
+    </div>
+
+</div>
+
+
+<div class="instructions" id="instructions">
+    Choose the correct answer for each question.
+</div>
+
+
+<div class="feedback" id="feedback">
+</div>
+
+
+<!-- QUIZ -->
+
+<div class="quiz" id="quiz">
+</div>
+
+
+</body>
+</html>
