@@ -1,7 +1,8 @@
-<HTML><HEAD><META NAME="Author" CONTENT="Produced using Hot Potatoes by Half-Baked Software, registered to Armando.Vezza.">
-<TITLE>
-Opposites (adjectives )
-</TITLE>
+<HTML>
+<HEAD>
+<META NAME="Author" CONTENT="Produced using Hot Potatoes by Half-Baked Software, registered to Armando.Vezza.">
+<TITLE>Opposites (adjectives)</TITLE>
+
 <SCRIPT LANGUAGE="JavaScript">
 
 var Feedback = '';
@@ -20,7 +21,7 @@ var WinUpperString='ABCDEFGHIJKLMNOPQRSTUVWXYZ%8A%8C%C0%C1%C2%C3%C4%C5%C6%C7%C8%
 var MacLowerString='abcdefghijklmnopqrstuvwxyz%8A%8C%8D%8E%96%9A%9F%BE%BF%88%8B%9B%CF%D8%89%90%87%91%8F%92%94%95%93%97%98%9C%9E%9D';
 var MacUpperString='ABCDEFGHIJKLMNOPQRSTUVWXYZ%80%81%82%83%84%85%86%AE%AF%CB%CC%CD%CE%D9%E5%E6%E7%E8%E9%EA%EB%EC%ED%EE%F1%F2%F3%F4';
 
-var LowerString = '';/
+var LowerString = '';
 var UpperString = '';
 
 MacAnswers = new Array();
@@ -112,7 +113,6 @@ MacAnswers[78] = 'cheap';
 MacAnswers[79] = 'cheap';
 MacAnswers[80] = 'cheap';
 
-
 WinAnswers[1] = 'wrong';
 WinAnswers[2] = 'left';
 WinAnswers[3] = 'left';
@@ -194,287 +194,334 @@ WinAnswers[78] = 'cheap';
 WinAnswers[79] = 'cheap';
 WinAnswers[80] = 'cheap';
 
+platform = 'win';
 
+if (navigator.appVersion.indexOf('Mac') != -1) {
+    platform = 'mac';
+}
 
-	platform = 'win';
-	if (navigator.appVersion.indexOf('Mac') != -1) {
-		platform = 'mac';
-	}
-
-	if (platform == 'win'){
-		for (i = 1; i < WinAnswers.length; i++){
-			AnswerList[i] = unescape(WinAnswers[i]);
-		LowerString = unescape(WinLowerString);
-		UpperString = unescape(WinUpperString);
-		}
-	}
-	else {
-		for (i = 1; i < MacAnswers.length; i++){
-			AnswerList[i] = unescape(MacAnswers[i]);
-		LowerString = unescape(MacLowerString);
-		UpperString = unescape(MacUpperString);
-		}
-	}
+if (platform == 'win'){
+    for (i = 1; i < WinAnswers.length; i++){
+        AnswerList[i] = unescape(WinAnswers[i]);
+    }
+    LowerString = unescape(WinLowerString);
+    UpperString = unescape(WinUpperString);
+}
+else {
+    for (i = 1; i < MacAnswers.length; i++){
+        AnswerList[i] = unescape(MacAnswers[i]);
+    }
+    LowerString = unescape(MacLowerString);
+    UpperString = unescape(MacUpperString);
+}
 }
 
 function ConvertCase(InString, Direction){
 
-	var FromString = '';
-	var ToString = '';
+var FromString = '';
+var ToString = '';
 
-	if (Direction == 0){
-		FromString = UpperString;
-		ToString = LowerString;
-	}
-	else{
-		FromString = LowerString;
-		ToString = UpperString;
-	}
-
-	var i = 0;
-	j = 0;
-	var OutString = '';
-	for (i=0; i<InString.length; i++){
-		if (FromString.indexOf(InString.charAt(i)) > -1){
-			j = FromString.indexOf(InString.charAt(i));			
-			OutString += ToString.charAt(j);
-		}
-		else{	
-			OutString += InString.charAt(i);
-		}
-	}
-	return OutString;
+if (Direction == 0){
+    FromString = UpperString;
+    ToString = LowerString;
+}
+else{
+    FromString = LowerString;
+    ToString = UpperString;
 }
 
+var i = 0;
+j = 0;
+var OutString = '';
 
+for (i=0; i<InString.length; i++){
+    if (FromString.indexOf(InString.charAt(i)) > -1){
+        j = FromString.indexOf(InString.charAt(i));			
+        OutString += ToString.charAt(j);
+    }
+    else{	
+        OutString += InString.charAt(i);
+    }
+}
+return OutString;
+}
 
 function CheckAllAnswers(){
-	var x = 0;
-	var y = 0;
-	var AnsNum = 0;
-	var InString = '';
-	IsWrong = 0;
-	var Answers = new Array(4);
-	var Tries = Math.floor((AnswerList.length) / 4);
-	var NumberCorrect = 0;
-	var Score = 0;
 
-	for (x=0; x<(document.cloze.elements.length); x++){
-		InString = TrimString(document.cloze.elements[x].value);
-		AnsNum = (x*4) +1;
-		Answers[1] = AnswerList[AnsNum];
-		Answers[2] = AnswerList[AnsNum+1];
-		Answers[3] = AnswerList[AnsNum+2];
-		Answers[4] = AnswerList[AnsNum+3];
+var x = 0;
+var y = 0;
+var AnsNum = 0;
+var InString = '';
+IsWrong = 0;
 
-		if (CaseSensitive == 'False') {
-			InString = ConvertCase(InString, 1);
-			for (y=1; y<5; y++) {
-				Answers[y] = ConvertCase(Answers[y], 1);
-			}
-		}
+var Answers = new Array(4);
+var Tries = Math.floor((AnswerList.length) / 4);
+var NumberCorrect = 0;
+var Score = 0;
 
-		if ((InString == Answers[1]) || (InString == Answers[2]) ||(InString == Answers[3]) || (InString == Answers[4])) {
-			NumberCorrect++;
-		}
-		else {
-			IsWrong = 1;
-			document.cloze.elements[x].value = '';
-		}
-	}
+for (x=0; x<(document.cloze.elements.length); x++){
 
-	
-	Score = Math.floor((NumberCorrect*100)/Tries);
+    InString = TrimString(document.cloze.elements[x].value);
+    AnsNum = (x*4) +1;
 
-	if (IsWrong == 1) {
-		Feedback = Incorrect;
-		Feedback+= '<BR>' + YourScoreIs + ' ' + Score + '%.';
-	}
+    Answers[1] = AnswerList[AnsNum];
+    Answers[2] = AnswerList[AnsNum+1];
+    Answers[3] = AnswerList[AnsNum+2];
+    Answers[4] = AnswerList[AnsNum+3];
 
-	else {
-		Feedback = Correct;
-		Feedback+= ' ' + YourScoreIs + ' ' + Score + '%.'+ '<BR>';
-		
-	}
+    if (CaseSensitive == 'False') {
+        InString = ConvertCase(InString, 1);
 
-	
+        for (y=1; y<5; y++) {
+            Answers[y] = ConvertCase(Answers[y], 1);
+        }
+    }
 
-	WriteFeedback(Feedback);
+    if ((InString == Answers[1]) ||
+        (InString == Answers[2]) ||
+        (InString == Answers[3]) ||
+        (InString == Answers[4])) {
+
+        NumberCorrect++;
+    }
+    else {
+        IsWrong = 1;
+        document.cloze.elements[x].value = '';
+    }
+}
+
+Score = Math.floor((NumberCorrect*100)/Tries);
+
+if (IsWrong == 1) {
+    Feedback = Incorrect;
+    Feedback+= '<BR>' + YourScoreIs + ' ' + Score + '%.';
+}
+else {
+    Feedback = Correct;
+    Feedback+= ' ' + YourScoreIs + ' ' + Score + '%.'+ '<BR>';
+}
+
+WriteFeedback(Feedback);
 }
 
 function TrimString(InString){
 
-	var x = 0;
+var x = 0;
 
-	if (InString.length != 0) {
+if (InString.length != 0) {
 
-		while ((escape(InString.charAt(InString.length - 1)) == '%20') || (escape(InString.charAt(InString.length - 1)) == '%0A') || (escape(InString.charAt(InString.length - 1)) == '%0D')){
-			InString = InString.substring(0, InString.length - 1);
-		}
+    while ((escape(InString.charAt(InString.length - 1)) == '%20') ||
+           (escape(InString.charAt(InString.length - 1)) == '%0A') ||
+           (escape(InString.charAt(InString.length - 1)) == '%0D')){
+        InString = InString.substring(0, InString.length - 1);
+    }
 
-		while ((escape(InString.charAt(0)) == '%20') || (escape(InString.charAt(0)) == '%0A') || (escape(InString.charAt(0)) == '%0D')){
-			InString = InString.substring(1, InString.length);
-		}
+    while ((escape(InString.charAt(0)) == '%20') ||
+           (escape(InString.charAt(0)) == '%0A') ||
+           (escape(InString.charAt(0)) == '%0D')){
+        InString = InString.substring(1, InString.length);
+    }
 
-		while (InString.indexOf('  ') != -1) {
-			x = InString.indexOf('  ');
-			InString = InString.substring(0, x) + InString.substring(x+1, InString.length );
-		}
-		return InString;
-	}
-	else {
-		return '';
-	}
+    while (InString.indexOf('  ') != -1) {
+        x = InString.indexOf('  ');
+        InString = InString.substring(0, x) +
+                   InString.substring(x+1, InString.length );
+    }
+
+    return InString;
+}
+else {
+    return '';
+}
 }
 
 function WriteFeedback(Feedback) {
+
 parent.frames[0].document.clear();
 parent.frames[0].document.open();
+
 parent.frames[0].document.writeln ("<html>");
 parent.frames[0].document.writeln ("<body bgcolor=#FFFFFF text=#BA050A background=\"HalfBakedBG.gif\">");
 parent.frames[0].document.writeln ("<font size = +1><center><b>");
 parent.frames[0].document.writeln (Feedback);
 parent.frames[0].document.writeln ("</b></center></font></body></html>");
+
 parent.frames[0].document.close();
 }
 
 function Cheat(){
 
-	CurrentAnswers = new Array(4);
-	CorrectBits = new Array(4);
-	var CurrentAnswer = FindCurrent();
+CurrentAnswers = new Array(4);
+CorrectBits = new Array(4);
 
-	if (CurrentAnswer == -1) {
-		return;
-	}
+var CurrentAnswer = FindCurrent();
 
-	CurrentAnswers[1] = AnswerList[(CurrentAnswer * 4) + 1];
-	CurrentAnswers[2] = AnswerList[(CurrentAnswer * 4) + 2];
-	CurrentAnswers[3] = AnswerList[(CurrentAnswer * 4) + 3];
-	CurrentAnswers[4] = AnswerList[(CurrentAnswer * 4) + 4];
+if (CurrentAnswer == -1) {
+    return;
+}
 
-	CorrectBits[1] = CheckBeginning(document.cloze.elements[CurrentAnswer].value, CurrentAnswers[1]);
-	CorrectBits[2] = CheckBeginning(document.cloze.elements[CurrentAnswer].value, CurrentAnswers[2]);
-	CorrectBits[3] = CheckBeginning(document.cloze.elements[CurrentAnswer].value, CurrentAnswers[3]);
-	CorrectBits[4] = CheckBeginning(document.cloze.elements[CurrentAnswer].value, CurrentAnswers[4]);
+CurrentAnswers[1] = AnswerList[(CurrentAnswer * 4) + 1];
+CurrentAnswers[2] = AnswerList[(CurrentAnswer * 4) + 2];
+CurrentAnswers[3] = AnswerList[(CurrentAnswer * 4) + 3];
+CurrentAnswers[4] = AnswerList[(CurrentAnswer * 4) + 4];
 
-	Longest = FindLongest(CorrectBits[1], CorrectBits[2], CorrectBits[3], CorrectBits[4]);
-		
-	document.cloze.elements[CurrentAnswer].value = CorrectBits[Longest];
-	WriteFeedback(GiveHint);
+CorrectBits[1] =
+CheckBeginning(document.cloze.elements[CurrentAnswer].value, CurrentAnswers[1]);
+
+CorrectBits[2] =
+CheckBeginning(document.cloze.elements[CurrentAnswer].value, CurrentAnswers[2]);
+
+CorrectBits[3] =
+CheckBeginning(document.cloze.elements[CurrentAnswer].value, CurrentAnswers[3]);
+
+CorrectBits[4] =
+CheckBeginning(document.cloze.elements[CurrentAnswer].value, CurrentAnswers[4]);
+
+Longest = FindLongest(
+    CorrectBits[1],
+    CorrectBits[2],
+    CorrectBits[3],
+    CorrectBits[4]
+);
+
+document.cloze.elements[CurrentAnswer].value = CorrectBits[Longest];
+
+WriteFeedback(GiveHint);
 }
 
 function TrackFocus(BoxNumber){
-	CurrentWord = BoxNumber;
+CurrentWord = BoxNumber;
 }
-
 
 function CheckBeginning(Guess, Answer){
-	var OutString = '';
-	var i = 0;
-	var UpperGuess = '';
-	var UpperAnswer = '';
 
-	if (CaseSensitive == 'False') {
-		UpperGuess = ConvertCase(Guess, 1);
-		UpperAnswer = ConvertCase(Answer, 1);
-	}
-	else {
-		UpperGuess = Guess;
-		UpperAnswer = Answer;
-	}
+var OutString = '';
+var i = 0;
+var UpperGuess = '';
+var UpperAnswer = '';
 
-	while (UpperGuess.charAt(i) == UpperAnswer.charAt(i)) {
-		OutString += Guess.charAt(i);
-		i++;
-	}
-	OutString += Answer.charAt(i);
-	return OutString;
+if (CaseSensitive == 'False') {
+    UpperGuess = ConvertCase(Guess, 1);
+    UpperAnswer = ConvertCase(Answer, 1);
+}
+else {
+    UpperGuess = Guess;
+    UpperAnswer = Answer;
 }
 
+while (UpperGuess.charAt(i) == UpperAnswer.charAt(i)) {
+    OutString += Guess.charAt(i);
+    i++;
+}
+
+OutString += Answer.charAt(i);
+return OutString;
+}
 
 function CheckAnswer(Guess, AnsNum){
 
-	if (CaseSensitive == 'True'){
+if (CaseSensitive == 'True'){
 
-		if ((Guess == AnswerList[(AnsNum * 4) + 1]) || (Guess == AnswerList[(AnsNum * 4) + 2]) || (Guess == AnswerList[(AnsNum * 4) + 3]) || (Guess == AnswerList[(AnsNum * 4) + 4])) {
+    if ((Guess == AnswerList[(AnsNum * 4) + 1]) ||
+        (Guess == AnswerList[(AnsNum * 4) + 2]) ||
+        (Guess == AnswerList[(AnsNum * 4) + 3]) ||
+        (Guess == AnswerList[(AnsNum * 4) + 4])) {
 
-			return true;
-		}
-		else {
-			return false;
-		}
-	}
+        return true;
+    }
+    else {
+        return false;
+    }
+}
 
-	else{
-		Guess = ConvertCase(Guess, 1);
-		if ((Guess == ConvertCase(AnswerList[(AnsNum * 4) + 1], 1)) || (Guess == ConvertCase(AnswerList[(AnsNum * 4) + 2], 1)) || (Guess == ConvertCase(AnswerList[(AnsNum * 4) + 3], 1)) || (Guess == ConvertCase(AnswerList[(AnsNum * 4) + 4], 1))) {
+else{
 
-			return true;
-		}
-		else {
-			return false;
-		}
+    Guess = ConvertCase(Guess, 1);
 
-	}
+    if ((Guess == ConvertCase(AnswerList[(AnsNum * 4) + 1], 1)) ||
+        (Guess == ConvertCase(AnswerList[(AnsNum * 4) + 2], 1)) ||
+        (Guess == ConvertCase(AnswerList[(AnsNum * 4) + 3], 1)) ||
+        (Guess == ConvertCase(AnswerList[(AnsNum * 4) + 4], 1))) {
+
+        return true;
+    }
+    else {
+        return false;
+    }
+}
 }
 
 function FindCurrent() {
 
-	var FoundCurrent = -1;
-	var x = 0;
+var FoundCurrent = -1;
+var x = 0;
 
-	if (CheckAnswer(document.cloze.elements[CurrentWord].value, CurrentWord) == false) {
-		FoundCurrent = CurrentWord;
-	}	
-	else {
+if (CheckAnswer(document.cloze.elements[CurrentWord].value, CurrentWord) == false) {
+    FoundCurrent = CurrentWord;
+}
+else {
 
-		x=CurrentWord + 1;
-		while ((FoundCurrent == -1) && (x<document.cloze.elements.length)){
-			if (CheckAnswer(document.cloze.elements[x].value, x) == false) {
-				FoundCurrent = x;
-			}
-			x++;	
-		}
-	}
-	if (FoundCurrent == -1){
-		x = 0;
-		while ((FoundCurrent == -1) && (x<CurrentWord)){
-			if (CheckAnswer(document.cloze.elements[x].value, x) == false) {
+    x=CurrentWord + 1;
 
-				FoundCurrent = x;
-			}
-			x++;
-		}
+    while ((FoundCurrent == -1) &&
+           (x<document.cloze.elements.length)){
 
-	}
-	return FoundCurrent;
+        if (CheckAnswer(document.cloze.elements[x].value, x) == false) {
+            FoundCurrent = x;
+        }
+
+        x++;	
+    }
+}
+
+if (FoundCurrent == -1){
+
+    x = 0;
+
+    while ((FoundCurrent == -1) &&
+           (x<CurrentWord)){
+
+        if (CheckAnswer(document.cloze.elements[x].value, x) == false) {
+            FoundCurrent = x;
+        }
+
+        x++;
+    }
+}
+
+return FoundCurrent;
 }
 
 function FindLongest(First, Second, Third, Fourth){
+
 var Longest = 0;
 var LongString = '';
-	   Longest = 4;
-	   LongString = Fourth;
-	   if (Third.length >= LongString.length){
-			 Longest = 3;
-			 LongString = Third;
-	   }
-	   if (Second.length >= LongString.length){
-			 Longest = 2;
-			 LongString = Second;
-	   }
-	   if (First.length >= LongString.length){
-			 Longest = 1;
-			 LongString = First;
-	   }
-	   return Longest;
+
+Longest = 4;
+LongString = Fourth;
+
+if (Third.length >= LongString.length){
+    Longest = 3;
+    LongString = Third;
 }
 
+if (Second.length >= LongString.length){
+    Longest = 2;
+    LongString = Second;
+}
+
+if (First.length >= LongString.length){
+    Longest = 1;
+    LongString = First;
+}
+
+return Longest;
+}
 
 </SCRIPT>
 
 <style>
+
 body {
     background-color: #000000;
     color: #FFFF00;
@@ -484,7 +531,7 @@ body {
 }
 
 h2 {
-    color: #FF9900;
+    color: #FFFF00;
     font-size: 22px;
 }
 
@@ -526,56 +573,205 @@ td {
 }
 
 .navigation a {
-    color: #FFFF00;
+    color: #FF8040;
     text-decoration: none;
     font-size: 26px;
-    font-weight: bold;
+    font-weight: normal;
     margin: 0 25px;
 }
 
 .navigation a:hover {
-    color: #FF9900;
+    color: #FFFF00;
 }
+
+.exercise-word {
+    color: #FF8040;
+    font-weight: normal;
+}
+
 </style>
 
 </head>
+
 <body onload="StartUp()">
+
 <div class="navigation">
     <a href="../categories/categories3.htm">←</a>
-    <a href="../index.html">Index</a>
+    <a href="../index.html">INDEX</a>
 </div>
+
 <CENTER>
 
-<h2>Opposites (adjectives )</h2>
+<h2>Opposites (adjectives)</h2>
+
 <b><i>Gap-Fill Exercise</i></b>
 
-</CENTER><br>
+</CENTER>
+
+<br>
 
 <FORM>
 <CENTER>
 </FORM>
 
 <FORM NAME="cloze">
+
 <BLOCKQUOTE>
 
-right or  <INPUT TYPE="TEXT" NAME="0" SIZE="9" onFocus="TrackFocus(0)">      &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;drunk or  <INPUT TYPE="TEXT" NAME="1" SIZE="9" onFocus="TrackFocus(1)"> &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;           
-fat or   <INPUT TYPE="TEXT" NAME="2" SIZE="9" onFocus="TrackFocus(2)">     <BR><BR>
-hard-working or  <INPUT TYPE="TEXT" NAME="3" SIZE="9" onFocus="TrackFocus(3)">&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;                hard or   <INPUT TYPE="TEXT" NAME="4" SIZE="9" onFocus="TrackFocus(4)">&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;              old or   <INPUT TYPE="TEXT" NAME="5" SIZE="9" onFocus="TrackFocus(5)"> <BR><BR>
-heavy or  <INPUT TYPE="TEXT" NAME="6" SIZE="9" onFocus="TrackFocus(6)"> &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;                         rich or    <INPUT TYPE="TEXT" NAME="7" SIZE="9" onFocus="TrackFocus(7)">      &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;        tall or  <INPUT TYPE="TEXT" NAME="8" SIZE="9" onFocus="TrackFocus(8)"> <BR><BR>
-happy or  <INPUT TYPE="TEXT" NAME="9" SIZE="9" onFocus="TrackFocus(9)">&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;                         strong or  <INPUT TYPE="TEXT" NAME="10" SIZE="9" onFocus="TrackFocus(10)"> &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;           intelligent or <INPUT TYPE="TEXT" NAME="11" SIZE="6" onFocus="TrackFocus(11)"> <BR><BR>
-high or  <INPUT TYPE="TEXT" NAME="12" SIZE="9" onFocus="TrackFocus(12)">&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;                            rough or   <INPUT TYPE="TEXT" NAME="13" SIZE="6" onFocus="TrackFocus(13)">&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;         ambitious or  <INPUT TYPE="TEXT" NAME="14" SIZE="6" onFocus="TrackFocus(14)"> <BR><BR>
-optimistic or  <INPUT TYPE="TEXT" NAME="15" SIZE="11" onFocus="TrackFocus(15)">&nbsp;&nbsp; &nbsp;&nbsp;        talkative or  <INPUT TYPE="TEXT" NAME="16" SIZE="9" onFocus="TrackFocus(16)">&nbsp;&nbsp; &nbsp;&nbsp;             generous or  <INPUT TYPE="TEXT" NAME="17" SIZE="10" onFocus="TrackFocus(17)"> <BR><BR>
-beautiful or   <INPUT TYPE="TEXT" NAME="18" SIZE="9" onFocus="TrackFocus(18)">                   expensive or  
+<span class="exercise-word">right</span> or
+<INPUT TYPE="TEXT" NAME="0" SIZE="9" onFocus="TrackFocus(0)">
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+
+<span class="exercise-word">drunk</span> or
+<INPUT TYPE="TEXT" NAME="1" SIZE="9" onFocus="TrackFocus(1)">
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+
+<span class="exercise-word">fat</span> or
+<INPUT TYPE="TEXT" NAME="2" SIZE="9" onFocus="TrackFocus(2)">
+
+<BR><BR>
+
+<span class="exercise-word">hard-working</span> or
+<INPUT TYPE="TEXT" NAME="3" SIZE="9" onFocus="TrackFocus(3)">
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+
+<span class="exercise-word">hard</span> or
+<INPUT TYPE="TEXT" NAME="4" SIZE="9" onFocus="TrackFocus(4)">
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+
+<span class="exercise-word">old</span> or
+<INPUT TYPE="TEXT" NAME="5" SIZE="9" onFocus="TrackFocus(5)">
+
+<BR><BR>
+
+<span class="exercise-word">heavy</span> or
+<INPUT TYPE="TEXT" NAME="6" SIZE="9" onFocus="TrackFocus(6)">
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+
+<span class="exercise-word">rich</span> or
+<INPUT TYPE="TEXT" NAME="7" SIZE="9" onFocus="TrackFocus(7)">
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+
+<span class="exercise-word">tall</span> or
+<INPUT TYPE="TEXT" NAME="8" SIZE="9" onFocus="TrackFocus(8)">
+
+<BR><BR>
+
+<span class="exercise-word">happy</span> or
+<INPUT TYPE="TEXT" NAME="9" SIZE="9" onFocus="TrackFocus(9)">
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+
+<span class="exercise-word">strong</span> or
+<INPUT TYPE="TEXT" NAME="10" SIZE="9" onFocus="TrackFocus(10)">
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+
+<span class="exercise-word">intelligent</span> or
+<INPUT TYPE="TEXT" NAME="11" SIZE="6" onFocus="TrackFocus(11)">
+
+<BR><BR>
+
+<span class="exercise-word">high</span> or
+<INPUT TYPE="TEXT" NAME="12" SIZE="9" onFocus="TrackFocus(12)">
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+
+<span class="exercise-word">rough</span> or
+<INPUT TYPE="TEXT" NAME="13" SIZE="6" onFocus="TrackFocus(13)">
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+
+<span class="exercise-word">ambitious</span> or
+<INPUT TYPE="TEXT" NAME="14" SIZE="6" onFocus="TrackFocus(14)">
+
+<BR><BR>
+
+<span class="exercise-word">optimistic</span> or
+<INPUT TYPE="TEXT" NAME="15" SIZE="11" onFocus="TrackFocus(15)">
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+
+<span class="exercise-word">talkative</span> or
+<INPUT TYPE="TEXT" NAME="16" SIZE="9" onFocus="TrackFocus(16)">
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+
+<span class="exercise-word">generous</span> or
+<INPUT TYPE="TEXT" NAME="17" SIZE="10" onFocus="TrackFocus(17)">
+
+<BR><BR>
+
+<span class="exercise-word">beautiful</span> or
+<INPUT TYPE="TEXT" NAME="18" SIZE="9" onFocus="TrackFocus(18)">
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+
+<span class="exercise-word">expensive</span> or
 <INPUT TYPE="TEXT" NAME="19" SIZE="8" onFocus="TrackFocus(19)">
 
-</BLOCKQUOTE></FORM>
-<CENTER><FORM NAME="buttonform">
+</BLOCKQUOTE>
+
+</FORM>
+
+<CENTER>
+
+<FORM NAME="buttonform">
+
 <INPUT TYPE="button" VALUE="Check" onClick="CheckAllAnswers()">
-<P>
-<TABLE BORDER=1 CELLPADDING=10><TR><TD><CENTER><B> &nbsp;&nbsp;cheap&nbsp;&nbsp; &nbsp;&nbsp;greedy&nbsp;&nbsp; &nbsp;&nbsp;lazy&nbsp;&nbsp; &nbsp;&nbsp;light&nbsp;&nbsp; &nbsp;&nbsp;low&nbsp;&nbsp; &nbsp;&nbsp;modest&nbsp;&nbsp; &nbsp;&nbsp;pessimistic&nbsp;&nbsp; &nbsp;&nbsp;poor&nbsp;&nbsp; 
-&nbsp;&nbsp;sad&nbsp;&nbsp; &nbsp;&nbsp;short&nbsp;&nbsp; &nbsp;&nbsp;shy&nbsp;&nbsp; &nbsp;&nbsp;smooth&nbsp;&nbsp; &nbsp;&nbsp;sober&nbsp;&nbsp; &nbsp;&nbsp;soft&nbsp;&nbsp; &nbsp;&nbsp;stupid&nbsp;&nbsp; &nbsp;&nbsp;thin&nbsp;&nbsp; &nbsp;&nbsp;ugly&nbsp;&nbsp; &nbsp;&nbsp;weak&nbsp;&nbsp; &nbsp;&nbsp;wrong&nbsp;&nbsp; &nbsp;&nbsp;young&nbsp;&nbsp; &nbsp;&nbsp;</B></CENTER></TD></TR></TABLE>
+
 <P>
 
-</FORM></CENTER>
-</BODY></HTML>
+<TABLE BORDER=1 CELLPADDING=10>
 
+<TR>
+
+<TD>
+
+<CENTER>
+
+<B>
+&nbsp;&nbsp;cheap&nbsp;&nbsp;
+&nbsp;&nbsp;greedy&nbsp;&nbsp;
+&nbsp;&nbsp;lazy&nbsp;&nbsp;
+&nbsp;&nbsp;light&nbsp;&nbsp;
+&nbsp;&nbsp;low&nbsp;&nbsp;
+&nbsp;&nbsp;modest&nbsp;&nbsp;
+&nbsp;&nbsp;pessimistic&nbsp;&nbsp;
+&nbsp;&nbsp;poor&nbsp;&nbsp;
+&nbsp;&nbsp;sad&nbsp;&nbsp;
+&nbsp;&nbsp;short&nbsp;&nbsp;
+&nbsp;&nbsp;shy&nbsp;&nbsp;
+&nbsp;&nbsp;smooth&nbsp;&nbsp;
+&nbsp;&nbsp;sober&nbsp;&nbsp;
+&nbsp;&nbsp;soft&nbsp;&nbsp;
+&nbsp;&nbsp;stupid&nbsp;&nbsp;
+&nbsp;&nbsp;thin&nbsp;&nbsp;
+&nbsp;&nbsp;ugly&nbsp;&nbsp;
+&nbsp;&nbsp;weak&nbsp;&nbsp;
+&nbsp;&nbsp;wrong&nbsp;&nbsp;
+&nbsp;&nbsp;young&nbsp;&nbsp;
+</B>
+
+</CENTER>
+
+</TD>
+
+</TR>
+
+</TABLE>
+
+<P>
+
+</FORM>
+
+</CENTER>
+
+</BODY>
+</HTML>
