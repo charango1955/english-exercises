@@ -5,6 +5,7 @@
 <META http-equiv="Content-Type" content="text/html; charset=windows-1252">
 
 <SCRIPT language="JavaScript">
+
 CorrectAnswers = new Array();
 CorrectAnswers[0]=7;
 CorrectAnswers[1]=3;
@@ -23,7 +24,9 @@ winrightchar=':)';
 winwrongchar=':(';
 
 var platform = 'win';
-if (navigator.appVersion.indexOf('Mac') != -1) {platform = 'mac'}
+if (navigator.appVersion.indexOf('Mac') != -1) {
+    platform = 'mac'
+}
 
 if (platform == 'mac') {
     rightchar = unescape(macrightchar);
@@ -52,33 +55,37 @@ function CheckAnswer(){
     Score = Math.floor((TotalCorrect*100)/CorrectAnswers.length);
     document.CheckForm.ScoreBox.value = Score + '%';
 }
+
 </SCRIPT>
 </HEAD>
 
 <BODY bgcolor="#000000" text="#ff8040" link="#ff8040" vlink="#ff0000">
 
-<!-- NAVIGATION -->
+<!-- SIMPLE NAVIGATION -->
+
 <CENTER>
-<TABLE border="0" cellpadding="5" cellspacing="1" width="85%">
-<TR>
-<TD bgcolor="#ff8040" align="center">
 <FONT face="Geneva,Arial" size="-1">
 
-<A href="categories2.htm" style="color:#000000; text-decoration:none;">
+<A href="categories2.htm" style="color:#ff8040; text-decoration:none;">
 &lt;
 </A>
 
-&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;
 
-<A href="../index.html" style="color:#000000; text-decoration:none;">
+<A href="../index.html" style="color:#ff8040; text-decoration:none;">
 Index
 </A>
 
+&nbsp;&nbsp;&nbsp;
+
+<A href="pairs.htm" style="color:#ff8040; text-decoration:none;">
+&gt;
+</A>
+
 </FONT>
-</TD>
-</TR>
-</TABLE>
 </CENTER>
+
+<BR>
 
 <CENTER>
 <H2><FONT color="#ffff00">Categories 3</FONT></H2>
@@ -94,8 +101,8 @@ Index
 <TABLE cellpadding="5" border="0">
 
 <TR>
-<TD><FONT color="#ff8040"><B>transport</B></FONT></TD>
-<TD><B><SELECT name="0">
+<TD><FONT color="#ff8040">transport</FONT></TD>
+<TD><SELECT name="0">
 <OPTION selected>choose a word</OPTION>
 <OPTION>dictionary</OPTION>
 <OPTION>doctor</OPTION>
@@ -107,13 +114,13 @@ Index
 <OPTION>kitchen</OPTION>
 <OPTION>wine</OPTION>
 <OPTION>China</OPTION>
-</SELECT></B></TD>
+</SELECT></TD>
 <TD><INPUT maxLength="3" size="3" name="1"></TD>
 </TR>
 
 <TR>
-<TD><FONT color="#ff8040"><B>food</B></FONT></TD>
-<TD><B><SELECT name="2">
+<TD><FONT color="#ff8040">food</FONT></TD>
+<TD><SELECT name="2">
 <OPTION selected>choose a word</OPTION>
 <OPTION>dictionary</OPTION>
 <OPTION>doctor</OPTION>
@@ -125,13 +132,13 @@ Index
 <OPTION>kitchen</OPTION>
 <OPTION>wine</OPTION>
 <OPTION>China</OPTION>
-</SELECT></B></TD>
+</SELECT></TD>
 <TD><INPUT maxLength="3" size="3" name="3"></TD>
 </TR>
 
 <TR>
-<TD><FONT color="#ff8040"><B>room</B></FONT></TD>
-<TD><B><SELECT name="4">
+<TD><FONT color="#ff8040">room</FONT></TD>
+<TD><SELECT name="4">
 <OPTION selected>choose a word</OPTION>
 <OPTION>dictionary</OPTION>
 <OPTION>doctor</OPTION>
@@ -143,13 +150,13 @@ Index
 <OPTION>kitchen</OPTION>
 <OPTION>wine</OPTION>
 <OPTION>China</OPTION>
-</SELECT></B></TD>
+</SELECT></TD>
 <TD><INPUT maxLength="3" size="3" name="5"></TD>
 </TR>
 
 <TR>
-<TD><FONT color="#ff8040"><B>container</B></FONT></TD>
-<TD><B><SELECT name="6">
+<TD><FONT color="#ff8040">container</FONT></TD>
+<TD><SELECT name="6">
 <OPTION selected>choose a word</OPTION>
 <OPTION>dictionary</OPTION>
 <OPTION>doctor</OPTION>
@@ -161,13 +168,13 @@ Index
 <OPTION>kitchen</OPTION>
 <OPTION>wine</OPTION>
 <OPTION>China</OPTION>
-</SELECT></B></TD>
+</SELECT></TD>
 <TD><INPUT maxLength="3" size="3" name="7"></TD>
 </TR>
 
 <TR>
-<TD><FONT color="#ff8040"><B>profession</B></FONT></TD>
-<TD><B><SELECT name="8">
+<TD><FONT color="#ff8040">profession</FONT></TD>
+<TD><SELECT name="8">
 <OPTION selected>choose a word</OPTION>
 <OPTION>dictionary</OPTION>
 <OPTION>doctor</OPTION>
@@ -179,13 +186,13 @@ Index
 <OPTION>kitchen</OPTION>
 <OPTION>wine</OPTION>
 <OPTION>China</OPTION>
-</SELECT></B></TD>
+</SELECT></TD>
 <TD><INPUT maxLength="3" size="3" name="9"></TD>
 </TR>
 
 <TR>
-<TD><FONT color="#ff8040"><B>drink</B></FONT></TD>
-<TD><B><SELECT name="10">
+<TD><FONT color="#ff8040">drink</FONT></TD>
+<TD><SELECT name="10">
 <OPTION selected>choose a word</OPTION>
 <OPTION>dictionary</OPTION>
 <OPTION>doctor</OPTION>
@@ -197,13 +204,13 @@ Index
 <OPTION>kitchen</OPTION>
 <OPTION>wine</OPTION>
 <OPTION>China</OPTION>
-</SELECT></B></TD>
+</SELECT></TD>
 <TD><INPUT maxLength="3" size="3" name="11"></TD>
 </TR>
 
 <TR>
-<TD><FONT color="#ff8040"><B>software</B></FONT></TD>
-<TD><B><SELECT name="12">
+<TD><FONT color="#ff8040">software</FONT></TD>
+<TD><SELECT name="12">
 <OPTION selected>choose a word</OPTION>
 <OPTION>dictionary</OPTION>
 <OPTION>doctor</OPTION>
@@ -215,13 +222,13 @@ Index
 <OPTION>kitchen</OPTION>
 <OPTION>wine</OPTION>
 <OPTION>China</OPTION>
-</SELECT></B></TD>
+</SELECT></TD>
 <TD><INPUT maxLength="3" size="3" name="13"></TD>
 </TR>
 
 <TR>
-<TD><FONT color="#ff8040"><B>book</B></FONT></TD>
-<TD><B><SELECT name="14">
+<TD><FONT color="#ff8040">book</FONT></TD>
+<TD><SELECT name="14">
 <OPTION selected>choose a word</OPTION>
 <OPTION>dictionary</OPTION>
 <OPTION>doctor</OPTION>
@@ -233,13 +240,13 @@ Index
 <OPTION>kitchen</OPTION>
 <OPTION>wine</OPTION>
 <OPTION>China</OPTION>
-</SELECT></B></TD>
+</SELECT></TD>
 <TD><INPUT maxLength="3" size="3" name="15"></TD>
 </TR>
 
 <TR>
-<TD><FONT color="#ff8040"><B>country</B></FONT></TD>
-<TD><B><SELECT name="16">
+<TD><FONT color="#ff8040">country</FONT></TD>
+<TD><SELECT name="16">
 <OPTION selected>choose a word</OPTION>
 <OPTION>dictionary</OPTION>
 <OPTION>doctor</OPTION>
@@ -251,13 +258,13 @@ Index
 <OPTION>kitchen</OPTION>
 <OPTION>wine</OPTION>
 <OPTION>China</OPTION>
-</SELECT></B></TD>
+</SELECT></TD>
 <TD><INPUT maxLength="3" size="3" name="17"></TD>
 </TR>
 
 <TR>
-<TD><FONT color="#ff8040"><B>town</B></FONT></TD>
-<TD><B><SELECT name="18">
+<TD><FONT color="#ff8040">town</FONT></TD>
+<TD><SELECT name="18">
 <OPTION selected>choose a word</OPTION>
 <OPTION>dictionary</OPTION>
 <OPTION>doctor</OPTION>
@@ -269,7 +276,7 @@ Index
 <OPTION>kitchen</OPTION>
 <OPTION>wine</OPTION>
 <OPTION>China</OPTION>
-</SELECT></B></TD>
+</SELECT></TD>
 <TD><INPUT maxLength="3" size="3" name="19"></TD>
 </TR>
 
