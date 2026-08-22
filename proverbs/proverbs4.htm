@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
 <meta charset="UTF-8">
 <title>Proverbs & Expressions 4</title>
@@ -13,99 +13,107 @@ body {
     padding: 0;
 }
 
-.container {
-    width: 85%;
-    margin: 0 auto;
+#navigation {
     text-align: center;
+    margin-top: 15px;
+    margin-bottom: 25px;
+    font-size: 16px;
 }
 
-/* Navigation */
-.navigation {
-    padding-top: 15px;
-    padding-bottom: 25px;
-    font-size: 14px;
-}
-
-.navigation a {
+#navigation a {
     color: #ff8040;
     text-decoration: none;
-    margin: 0 18px;
 }
 
-.navigation a:hover {
-    text-decoration: underline;
+#navigation a:hover {
+    color: #ffff00;
 }
 
-/* Title */
-.title {
+.nav-space {
+    display: inline-block;
+    width: 35px;
+}
+
+h1 {
     color: #ffff00;
     font-size: 22px;
-    margin-bottom: 5px;
+    text-align: center;
+    margin: 10px 0 5px 0;
 }
 
 .subtitle {
     color: #ffff00;
     font-size: 14px;
-    margin-bottom: 30px;
+    text-align: center;
+    margin-bottom: 25px;
 }
 
-/* Exercise */
 .exercise {
     margin: 0 auto;
-    border-collapse: collapse;
+    width: 650px;
 }
 
-.exercise td {
-    padding: 8px 0;
+table {
+    border-collapse: separate;
+    border-spacing: 0 8px;
+    margin: 0 auto;
+}
+
+td {
     vertical-align: middle;
 }
 
-/* Extra space between the English expression and answer box */
-.left {
+.question {
+    color: #ff8040;
+    font-weight: bold;
     text-align: right;
-    padding-right: 55px !important;
+    padding-right: 45px;
     white-space: nowrap;
 }
 
-.right {
+.answer {
     text-align: left;
-    padding-left: 10px !important;
 }
 
-.answer {
-    font-family: Arial, Geneva, sans-serif;
+.answer select {
     font-size: 14px;
+    min-width: 280px;
 }
 
 .mark {
-    padding-left: 12px !important;
-    text-align: left;
+    color: #ff8040;
+    padding-left: 12px;
+    font-weight: bold;
 }
 
 .check {
-    padding-top: 25px !important;
+    text-align: center;
+    padding-top: 18px;
 }
 
-button {
-    font-family: Arial, Geneva, sans-serif;
+.check input {
     font-size: 14px;
     padding: 3px 12px;
 }
 
-select {
-    font-family: Arial, Geneva, sans-serif;
-    font-size: 14px;
-}
-
-.feedback {
-    margin-top: 20px;
+#feedback {
+    text-align: center;
     color: #ff8040;
     font-size: 14px;
+    min-height: 20px;
+    margin-bottom: 10px;
 }
 </style>
 
-<script>
-const items = [
+<script type="text/javascript">
+
+var CorrectIndicator = ":-)";
+var IncorrectIndicator = "X";
+
+var CorrectResponse = "Correct! Well done.";
+var IncorrectResponse = "Sorry! Try again. Incorrect matches have been removed.";
+
+var I = [
     ["absence makes the heart grow fonder", "loin des yeux...près du coeur"],
     ["a bird in the hand is better than two in the bush", "un bon tiens vaut mieux que deux tu l'auras"],
     ["a friend in need is a friend indeed", "c'est dans le besoin qu'on reconnait ses amis"],
@@ -118,160 +126,190 @@ const items = [
     ["no use crying over spilt milk", "ce qui est fait est fait"]
 ];
 
-let answers = [];
-let attempts = 0;
+var RItems = [];
+var Status = [];
+var Penalties = 0;
 
-function shuffle(array) {
-    let result = [...array];
+function Shuffle(array) {
+    var result = array.slice();
 
-    for (let i = result.length - 1; i > 0; i--) {
-        let j = Math.floor(Math.random() * (i + 1));
-        [result[i], result[j]] = [result[j], result[i]];
+    for (var i = result.length - 1; i > 0; i--) {
+        var j = Math.floor(Math.random() * (i + 1));
+        var temp = result[i];
+        result[i] = result[j];
+        result[j] = temp;
     }
 
     return result;
 }
 
-function startExercise() {
+function StartUp() {
 
-    answers = shuffle(
-        items.map((item, index) => ({
-            text: item[1],
-            index: index
-        }))
-    );
+    RItems = [];
 
-    buildExercise();
+    for (var i = 0; i < I.length; i++) {
+        RItems.push(I[i][1]);
+        Status[i] = {
+            correct: false,
+            tried: false
+        };
+    }
+
+    RItems = Shuffle(RItems);
+
+    BuildExercise();
 }
 
-function buildExercise() {
+function BuildExercise() {
 
-    const table = document.getElementById("exercise");
+    var html = "";
 
-    table.innerHTML = "";
+    html += '<table>';
 
-    items.forEach((item, index) => {
+    for (var i = 0; i < I.length; i++) {
 
-        const row = table.insertRow();
+        html += '<tr>';
 
-        const leftCell = row.insertCell();
-        leftCell.className = "left";
-        leftCell.innerHTML = item[0];
+        html += '<td class="question">';
+        html += I[i][0];
+        html += '</td>';
 
-        const rightCell = row.insertCell();
-        rightCell.className = "right";
+        html += '<td class="answer">';
 
-        const select = document.createElement("select");
-        select.className = "answer";
-        select.id = "answer" + index;
+        if (Status[i].correct) {
 
-        const firstOption = document.createElement("option");
-        firstOption.value = "";
-        firstOption.textContent = "???";
-        select.appendChild(firstOption);
-
-        answers.forEach(answer => {
-
-            const option = document.createElement("option");
-
-            option.value = answer.index;
-            option.textContent = answer.text;
-
-            select.appendChild(option);
-        });
-
-        rightCell.appendChild(select);
-
-        const markCell = row.insertCell();
-        markCell.className = "mark";
-        markCell.id = "mark" + index;
-    });
-
-    const row = table.insertRow();
-
-    const cell = row.insertCell();
-    cell.colSpan = 3;
-    cell.className = "check";
-
-    const button = document.createElement("button");
-
-    button.textContent = "Check";
-    button.onclick = checkAnswers;
-
-    cell.appendChild(button);
-}
-
-function checkAnswers() {
-
-    attempts++;
-
-    let correct = 0;
-
-    items.forEach((item, index) => {
-
-        const select = document.getElementById("answer" + index);
-        const mark = document.getElementById("mark" + index);
-
-        if (parseInt(select.value) === index) {
-
-            correct++;
-            mark.innerHTML = ":-)";
+            html += I[i][1];
 
         } else {
 
-            mark.innerHTML = "X";
-        }
-    });
+            html += '<select id="answer' + i + '">';
+            html += '<option value="">???</option>';
 
-    const score = Math.floor(
-        (correct / items.length) * 100
+            for (var j = 0; j < RItems.length; j++) {
+
+                html += '<option value="' + escapeQuotes(RItems[j]) + '">';
+                html += RItems[j];
+                html += '</option>';
+            }
+
+            html += '</select>';
+        }
+
+        html += '</td>';
+
+        html += '<td class="mark">';
+
+        if (Status[i].tried) {
+
+            if (Status[i].correct) {
+                html += CorrectIndicator;
+            } else {
+                html += IncorrectIndicator;
+            }
+        }
+
+        html += '</td>';
+
+        html += '</tr>';
+    }
+
+    html += '<tr>';
+    html += '<td colspan="3" class="check">';
+    html += '<input type="button" value="Check" onclick="CheckAnswers()">';
+    html += '</td>';
+    html += '</tr>';
+
+    html += '</table>';
+
+    document.getElementById("exercise").innerHTML = html;
+}
+
+function escapeQuotes(text) {
+    return text.replace(/"/g, "&quot;");
+}
+
+function CheckAnswers() {
+
+    var totalCorrect = 0;
+    var allDone = true;
+
+    for (var i = 0; i < I.length; i++) {
+
+        if (Status[i].correct) {
+            totalCorrect++;
+            continue;
+        }
+
+        var select = document.getElementById("answer" + i);
+
+        if (!select) {
+            continue;
+        }
+
+        Status[i].tried = true;
+
+        if (select.value === I[i][1]) {
+            Status[i].correct = true;
+            totalCorrect++;
+        } else {
+            allDone = false;
+        }
+    }
+
+    var score = Math.floor(
+        ((totalCorrect - Penalties) / I.length) * 100
     );
 
-    const feedback = document.getElementById("feedback");
+    if (score < 0) {
+        score = 0;
+    }
 
-    if (correct === items.length) {
+    if (allDone) {
 
-        feedback.innerHTML =
-            "Correct! Well done.<br>Your score is " +
-            score + "%.";
+        document.getElementById("feedback").innerHTML =
+            CorrectResponse + "<br>Your score is " + score + "%.";
 
     } else {
 
-        feedback.innerHTML =
-            "Sorry! Try again.<br>Your score is " +
-            score + "%.";
+        document.getElementById("feedback").innerHTML =
+            IncorrectResponse + "<br>Your score is " + score + "%.";
+
+        Penalties++;
     }
+
+    BuildExercise();
 }
 
-window.onload = startExercise;
-</script>
+window.onload = StartUp;
 
+</script>
 </head>
 
 <body>
 
-<div class="container">
+<div id="navigation">
 
-    <div class="navigation">
-        <a href="proverbs3.htm">←</a>
-        <a href="../index.html">INDEX</a>
-    </div>
+    <a href="proverbs3.htm">&lt;</a>
 
-    <div class="title">
-        Proverbs & Expressions 4
-    </div>
+    <span class="nav-space"></span>
 
-    <div class="subtitle">
-        Matching exercise
-    </div>
+    <a href="../index.html">INDEX</a>
 
-    <table id="exercise" class="exercise">
-    </table>
+    <span class="nav-space"></span>
 
-    <div id="feedback" class="feedback">
-    </div>
+    <a href="categories1.htm">&gt;</a>
 
 </div>
+
+<h1>Proverbs & Expressions 4</h1>
+
+<div class="subtitle">
+    Matching exercise
+</div>
+
+<div id="feedback"></div>
+
+<div id="exercise" class="exercise"></div>
 
 </body>
 </html>
