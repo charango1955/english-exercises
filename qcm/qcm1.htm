@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -22,26 +23,27 @@
         align-items: center;
         gap: 10px;
         padding: 12px 10px;
-        background-color: #111111;
-        border-bottom: 1px solid #444444;
+        background-color: #000000;
+        border-bottom: 1px solid #ff8040;
     }
 
     .navbar button {
-        background-color: #222222;
-        color: #ffffff;
-        border: 1px solid #666666;
-        border-radius: 6px;
-        padding: 7px 16px;
+        background: none;
+        color: #ff8040;
+        border: none;
+        padding: 4px 10px;
+        font-family: Arial, Helvetica, sans-serif;
         font-size: 14px;
+        font-weight: bold;
         cursor: pointer;
     }
 
     .navbar button:hover {
-        background-color: #444444;
+        color: #ffff00;
     }
 
     .navbar button:disabled {
-        opacity: 0.4;
+        color: #555555;
         cursor: default;
     }
 
@@ -54,11 +56,6 @@
 
     .title-main {
         font-size: 22px;
-    }
-
-    .title-sub {
-        font-size: 14px;
-        margin-top: 5px;
     }
 
     .instructions {
@@ -90,10 +87,12 @@
         font-size: 18px;
         font-weight: bold;
         margin-right: 8px;
+        color: #ffff00;
     }
 
     .question-text {
         font-size: 15px;
+        color: #ffff00;
     }
 
     .answer {
@@ -104,18 +103,21 @@
     }
 
     .answer button {
-        background-color: #222222;
-        color: #ffffff;
-        border: 1px solid #666666;
-        border-radius: 5px;
+        background: none;
+        color: #ff8040;
+        border: 1px solid #ff8040;
+        border-radius: 3px;
         min-width: 40px;
-        padding: 5px 10px;
+        padding: 4px 9px;
+        font-family: Arial, Helvetica, sans-serif;
         font-size: 14px;
+        font-weight: bold;
         cursor: pointer;
     }
 
     .answer button:hover {
-        background-color: #444444;
+        background-color: #ff8040;
+        color: #000000;
     }
 
     .answer input[type="text"] {
@@ -123,9 +125,9 @@
         height: 22px;
         box-sizing: border-box;
         text-align: center;
-        background-color: #111111;
+        background-color: #000000;
         color: #ffffff;
-        border: 1px solid #555555;
+        border: 1px solid #ff8040;
         border-radius: 3px;
     }
 
@@ -157,7 +159,6 @@
    ========================================================= */
 
 var ExerciseTitle = "Multiple Choice Quiz 1";
-var ExerciseSubtitle = "Multiple-choice exercise";
 var Instructions = "Choose the correct answer for each question.";
 
 var CorrectIndicator = ":-)";
@@ -414,9 +415,6 @@ function StartUp() {
 
     document.getElementById("title").innerHTML =
         ExerciseTitle;
-
-    document.getElementById("subtitle").innerHTML =
-        ExerciseSubtitle;
 
     document.getElementById("instructions").innerHTML =
         Instructions;
@@ -691,16 +689,16 @@ function GoIndex() {
 <div class="navbar">
 
     <button type="button" onclick="GoBack()">
-        &larr;
+        &lt;
     </button>
 
     <button type="button" onclick="GoIndex()">
-        Index
+        INDEX
     </button>
 
     <!-- Right-hand button deliberately inactive for now -->
     <button type="button">
-        &rarr;
+        &gt;
     </button>
 
 </div>
@@ -712,10 +710,6 @@ function GoIndex() {
 
     <div class="title-main" id="title">
         Multiple Choice Quiz 1
-    </div>
-
-    <div class="title-sub" id="subtitle">
-        Multiple-choice exercise
     </div>
 
 </div>
@@ -738,3 +732,4 @@ function GoIndex() {
 
 </body>
 </html>
+```
