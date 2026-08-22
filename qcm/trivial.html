@@ -1,1 +1,1045 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>TRIVIAL PURSUIT QUIZ</title>
+
+<style>
+
+    body {
+        background-color: #000000;
+        color: #ff8040;
+        font-family: Arial, Helvetica, sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+
+    /* =====================================================
+       NAVIGATION
+       ===================================================== */
+
+    .navbar {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 28px;
+        padding: 14px 10px;
+        background-color: #000000;
+        border-bottom: none;
+    }
+
+    .navbar button {
+        background: none;
+        border: none;
+        color: #ff8040;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 14px;
+        font-weight: bold;
+        padding: 0;
+        cursor: pointer;
+    }
+
+    .navbar button:hover {
+        color: #ffff00;
+    }
+
+    /* =====================================================
+       TITLE
+       ===================================================== */
+
+    .title {
+        text-align: center;
+        padding: 18px 10px 10px;
+        color: #ffff00;
+        font-size: 22px;
+        font-weight: normal;
+    }
+
+    /* =====================================================
+       INSTRUCTIONS / FEEDBACK
+       ===================================================== */
+
+    .instructions {
+        text-align: center;
+        margin: 10px;
+        font-size: 14px;
+    }
+
+    .feedback {
+        text-align: center;
+        min-height: 25px;
+        margin: 10px;
+        font-size: 14px;
+    }
+
+    .correct {
+        color: #00ff00;
+        font-weight: bold;
+    }
+
+    .incorrect {
+        color: #ff0000;
+        font-weight: bold;
+    }
+
+    /* =====================================================
+       QUIZ
+       ===================================================== */
+
+    .quiz {
+        width: 85%;
+        max-width: 900px;
+        margin: 20px auto 40px;
+    }
+
+    .question {
+        margin-top: 20px;
+        padding: 10px 5px;
+    }
+
+    .question-number {
+        color: #ffff00;
+        font-size: 18px;
+        font-weight: bold;
+        margin-right: 8px;
+    }
+
+    .question-text {
+        color: #ffff00;
+        font-size: 15px;
+    }
+
+    .answer-area {
+        text-align: center;
+        margin-top: 12px;
+    }
+
+    .answer-box {
+        width: 220px;
+        max-width: 80%;
+        min-height: 28px;
+        box-sizing: border-box;
+        background-color: #111111;
+        color: #ffffff;
+        border: 1px solid #555555;
+        border-radius: 3px;
+        padding: 5px 8px;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 14px;
+    }
+
+    .quiz-button {
+        background-color: #222222;
+        color: #ffffff;
+        border: 1px solid #666666;
+        border-radius: 5px;
+        padding: 5px 14px;
+        margin-left: 6px;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 14px;
+        cursor: pointer;
+    }
+
+    .quiz-button:hover {
+        background-color: #444444;
+    }
+
+    .hint {
+        color: #ffff00;
+    }
+
+    hr {
+        border: 0;
+        border-top: 1px solid #444444;
+        margin: 20px 0;
+    }
+
+</style>
+
+
+<script>
+
+/* =========================================================
+   QUIZ SETTINGS
+   ========================================================= */
+
+var ExerciseTitle = "TRIVIAL PURSUIT QUIZ";
+
+var Instructions =
+    'Type your answer, then press "Check". If you need help, you can click on the "Hint" button to get a free letter.';
+
+var YourScoreIs = "Your score is ";
+
+var CorrectFirstTime =
+    "Questions answered correctly first time: ";
+
+var CorrectResponse = "Correct!";
+
+var TheseAnswersToo = "Other correct answers: ";
+
+var ThisMuchIsCorrect =
+    "This part of your answer is correct: ";
+
+var TheseWordsAppear =
+    "These words appear in the answer: ";
+
+var IncorrectResponse =
+    "Sorry! Try again.";
+
+var EnterGuess =
+    "Please enter a guess.";
+
+var GiveHint =
+    "Next correct letter in the answer: ";
+
+var TheseCorrect =
+    "Correct answers: ";
+
+var CaseSensitive = false;
+
+var FocusBoxes = true;
+
+var ShuffleQs = true;
+
+var ContinuousScoring = true;
+
+var Score = 0;
+
+
+/* =========================================================
+   QUESTIONS
+   ========================================================= */
+
+var I = new Array();
+
+I[0] = new Array();
+I[0][0]='What is Captain Haddock\'s favourite drink ?';
+I[0][1] = new Array();
+I[0][1][0] = ['whisky'];
+I[0][1][1] = ['whiskey'];
+
+I[1] = new Array();
+I[1][0]='What is the capital of Algeria ?';
+I[1][1] = new Array();
+I[1][1][0] = ['Alger'];
+
+I[2] = new Array();
+I[2][0]='In which country did the Industrial Revolution begin ?';
+I[2][1] = new Array();
+I[2][1][0] = ['Great Britain'];
+I[2][1][1] = ['The United Kingdom'];
+I[2][1][2] = ['England'];
+
+I[3] = new Array();
+I[3][0]='What does C.I.A. stand for ?';
+I[3][1] = new Array();
+I[3][1][0] = ['central intelligence agency'];
+
+I[4] = new Array();
+I[4][0]='How many places are there in a bobsleigh ?';
+I[4][1] = new Array();
+I[4][1][0] = ['two'];
+I[4][1][1] = ['2'];
+I[4][1][2] = ['4'];
+I[4][1][3] = ['four'];
+
+I[5] = new Array();
+I[5][0]='What is the capital of Switzerland ?';
+I[5][1] = new Array();
+I[5][1][0] = ['Berne'];
+
+I[6] = new Array();
+I[6][0]='Who spent three days in the stomach of a whale ?';
+I[6][1] = new Array();
+I[6][1][0] = ['Jonas'];
+
+I[7] = new Array();
+I[7][0]='In which cartoon is a young girl poisoned with an apple ?';
+I[7][1] = new Array();
+I[7][1][0] = ['Snow White'];
+I[7][1][1] = ['snowhite'];
+
+I[8] = new Array();
+I[8][0]='How many days separate a new moon from a full moon ?';
+I[8][1] = new Array();
+I[8][1][0] = ['14'];
+I[8][1][1] = ['fourteen'];
+
+I[9] = new Array();
+I[9][0]='What does F.B.I. stand for ?';
+I[9][1] = new Array();
+I[9][1][0] = ['federal bureau of investigation'];
+
+I[10] = new Array();
+I[10][0]='What was strange about the actresses in Shakespeare\'s time ?';
+I[10][1] = new Array();
+I[10][1][0] = ['they were men'];
+I[10][1][1] = ['they weren\'t women'];
+
+I[11] = new Array();
+I[11][0]='Who invented dynamite -Curie, Franklin or Nobel ?';
+I[11][1] = new Array();
+I[11][1][0] = ['Nobel'];
+
+I[12] = new Array();
+I[12][0]='How many records must you sell to obtain a Gold Record ?';
+I[12][1] = new Array();
+I[12][1][0] = ['500,000'];
+I[12][1][1] = ['five hundred thousand'];
+
+I[13] = new Array();
+I[13][0]='Where are the Rocky Mountains ?';
+I[13][1] = new Array();
+I[13][1][0] = ['America'];
+I[13][1][1] = ['the U.S.A.'];
+I[13][1][2] = ['In the U.S.A.'];
+
+I[14] = new Array();
+I[14][0]='How tall is a woman pygmy-0.82m, 1.10m or 1.33m ?';
+I[14][1] = new Array();
+I[14][1][0] = ['1.33m'];
+
+I[15] = new Array();
+I[15][0]='Which instrument uses a wah-wah ?';
+I[15][1] = new Array();
+I[15][1][0] = ['electric guitar'];
+
+I[16] = new Array();
+I[16][0]='Could you eat chewing gum in 1873 ?';
+I[16][1] = new Array();
+I[16][1][0] = ['yes'];
+I[16][1][1] = ['yes, it was invented in 1872'];
+
+I[17] = new Array();
+I[17][0]='Of which country is Kaboul the capital ?';
+I[17][1] = new Array();
+I[17][1][0] = ['Afghanistan'];
+
+I[18] = new Array();
+I[18][0]='Vladimir Ilich Oulianov is better known under another name, which ?';
+I[18][1] = new Array();
+I[18][1][0] = ['Lenin'];
+
+I[19] = new Array();
+I[19][0]='Who was imprisoned by a witch in a house made of sugar ?';
+I[19][1] = new Array();
+I[19][1][0] = ['Hansel and Gretel'];
+
+I[20] = new Array();
+I[20][0]='What is the smallest continent in the world ?';
+I[20][1] = new Array();
+I[20][1][0] = ['Australia'];
+I[20][1][1] = ['Oceania'];
+I[20][1][2] = ['Australasia'];
+
+I[21] = new Array();
+I[21][0]='Michael Jackson burnt his hair while he was making an advertisement for which product ?';
+I[21][1] = new Array();
+I[21][1][0] = ['Pepsi Cola'];
+I[21][1][1] = ['pepsicola'];
+
+I[22] = new Array();
+I[22][0]='Who assassinated Lord Mountbatten in 1979-the E.T.A.,the I.R.A. or the O.L.P. ?';
+I[22][1] = new Array();
+I[22][1][0] = ['I.R.A.'];
+I[22][1][1] = ['the I.R.A.'];
+
+I[23] = new Array();
+I[23][0]='Are there more boys or girls born in the world ?';
+I[23][1] = new Array();
+I[23][1][0] = ['boys'];
+
+I[24] = new Array();
+I[24][0]='What colour are the taxis in London ?';
+I[24][1] = new Array();
+I[24][1][0] = ['black'];
+
+I[25] = new Array();
+I[25][0]='What colour are the taxis in New York ?';
+I[25][1] = new Array();
+I[25][1][0] = ['yellow'];
+
+I[26] = new Array();
+I[26][0]='Where are the ears of a cricket ?';
+I[26][1] = new Array();
+I[26][1][0] = ['on it\'s feet'];
+
+I[27] = new Array();
+I[27][0]='What is the music of cowboys ?';
+I[27][1] = new Array();
+I[27][1][0] = ['country'];
+
+I[28] = new Array();
+I[28][0]='What giant did David defeat ?';
+I[28][1] = new Array();
+I[28][1][0] = ['Goliath'];
+
+I[29] = new Array();
+I[29][0]='Which hero from Jules Verne went round the world in 80 days ?';
+I[29][1] = new Array();
+I[29][1][0] = ['Phileas Fogg'];
+
+I[30] = new Array();
+I[30][0]='When was the telephone invented ?';
+I[30][1] = new Array();
+I[30][1][0] = ['1876'];
+
+I[31] = new Array();
+I[31][0]='In which country do 150 million pupils go to primary school ?';
+I[31][1] = new Array();
+I[31][1][0] = ['China'];
+
+I[32] = new Array();
+I[32][0]='How many times did Brazil win the World Cup with Pele ?';
+I[32][1] = new Array();
+I[32][1][0] = ['three times'];
+I[32][1][1] = ['3 times'];
+
+I[33] = new Array();
+I[33][0]='Which Jamaican singer died in 1981 ?';
+I[33][1] = new Array();
+I[33][1][0] = ['Bob Marley'];
+
+I[34] = new Array();
+I[34][0]='What is the chemical symbol for iron ?';
+I[34][1] = new Array();
+I[34][1][0] = ['Fe'];
+
+I[35] = new Array();
+I[35][0]='In which country is the Lada built ?';
+I[35][1] = new Array();
+I[35][1][0] = ['Russia'];
+I[35][1][1] = ['the Soviet Union'];
+I[35][1][2] = ['U.S.S.R.'];
+
+I[36] = new Array();
+I[36][0]='Who wrote the song "The Sound of Silence "?';
+I[36][1] = new Array();
+I[36][1][0] = ['Simon and Garfunkel'];
+
+I[37] = new Array();
+I[37][0]='Who wrote the song "Penny Lane "?';
+I[37][1] = new Array();
+I[37][1][0] = ['The Beatles'];
+I[37][1][1] = ['John Lennon and Paul Mc Cartney'];
+
+I[38] = new Array();
+I[38][0]='Which country produces the most coffee in the world ?';
+I[38][1] = new Array();
+I[38][1][0] = ['Brazil'];
+
+I[39] = new Array();
+I[39][0]='Which animal is called "the vessel of the desert" ?';
+I[39][1] = new Array();
+I[39][1][0] = ['camel'];
+
+I[40] = new Array();
+I[40][0]='What was the name of King Arthur\'s sword ?';
+I[40][1] = new Array();
+I[40][1][0] = ['Excalibur'];
+
+I[41] = new Array();
+I[41][0]='A boa is what sort of animal ?';
+I[41][1] = new Array();
+I[41][1][0] = ['snake'];
+
+I[42] = new Array();
+I[42][0]='What was Elvis Presley\'s job when he made his first record ?';
+I[42][1] = new Array();
+I[42][1][0] = ['truck-driver'];
+I[42][1][1] = ['lorry-driver'];
+
+I[43] = new Array();
+I[43][0]='Which saint carried Jesus on his back ?';
+I[43][1] = new Array();
+I[43][1][0] = ['Christopher'];
+I[43][1][1] = ['St.Christopher'];
+
+I[44] = new Array();
+I[44][0]='What is Robinson Crusoe\'s favourite day ?';
+I[44][1] = new Array();
+I[44][1][0] = ['Friday'];
+
+I[45] = new Array();
+I[45][0]='Who was Robin Hood\'s girlfriend ?';
+I[45][1] = new Array();
+I[45][1][0] = ['Marion'];
+I[45][1][1] = ['Marianne'];
+
+I[46] = new Array();
+I[46][0]='What was forbidden in the U.S.A. during the Prohibition ?';
+I[46][1] = new Array();
+I[46][1][0] = ['alcohol'];
+I[46][1][1] = ['drinking alcohol'];
+
+I[47] = new Array();
+I[47][0]='Who wrote the Communist Manifesto ?';
+I[47][1] = new Array();
+I[47][1][0] = ['Marx'];
+I[47][1][1] = ['Marx and Engels'];
+I[47][1][2] = ['Karl Marx'];
+
+I[48] = new Array();
+I[48][0]='Who discovered America five centuries before Columbus ?';
+I[48][1] = new Array();
+I[48][1][0] = ['the Vikings'];
+I[48][1][1] = ['Vikings'];
+
+I[49] = new Array();
+I[49][0]='How many planets go round the Sun ?';
+I[49][1] = new Array();
+I[49][1][0] = ['nine'];
+I[49][1][1] = ['9'];
+
+
+/* =========================================================
+   QUIZ STATUS
+   ========================================================= */
+
+var Status = new Array();
+
+function CreateStatusArrays() {
+
+    Status.length = 0;
+
+    for (var i = 0; i < I.length; i++) {
+
+        Status[i] = new Array();
+
+        Status[i][0] = 0;  // answered correctly
+        Status[i][1] = 0;  // wrong attempts
+        Status[i][2] = 0;  // hints
+        Status[i][3] = ""; // student's answer
+        Status[i][4] = 0;  // score
+    }
+}
+
+
+/* =========================================================
+   SHUFFLE
+   ========================================================= */
+
+function Shuffle(InArray) {
+
+    var Temp = new Array();
+
+    for (var i = 0; i < InArray.length; i++) {
+        Temp[i] = InArray[i];
+    }
+
+    for (var i = 0; i < InArray.length; i++) {
+
+        var Num =
+            Math.floor(
+                (InArray.length - i) * Math.random()
+            );
+
+        InArray[i] = Temp[Num];
+
+        Temp.splice(Num, 1);
+    }
+
+    return InArray;
+}
+
+
+/* =========================================================
+   START
+   ========================================================= */
+
+function StartUp() {
+
+    if (ShuffleQs == true) {
+        I = Shuffle(I);
+    }
+
+    CreateStatusArrays();
+
+    document.getElementById("title").innerHTML =
+        ExerciseTitle;
+
+    document.getElementById("instructions").innerHTML =
+        Instructions;
+
+    ShowAllQs();
+
+    WriteFeedback(Instructions);
+}
+
+
+/* =========================================================
+   DISPLAY ALL QUESTIONS
+   ========================================================= */
+
+function ShowAllQs() {
+
+    var output = "";
+
+    for (var i = 0; i < I.length; i++) {
+
+        output += BuildQuestion(i);
+
+        if (i < I.length - 1) {
+            output += "<hr>";
+        }
+    }
+
+    document.getElementById("quiz").innerHTML = output;
+}
+
+
+function BuildQuestion(QNum) {
+
+    var output = "";
+
+    output += '<div class="question">';
+
+    output +=
+        '<span class="question-number">' +
+        (QNum + 1) +
+        '.</span>';
+
+    output +=
+        '<span class="question-text">' +
+        I[QNum][0] +
+        '</span>';
+
+    output +=
+        '<div class="answer-area">';
+
+    output +=
+        '<input type="text" class="answer-box" ' +
+        'id="Answer_' + QNum + '" ' +
+        'onkeydown="HandleEnter(event,' + QNum + ')">';
+
+    output +=
+        '<button type="button" class="quiz-button" ' +
+        'onclick="CheckAnswer(false,' + QNum + ')">' +
+        'Check' +
+        '</button>';
+
+    output +=
+        '<button type="button" class="quiz-button" ' +
+        'onclick="CheckAnswer(true,' + QNum + ')">' +
+        'Hint' +
+        '</button>';
+
+    output += '</div>';
+
+    output += '</div>';
+
+    return output;
+}
+
+
+/* =========================================================
+   ENTER KEY
+   ========================================================= */
+
+function HandleEnter(event, QNum) {
+
+    if (event.key === "Enter") {
+
+        event.preventDefault();
+
+        CheckAnswer(false, QNum);
+    }
+}
+
+
+/* =========================================================
+   CHECK ANSWER
+   ========================================================= */
+
+function CheckAnswer(ShowHint, QNum) {
+
+    if (Status[QNum][0] == 1) {
+        ShowAnswers(QNum);
+        return;
+    }
+
+    var Box =
+        document.getElementById("Answer_" + QNum);
+
+    var Guess =
+        Box.value.trim();
+
+    Status[QNum][3] = Guess;
+
+    if (Guess.length < 1) {
+
+        WriteFeedback(EnterGuess);
+
+        Box.focus();
+
+        return;
+    }
+
+    var TestGuess = Guess;
+
+    if (CaseSensitive == false) {
+        TestGuess = TestGuess.toUpperCase();
+    }
+
+    var Right = -1;
+
+    for (
+        var i = 0;
+        i < I[QNum][1].length;
+        i++
+    ) {
+
+        var Answer = I[QNum][1][i][0];
+
+        var TestAnswer = Answer;
+
+        if (CaseSensitive == false) {
+            TestAnswer = TestAnswer.toUpperCase();
+        }
+
+        if (TestGuess == TestAnswer) {
+            Right = i;
+            break;
+        }
+    }
+
+
+    /* -----------------------------------------------------
+       CORRECT
+       ----------------------------------------------------- */
+
+    if (Right > -1) {
+
+        Status[QNum][0] = 1;
+
+        var HintPenalty =
+            (Status[QNum][2] * 10) /
+            I[QNum][1][Right][0].length;
+
+        Status[QNum][4] =
+            Math.floor(
+                (10 - Status[QNum][1]) -
+                HintPenalty
+            );
+
+        if (Status[QNum][4] < 0) {
+            Status[QNum][4] = 0;
+        }
+
+        var Output =
+            '<span class="correct">' +
+            CorrectResponse +
+            '</span>';
+
+        var OtherAnswers = "";
+
+        for (
+            var j = 0;
+            j < I[QNum][1].length;
+            j++
+        ) {
+
+            if (j != Right) {
+
+                OtherAnswers +=
+                    I[QNum][1][j][0] +
+                    "<br>";
+            }
+        }
+
+        if (OtherAnswers.length > 0) {
+
+            Output +=
+                "<br>" +
+                TheseAnswersToo +
+                "<br>" +
+                OtherAnswers;
+        }
+
+
+        var Finished = true;
+
+        for (var k = 0; k < Status.length; k++) {
+
+            if (Status[k][0] == 0) {
+                Finished = false;
+                break;
+            }
+        }
+
+
+        if (ContinuousScoring == true ||
+            Finished == true) {
+
+            var CurrentScore =
+                CalculateScore();
+
+            Output +=
+                "<br>" +
+                YourScoreIs +
+                CurrentScore +
+                "%.";
+        }
+
+
+        if (Finished == true) {
+
+            var CFT = 0;
+
+            for (
+                var m = 0;
+                m < Status.length;
+                m++
+            ) {
+
+                if (
+                    Status[m][1] == 0 &&
+                    Status[m][2] == 0
+                ) {
+
+                    CFT++;
+                }
+            }
+
+            Output +=
+                "<br>" +
+                CorrectFirstTime +
+                CFT +
+                "/" +
+                I.length;
+        }
+
+        WriteFeedback(Output);
+
+        if (QNum < I.length - 1) {
+
+            var NextBox =
+                document.getElementById(
+                    "Answer_" + (QNum + 1)
+                );
+
+            if (NextBox != null &&
+                FocusBoxes == true) {
+
+                NextBox.focus();
+            }
+        }
+
+        return;
+    }
+
+
+    /* -----------------------------------------------------
+       INCORRECT / HINT
+       ----------------------------------------------------- */
+
+    if (ShowHint == false) {
+
+        Status[QNum][1]++;
+
+        WriteFeedback(
+            '<span class="incorrect">' +
+            IncorrectResponse +
+            '</span>'
+        );
+
+    } else {
+
+        Status[QNum][2]++;
+
+        var CorrectAnswer =
+            I[QNum][1][0][0];
+
+        var HintPosition =
+            Status[QNum][2] - 1;
+
+        if (HintPosition >= CorrectAnswer.length) {
+            HintPosition = CorrectAnswer.length - 1;
+        }
+
+        var HintText =
+            CorrectAnswer.substring(
+                0,
+                HintPosition + 1
+            );
+
+        WriteFeedback(
+            GiveHint +
+            '<span class="hint">' +
+            HintText +
+            '...</span>'
+        );
+    }
+
+    Box.focus();
+}
+
+
+/* =========================================================
+   SCORE
+   ========================================================= */
+
+function CalculateScore() {
+
+    var TotalScore = 0;
+    var DoneQs = 0;
+
+    for (var i = 0; i < Status.length; i++) {
+
+        if (Status[i][0] == 1) {
+
+            TotalScore += Status[i][4];
+
+            DoneQs++;
+        }
+    }
+
+    if (DoneQs == 0) {
+        return 0;
+    }
+
+    return Math.floor(
+        (TotalScore * 100) /
+        (DoneQs * 10)
+    );
+}
+
+
+/* =========================================================
+   SHOW ANSWERS
+   ========================================================= */
+
+function ShowAnswers(QNum) {
+
+    Status[QNum][0] = 1;
+
+    Status[QNum][1] = -1;
+    Status[QNum][2] = -1;
+    Status[QNum][4] = 0;
+
+    var Output =
+        TheseCorrect +
+        "<br>";
+
+    for (
+        var i = 0;
+        i < I[QNum][1].length;
+        i++
+    ) {
+
+        Output +=
+            I[QNum][1][i][0] +
+            "<br>";
+    }
+
+    Output +=
+        YourScoreIs +
+        CalculateScore() +
+        "%.";
+
+    WriteFeedback(Output);
+}
+
+
+/* =========================================================
+   FEEDBACK
+   ========================================================= */
+
+function WriteFeedback(Feedback) {
+
+    document.getElementById("feedback").innerHTML =
+        Feedback;
+}
+
+
+/* =========================================================
+   NAVIGATION
+   ========================================================= */
+
+function GoBack() {
+
+    window.history.back();
+}
+
+
+function GoIndex() {
+
+    window.location.href = "../index.html";
+}
+
+
+function GoNext() {
+
+    window.location.href = "qcm1.htm";
+}
+
+</script>
+
+</head>
+
+
+<body onload="StartUp()">
+
+
+<!-- =====================================================
+     NAVIGATION BAR
+     ===================================================== -->
+
+<div class="navbar">
+
+    <button type="button" onclick="GoBack()">
+        &larr;
+    </button>
+
+    <button type="button" onclick="GoIndex()">
+        INDEX
+    </button>
+
+    <button type="button" onclick="GoNext()">
+        &rarr;
+    </button>
+
+</div>
+
+
+<!-- =====================================================
+     TITLE
+     ===================================================== -->
+
+<div class="title" id="title">
+    TRIVIAL PURSUIT QUIZ
+</div>
+
+
+<!-- =====================================================
+     INSTRUCTIONS
+     ===================================================== -->
+
+<div class="instructions" id="instructions">
+    Type your answer, then press "Check".
+</div>
+
+
+<!-- =====================================================
+     FEEDBACK
+     ===================================================== -->
+
+<div class="feedback" id="feedback">
+</div>
+
+
+<!-- =====================================================
+     QUESTIONS
+     ===================================================== -->
+
+<div class="quiz" id="quiz">
+</div>
+
+
+</body>
+</html>
+```
 
