@@ -21,30 +21,24 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        gap: 10px;
+        gap: 25px;
         padding: 12px 10px;
         background-color: #000000;
-        border-bottom: 1px solid #ff8040;
     }
 
     .navbar button {
         background: none;
         color: #ff8040;
         border: none;
-        padding: 4px 10px;
-        font-family: Arial, Helvetica, sans-serif;
+        padding: 0;
         font-size: 14px;
         font-weight: bold;
+        font-family: Arial, Helvetica, sans-serif;
         cursor: pointer;
     }
 
     .navbar button:hover {
         color: #ffff00;
-    }
-
-    .navbar button:disabled {
-        color: #555555;
-        cursor: default;
     }
 
     /* Title */
@@ -103,21 +97,18 @@
     }
 
     .answer button {
-        background: none;
-        color: #ff8040;
-        border: 1px solid #ff8040;
-        border-radius: 3px;
+        background-color: #222222;
+        color: #ffffff;
+        border: 1px solid #666666;
+        border-radius: 5px;
         min-width: 40px;
-        padding: 4px 9px;
-        font-family: Arial, Helvetica, sans-serif;
+        padding: 5px 10px;
         font-size: 14px;
-        font-weight: bold;
         cursor: pointer;
     }
 
     .answer button:hover {
-        background-color: #ff8040;
-        color: #000000;
+        background-color: #444444;
     }
 
     .answer input[type="text"] {
@@ -125,9 +116,9 @@
         height: 22px;
         box-sizing: border-box;
         text-align: center;
-        background-color: #000000;
+        background-color: #111111;
         color: #ffffff;
-        border: 1px solid #ff8040;
+        border: 1px solid #555555;
         border-radius: 3px;
     }
 
@@ -421,7 +412,7 @@ function StartUp() {
 
     ShowAllQs();
 
-    WriteFeedback(Instructions);
+    WriteFeedback("");
 }
 
 
@@ -689,7 +680,7 @@ function GoIndex() {
 <div class="navbar">
 
     <button type="button" onclick="GoBack()">
-        &lt;
+        &larr;
     </button>
 
     <button type="button" onclick="GoIndex()">
@@ -698,7 +689,7 @@ function GoIndex() {
 
     <!-- Right-hand button deliberately inactive for now -->
     <button type="button">
-        &gt;
+        &rarr;
     </button>
 
 </div>
