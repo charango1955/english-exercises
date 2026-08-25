@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -969,7 +968,10 @@ function GoIndex() {
 }
 
 
-/* Right arrow deliberately inactive for now. */
+function GoNext() {
+
+    window.location.href = "qcm/multiple_choice_trivial_pursuit.htm";
+}
 
 </script>
 
@@ -993,7 +995,7 @@ function GoIndex() {
         INDEX
     </button>
 
-    <button type="button" disabled>
+    <button type="button" onclick="GoNext()">
         &rarr;
     </button>
 
@@ -1031,4 +1033,3 @@ function GoIndex() {
 
 </body>
 </html>
-```
