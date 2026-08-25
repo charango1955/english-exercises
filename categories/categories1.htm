@@ -56,7 +56,7 @@ function CheckAnswer() {
 body {
     background-color: #000000;
     color: #ff8040;
-    font-family: Geneva, Arial, sans-serif;
+    font-family: Arial, Geneva, sans-serif;
     margin: 0;
     padding: 0;
 }
@@ -76,38 +76,36 @@ body {
 }
 
 .navigation a:hover {
-    text-decoration: underline;
+    color: #ffff00;
 }
 
 .title {
     text-align: center;
     color: #ffff00;
-    font-size: 24px;
-    margin-bottom: 12px;
+    font-size: 22px;
+    margin: 10px 0 5px 0;
 }
 
 .subtitle {
     text-align: center;
-    color: #ff8040;
-    font-weight: bold;
+    color: #ffff00;
+    font-size: 14px;
     margin-bottom: 25px;
 }
 
 .exercise {
-    margin-left: auto;
-    margin-right: auto;
+    margin: 0 auto;
     border-collapse: separate;
-    border-spacing: 0 7px;
+    border-spacing: 0 8px;
 }
 
 .exercise td {
-    padding-top: 3px;
-    padding-bottom: 3px;
+    vertical-align: middle;
 }
 
 .category {
     color: #ff8040;
-    font-weight: bold;
+    font-weight: normal;
     text-align: right;
     padding-right: 45px !important;
     white-space: nowrap;
@@ -118,17 +116,24 @@ body {
 }
 
 .answer select {
-    min-width: 150px;
+    font-size: 14px;
+    min-width: 250px;
 }
 
 .mark {
+    color: #ff8040;
     padding-left: 12px !important;
+    font-weight: normal;
 }
 
 .check {
     text-align: center;
-    margin-top: 25px;
-    margin-bottom: 30px;
+    padding-top: 18px;
+}
+
+.check input {
+    font-size: 14px;
+    padding: 3px 12px;
 }
 
 </style>
