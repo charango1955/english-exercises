@@ -32,40 +32,35 @@ Multiple-choice Trivial Pursuit
 
 /* CSS variables for colours. */
 :root{
-	--strFontFace:       Geneva,Arial,sans-serif;
+	--strFontFace:       Arial, Helvetica, sans-serif;
 	--strFontSize:       medium;
-	--strTextColor:      #000000;
-	--strTitleColor:     #000000;
 
-	--strFuncLightColor: #ffffff;
-	--strFuncShadeColor: #7f7f7f;
-	--strLinkColor:      #0000FF;
-	--strVLinkColor:     #0000CC;
+	--strTextColor:      #ff8040;
+	--strTitleColor:     #ffff00;
+
+	--strFuncLightColor: #666666;
+	--strFuncShadeColor: #222222;
+
+	--strLinkColor:      #ffff00;
+	--strVLinkColor:     #ff8040;
 	
 	--strNavBarColor:    #000000;
-	--strNavLightColor:  #7f7f7f;
-	--strNavShadeColor:  #000000;
-	--strNavTextColor:   #ffffff;
+	--strNavLightColor:  #666666;
+	--strNavShadeColor:  #222222;
+	--strNavTextColor:   #ff8040;
 	
-	--strPageBGColor:    #C0C0C0;
-	--strExBGColor:      #FFFFFF;
+	--strPageBGColor:    #000000;
+	--strExBGColor:      #000000;
 }
 
 body{
 	font-family: var(--strFontFace);
-	background-color: var(--strPageBGColor);
-	color: var(--strTextColor);
- 
+	background-color: #000000;
+	color: #ff8040;
 	margin-right: 5%;
 	margin-left: 5%;
 	font-size: var(--strFontSize);
 	padding-bottom: 0.5em;
-}
-
-p{
-	text-align: left;
-	margin: 0px;
-	font-size: 1em;
 }
 
 table,div,span,td{
@@ -480,6 +475,7 @@ textarea{
 	text-align: left;
 	margin: 0px;
 	font-size: 1em;
+	color: #ffff00;
 }
 
 .Answer{
@@ -532,20 +528,17 @@ div.ShortAnswer{
 
 .FuncButton {
 	border-style: solid;
-	border-radius: 0.5em;
-	padding: 0.5em;
+	border-radius: 5px;
+	padding: 5px 14px;
 	min-width: 3em;
 
-	border-left-color: var(--strFuncLightColor);
-	border-top-color: var(--strFuncLightColor);
-	border-right-color: var(--strFuncShadeColor);
-	border-bottom-color: var(--strFuncShadeColor);
-	color: var(--strTextColor);
-	background-color: var(--strExBGColor);
+	border: 1px solid #666666;
 
-	border-width: 1pt;
-	cursor: pointer;	
-	box-shadow: 0.2em 0.3em 0.2em var(--strFuncShadeColor);
+	color: #ffffff;
+	background-color: #222222;
+
+	cursor: pointer;
+	box-shadow: none;
 }
 
 .FuncButton:active {
@@ -553,38 +546,37 @@ div.ShortAnswer{
 }
 
 .FuncButton:hover{
-	color: var(--strExBGColor);
-	background-color: var(--strTextColor);
+	color: #ffff00;
+	background-color: #444444;
 }
 
 /*BeginNavBarStyle*/
 
 div.NavButtonBar{
-	background-color: var(--strNavBarColor);
+	background-color: #000000;
 	text-align: center;
-	margin: 0.25rem 0;
+	margin: 10px 0;
 	clear: both;
 	font-size: 1em;
-	padding: 0.2em;
+	padding: 10px;
 	box-sizing: border-box;
 }
 
 .NavButton {
-	border-style: solid;
-	border-radius: 0.5em;
-	padding: 0.5em;
+	border: none;
+	border-radius: 0;
+	padding: 5px 14px;
 	min-width: 3em;
-	
-	border-left-color: var(--strNavLightColor);
-	border-top-color: var(--strNavLightColor);
-	border-right-color: var(--strNavShadeColor);
-	border-bottom-color: var(--strNavShadeColor); 
-	background-color: var(--strNavBarColor);
-	color: var(--strNavTextColor);
 
-	border-width: 1pt;
-	cursor: pointer;	
-	box-shadow: 0.2em 0.3em 0.2em var(--strNavShadeColor);
+	background-color: #000000;
+	color: #ff8040;
+
+	cursor: pointer;
+	box-shadow: none;
+
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 14px;
+	font-weight: bold;
 }
 
 .NavButton:active {
@@ -592,12 +584,11 @@ div.NavButtonBar{
 }
 
 .NavButton:hover{
-	color: var(--strNavBarColor);
-	background-color: var(--strNavTextColor);
+	color: #ffff00;
+	background-color: #000000;
 }
 
 /*EndNavBarStyle*/
-
 a{
 	color: var(--strLinkColor);
 }
@@ -1740,8 +1731,13 @@ function CheckFinished(){
 
 
 
-<button class="NavButton" onclick="location='../index.html'; return false;"> Index </button>
+ <button class="NavButton" onclick="location='../trivial.html'; return false;">
+        &larr;
+    </button>
 
+    <button class="NavButton" onclick="location='../index.html'; return false;">
+        Index
+    </button>
 
 
 </div>
